@@ -1,4 +1,4 @@
-package com.thekey.stylekey.backend.domain.base;
+package com.thekey.stylekey.backend.model.base;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
@@ -20,7 +20,7 @@ public class BaseTimeEntity {
     private LocalDateTime createdAt;
 
     @LastModifiedDate
-    @Column(name = "upated_at", nullable = false)
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 }
 

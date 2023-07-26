@@ -1,8 +1,8 @@
-package com.thekey.stylekey.backend.domain.stylepoint.entity;
+package com.thekey.stylekey.backend.model.stylepoint.entity;
 
-import com.thekey.stylekey.backend.domain.base.BaseTimeEntity;
-import com.thekey.stylekey.backend.domain.brand.entity.Brand;
-import com.thekey.stylekey.backend.domain.coordilook.entity.CoordiLook;
+import com.thekey.stylekey.backend.model.base.BaseTimeEntity;
+import com.thekey.stylekey.backend.model.brand.entity.Brand;
+import com.thekey.stylekey.backend.model.coordilook.entity.CoordiLook;
 import lombok.*;
 
 import javax.persistence.*;

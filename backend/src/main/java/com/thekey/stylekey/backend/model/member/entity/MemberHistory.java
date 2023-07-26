@@ -1,7 +1,7 @@
-package com.thekey.stylekey.backend.domain.member.entity;
+package com.thekey.stylekey.backend.model.member.entity;
 
-import com.thekey.stylekey.backend.domain.base.BaseTimeEntity;
-import com.thekey.stylekey.backend.domain.stylepoint.entity.StylePoint;
+import com.thekey.stylekey.backend.model.base.BaseTimeEntity;
+import com.thekey.stylekey.backend.model.stylepoint.entity.StylePoint;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

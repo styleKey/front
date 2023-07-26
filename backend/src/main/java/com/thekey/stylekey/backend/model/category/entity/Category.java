@@ -1,6 +1,6 @@
-package com.thekey.stylekey.backend.domain.category.entity;
+package com.thekey.stylekey.backend.model.category.entity;
 
-import com.thekey.stylekey.backend.domain.item.entity.Item_Category;
+import com.thekey.stylekey.backend.model.item.entity.Item_Category;
 import lombok.*;
 
 import javax.persistence.*;

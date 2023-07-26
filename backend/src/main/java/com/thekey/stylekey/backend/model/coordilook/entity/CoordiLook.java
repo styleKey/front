@@ -1,7 +1,7 @@
-package com.thekey.stylekey.backend.domain.coordilook.entity;
+package com.thekey.stylekey.backend.model.coordilook.entity;
 
-import com.thekey.stylekey.backend.domain.item.entity.Item;
-import com.thekey.stylekey.backend.domain.stylepoint.entity.StylePoint;
+import com.thekey.stylekey.backend.model.item.entity.Item;
+import com.thekey.stylekey.backend.model.stylepoint.entity.StylePoint;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
