@@ -1,6 +1,6 @@
-package com.thekey.stylekey.backend.domain.member.repository;
+package com.thekey.stylekey.backend.model.member.repository;
 
-import com.thekey.stylekey.backend.domain.member.entity.MemberHistory;
+import com.thekey.stylekey.backend.model.member.entity.MemberHistory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,6 @@
-package com.thekey.stylekey.backend.domain.brand.repository;
+package com.thekey.stylekey.backend.model.brand.repository;
 
-import com.thekey.stylekey.backend.domain.brand.entity.Brand;
+import com.thekey.stylekey.backend.model.brand.entity.Brand;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
