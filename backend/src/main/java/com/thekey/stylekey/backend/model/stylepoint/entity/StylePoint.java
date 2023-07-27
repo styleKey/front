@@ -1,6 +1,5 @@
 package com.thekey.stylekey.backend.model.stylepoint.entity;
 
-import com.thekey.stylekey.backend.model.base.BaseTimeEntity;
 import com.thekey.stylekey.backend.model.brand.entity.Brand;
 import com.thekey.stylekey.backend.model.coordilook.entity.CoordiLook;
 import lombok.*;
@@ -13,7 +12,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "stylepoint")
-public class StylePoint extends BaseTimeEntity {
+public class StylePoint {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "stylepoint_id", nullable = false)
