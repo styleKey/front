@@ -1,5 +1,6 @@
 package com.thekey.stylekey.backend.model.brand.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.thekey.stylekey.backend.model.base.BaseTimeEntity;
 import com.thekey.stylekey.backend.model.item.entity.Item;
 import com.thekey.stylekey.backend.model.stylepoint.entity.StylePoint;
@@ -45,6 +46,7 @@ public class Brand extends BaseTimeEntity {
     // 다대일 양방향 연관관계
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "stylepoint_id")
+    @JsonIgnore
     private StylePoint stylepoint;
 
     @Builder
