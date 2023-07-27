@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "stylepoint")
-public class StylePoint extends BaseTimeEntity {
+public class StylePoint {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "stylepoint_id", nullable = false)
