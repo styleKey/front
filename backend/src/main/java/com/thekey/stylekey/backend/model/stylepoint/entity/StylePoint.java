@@ -1,6 +1,5 @@
 package com.thekey.stylekey.backend.model.stylepoint.entity;
 
-import com.thekey.stylekey.backend.model.base.BaseTimeEntity;
 import com.thekey.stylekey.backend.model.brand.entity.Brand;
 import com.thekey.stylekey.backend.model.coordilook.entity.CoordiLook;
 import lombok.*;

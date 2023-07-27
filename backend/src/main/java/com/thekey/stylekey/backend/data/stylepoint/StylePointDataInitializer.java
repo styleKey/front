@@ -48,7 +48,7 @@ public class StylePointDataInitializer {
 
         StylePoint stylePoint_6 = StylePoint.builder()
                 .title("Retro")
-                .description("섹시함이 강조되는 화려하고 여성스러운 스타일")
+                .description("1990-2000년대의 감성을 재해석하여 오래된 듯한 멋진 느낌이 드는 스타일")
                 .image("image_url_6")
                 .build();
 

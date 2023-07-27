@@ -1,5 +1,6 @@
 package com.thekey.stylekey.backend.model.coordilook.entity;
 
+import com.thekey.stylekey.backend.model.base.BaseTimeEntity;
 import com.thekey.stylekey.backend.model.item.entity.Item;
 import com.thekey.stylekey.backend.model.stylepoint.entity.StylePoint;
 import lombok.AccessLevel;
@@ -15,7 +16,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "coordilook")
-public class CoordiLook {
+public class CoordiLook extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
