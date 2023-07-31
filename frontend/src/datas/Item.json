@@ -1,0 +1,51 @@
+[
+    {
+      "item_id": 301,
+      "brand_id": 203,
+      "category_id": 1,
+      "item_title": "Odlyworkshop Good Grief Mesh Tee",
+      "item_sales_link": "http://m.odlyworkshop.com/product/good-grief-mesh-tee/374/category/72/display/1/",
+      "item_image": "public/images/item_301.png"
+    },
+    {
+      "item_id": 302,
+      "brand_id": 203,
+      "category_id": 1,
+      "item_title": "Odlyworkshop Cumu Arum Cutout Tank (Ivory)",
+      "item_sales_link": "http://m.odlyworkshop.com/product/cumu-arum-cutout-tank-ivory/368/category/72/display/1/",
+      "item_image": "public/images/item_302.png"
+    },
+    {
+      "item_id": 303,
+      "brand_id": 202,
+      "category_id": 2,
+      "item_title": "Long Coat",
+      "item_sales_link": "https://www.example.com/long_coat",
+      "item_image": "public/images/item_303.png"
+    },
+    {
+      "item_id": 304,
+      "brand_id": 203,
+      "category_id": 3,
+      "item_title": "Floral Maxi Dress",
+      "item_sales_link": "https://www.example.com/floral_maxi_dress",
+      "item_image": "public/images/item_304.png"
+    },
+    {
+      "item_id": 305,
+      "brand_id": 204,
+      "category_id": 4,
+      "item_title": "High-Waisted Jeans",
+      "item_sales_link": "https://www.example.com/high_waisted_jeans",
+      "item_image": "public/images/item_305.png"
+    },
+    {
+      "item_id": 306,
+      "brand_id": 204,
+      "category_id": 4,
+      "item_title": "A-line Skirt",
+      "item_sales_link": "https://www.example.com/a_line_skirt",
+      "item_image": "public/images/item_306.png"
+    }
+  ]
+  
