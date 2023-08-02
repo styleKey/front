@@ -30,8 +30,8 @@ public class StylePoint {
     @OneToMany(mappedBy = "stylepoint", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<CoordiLook> coordiLookList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "stylepoint", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Brand> brandList = new ArrayList<>();
+//    @OneToMany(mappedBy = "stylepoint", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private List<Brand> brandList = new ArrayList<>();
 
     @Builder
     public StylePoint(String title, String description, String image) {
