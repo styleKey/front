@@ -1,0 +1,31 @@
+[
+    {
+      "category_id": 1,
+      "category_title": "top"
+    },
+    {
+      "category_id": 2,
+      "category_title": "outer"
+    },
+    {
+      "category_id": 3,
+      "category_title": "dress"
+    },
+    {
+      "category_id": 4,
+      "category_title": "bottom"
+    },
+    {
+      "category_id": 5,
+      "category_title": "bag"
+    },
+    {
+      "category_id": 6,
+      "category_title": "shoes"
+    },
+    {
+      "category_id": 7,
+      "category_title": "acc"
+    }
+  ]
+  

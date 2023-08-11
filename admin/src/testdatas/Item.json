@@ -1,0 +1,35 @@
+[
+  {
+    "item_id": 301,
+    "brand_id": 203,
+    "category_id": 1,
+    "item_title": "Odlyworkshop Good Grief Mesh Tee",
+    "item_sales_link": "http://m.odlyworkshop.com/product/good-grief-mesh-tee/374/category/72/display/1/",
+    "item_image": "public/images/item_301.png"
+  },
+  {
+    "item_id": 302,
+    "brand_id": 203,
+    "category_id": 1,
+    "item_title": "Odlyworkshop Cumu Arum Cutout Tank (Ivory)",
+    "item_sales_link": "http://m.odlyworkshop.com/product/cumu-arum-cutout-tank-ivory/368/category/72/display/1/",
+    "item_image": "public/images/item_302.png"
+  },
+  {
+    "item_id": 303,
+    "brand_id": 202,
+    "category_id": 4,
+    "item_title": "The Open Product Distressed High Waist Jeans (Blue)",
+    "item_sales_link": "https://theopenproduct.com/product/detail.html?product_no=3101&cate_no=51&display_group=1",
+    "item_image": "public/images/item_303.png"
+  },
+  {
+    "item_id": 304,
+    "brand_id": 201,
+    "category_id": 1,
+    "item_title": "SALTY PEBBLE SQUARE LACE UP VEST (BLUE)",
+    "item_sales_link": "https://saltypebble.com/product/square-lace-up-vest-blue/795/category/57/display/1/",
+    "item_image": "public/images/item_304.png"
+  }
+  ]
+  
