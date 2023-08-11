@@ -1,5 +1,5 @@
-사이트 디자인 https://xd.adobe.com/view/1e5ac1fa-c397-4de1-90e4-44d446c0fbbf-4b09/
-리액트 참고 https://www.youtube.com/watch?v=I2UBjN5ER4s&t=411s&ab_channel=BrianDesign
+# StyleKEY
+스타일키 프론트 개발
 
 --- 제목 ---
 [커밋 타입]: [작업내용을 50자 이내 요약]
