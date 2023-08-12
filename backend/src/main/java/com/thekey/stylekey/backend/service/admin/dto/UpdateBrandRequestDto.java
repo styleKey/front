@@ -2,12 +2,10 @@ package com.thekey.stylekey.backend.service.admin.dto;
 
 import com.thekey.stylekey.backend.model.brand.entity.Brand;
 import com.thekey.stylekey.backend.model.stylepoint.entity.StylePoint;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor

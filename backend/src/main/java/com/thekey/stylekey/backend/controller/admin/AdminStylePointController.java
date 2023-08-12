@@ -3,6 +3,7 @@ package com.thekey.stylekey.backend.controller.admin;
 import com.thekey.stylekey.backend.model.brand.entity.Brand;
 import com.thekey.stylekey.backend.model.stylepoint.entity.StylePoint;
 import com.thekey.stylekey.backend.service.admin.StylePointAdminService;
+import com.thekey.stylekey.backend.service.admin.dto.UpdateStylePointRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,7 @@ public class AdminStylePointController {
 
     // Read Only One By ID
     @GetMapping("/stylepoint/{id}")
-    public  ResponseEntity<Map<String, Object>> getStylePointById(@PathVariable Long id) {
+    public ResponseEntity<Map<String, Object>> getStylePointById(@PathVariable Long id) {
         StylePoint stylePoint = styleAdminService.findById(id);
         List<Brand> brands = styleAdminService.getBrandsByStylePointId(id);
 
@@ -40,6 +41,19 @@ public class AdminStylePointController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/stylepoint/{id}")
+    public ResponseEntity<StylePoint> updateStylePoint(@PathVariable Long id, @RequestBody UpdateStylePointRequestDto requestDto) {
+        if (id == null) {
+            return ResponseEntity.ok().build();
+        }
+
+        StylePoint updatedStylePoint = styleAdminService.updateStylePoint(id, requestDto);
+        if (updatedStylePoint == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(updatedStylePoint);
     }
 
 }
