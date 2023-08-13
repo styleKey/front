@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @NoArgsConstructor
 public class CreateBrandRequestDto {
@@ -28,7 +27,7 @@ public class CreateBrandRequestDto {
         this.stylepointId = stylepointId;
     }
 
-    public Brand toEntity(StylePoint stylePoint) {
+    public Brand toEntity(StylePoint stylepoint) {
 
         return Brand.builder()
                 .title(this.title)
@@ -36,8 +35,7 @@ public class CreateBrandRequestDto {
                 .description(this.description)
                 .site_url(this.site_url)
                 .image(this.image)
-                .stylePoint(stylePoint)
+                .stylepoint(stylepoint)
                 .build();
-
     }
 }

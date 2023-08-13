@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 public interface BrandAdminService {
 
     // create
-    Brand createBrand(CreateBrandRequestDto brand);
+    Brand createBrand(CreateBrandRequestDto requestDto);
 
     // read only one
     Brand findById(Long id);
@@ -18,7 +18,7 @@ public interface BrandAdminService {
     Page<Brand> findAll(Pageable pageable);
 
     // update
-    Brand updateBrand(Long id, UpdateBrandRequestDto brand);
+    Brand updateBrand(Long id, UpdateBrandRequestDto requestDto);
 
     // delete
     void deleteBrand(Long id);

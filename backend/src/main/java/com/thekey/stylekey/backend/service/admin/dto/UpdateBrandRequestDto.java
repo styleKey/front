@@ -28,14 +28,14 @@ public class UpdateBrandRequestDto {
         this.stylepointId = stylepointId;
     }
 
-    public Brand toEntity(StylePoint stylePoint) {
+    public Brand toEntity(StylePoint stylepoint) {
         return Brand.builder()
                 .title(this.title)
                 .title_eng(this.title_eng)
                 .description(this.description)
                 .site_url(this.site_url)
                 .image(this.image)
-                .stylePoint(stylePoint)
+                .stylepoint(stylepoint)
                 .build();
     }
 }
