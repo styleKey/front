@@ -15,12 +15,12 @@ public interface StylePointAdminService {
     // read all
     List<StylePoint> findAll();
 
-    // get a list of brands included in stylepoint id
-    List<Brand> getBrandsByStylePointId(Long stylepointId);
-
     // update
     StylePoint updateStylePoint(Long stylepoinyId, UpdateStylePointRequestDto requestDto);
 
     // get a list of coordilook included in stylepoint id
     List<CoordiLook> getCoordilooksStylePointId(Long stylepointId);
+
+    // get a list of brands included in stylepoint id
+    List<Brand> getBrandsByStylePointId(Long stylepointId);
 }

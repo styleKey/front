@@ -1,17 +1,15 @@
 package com.thekey.stylekey.backend.model.stylepoint.entity;
 
-import com.thekey.stylekey.backend.model.brand.entity.Brand;
-import com.thekey.stylekey.backend.model.coordilook.entity.CoordiLook;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "stylepoint")
+@DynamicUpdate
 public class StylePoint {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,8 +25,8 @@ public class StylePoint {
     @Column(name = "stulepoint_image", nullable = false)
     private String image;
 
-    @OneToMany(mappedBy = "stylepoint", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<CoordiLook> coordiLookList = new ArrayList<>();
+//    @OneToMany(mappedBy = "stylepoint", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private List<CoordiLook> coordiLookList = new ArrayList<>();
 
 //    @OneToMany(mappedBy = "stylepoint", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //    private List<Brand> brandList = new ArrayList<>();

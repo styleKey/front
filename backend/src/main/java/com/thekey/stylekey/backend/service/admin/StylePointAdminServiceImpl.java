@@ -17,51 +17,53 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional
 public class StylePointAdminServiceImpl implements StylePointAdminService {
 
     private final StylePointRepository stylePointRepository;
     private final BrandRepository brandRepository;
     private final CoordiLookRepository coordiLookRepository;
 
-    @Transactional
     @Override
     public StylePoint findById(Long id) {
         return stylePointRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("stylepoint does not exist: " + id));
     }
 
-    @Transactional
     @Override
     public List<StylePoint> findAll() {
         return stylePointRepository.findAll();
     }
 
-    @Transactional
     @Override
-    public List<Brand> getBrandsByStylePointId(Long stylepointId) {
-        StylePoint stylePoint = stylePointRepository.findById(stylepointId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid StylePoint ID: " + stylepointId));
-
-        return brandRepository.findByStylepoint(stylePoint);
-    }
-
     @Transactional
-    @Override
     public StylePoint updateStylePoint(Long stylepointId, UpdateStylePointRequestDto requestDto) {
         StylePoint stylePoint = stylePointRepository.findById(stylepointId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid StylePoint ID: " + stylepointId));
 
         stylePoint.update(requestDto.getTitle(), requestDto.getDescription(), requestDto.getImage());
         return stylePoint;
-
     }
 
-    @Transactional
+    /**
+     * 해당 스타일포인트 id값에 해당하는 코디룩 목록 조회
+     */
     @Override
     public List<CoordiLook> getCoordilooksStylePointId(Long stylePointId) {
         StylePoint stylePoint = stylePointRepository.findById(stylePointId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid StylePoint ID: " + stylePointId));
 
         return coordiLookRepository.findByStylepoint(stylePoint);
+    }
+
+    /**
+     * 해당 스타일포인트 id값에 해당하는 브랜드 목록 조회
+     */
+    @Override
+    public List<Brand> getBrandsByStylePointId(Long stylepointId) {
+        StylePoint stylePoint = stylePointRepository.findById(stylepointId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid StylePoint ID: " + stylepointId));
+
+        return brandRepository.findByStylepoint(stylePoint);
     }
 }
