@@ -1,5 +1,6 @@
 package com.thekey.stylekey.backend.model.coordilook.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.thekey.stylekey.backend.model.base.BaseTimeEntity;
 import com.thekey.stylekey.backend.model.item.entity.Item;
 import com.thekey.stylekey.backend.model.stylepoint.entity.StylePoint;
@@ -33,13 +34,20 @@ public class CoordiLook extends BaseTimeEntity {
     // 다대일 양방향 관계
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "stylepoint_id")
+    @JsonIgnore
     private StylePoint stylepoint;
 
     @OneToMany(mappedBy = "coordilook", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Item> itemList = new ArrayList<>();
+    private List<Item> items = new ArrayList<>();
 
     @Builder
     public CoordiLook(String title, String image, StylePoint stylepoint) {
+        this.title = title;
+        this.image = image;
+        this.stylepoint = stylepoint;
+    }
+
+    public void update(String title, String image, StylePoint stylepoint) {
         this.title = title;
         this.image = image;
         this.stylepoint = stylepoint;
