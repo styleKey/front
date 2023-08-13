@@ -1,6 +1,8 @@
 package com.thekey.stylekey.backend.controller.admin;
 
 import com.thekey.stylekey.backend.model.brand.entity.Brand;
+import com.thekey.stylekey.backend.model.coordilook.entity.CoordiLook;
+import com.thekey.stylekey.backend.model.coordilook.repository.CoordiLookRepository;
 import com.thekey.stylekey.backend.model.stylepoint.entity.StylePoint;
 import com.thekey.stylekey.backend.service.admin.StylePointAdminService;
 import com.thekey.stylekey.backend.service.admin.dto.UpdateStylePointRequestDto;
@@ -32,10 +34,12 @@ public class AdminStylePointController {
     public ResponseEntity<Map<String, Object>> getStylePointById(@PathVariable Long id) {
         StylePoint stylePoint = styleAdminService.findById(id);
         List<Brand> brands = styleAdminService.getBrandsByStylePointId(id);
+        List<CoordiLook> coordiLooks = styleAdminService.getCoordilooksStylePointId(id);
 
         Map<String, Object> response = new HashMap<>();
         response.put("stylePoint", stylePoint);
         response.put("brands", brands);
+        response.put("coordilooks", coordiLooks);
 
         if (stylePoint == null) {
             return ResponseEntity.notFound().build();
