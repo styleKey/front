@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import brandData from '../datas/Brand.json'; // Import the brand data
+import brandData from '../testdatas/Brand.json'; // Import the brand data
 import '../App.css';
 
 const BrandForm = () => {

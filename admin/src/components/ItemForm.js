@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import brandData from '../datas/Brand.json';
-import categoryData from '../datas/Category.json';
-import itemsData from '../datas/Item.json';
+import brandData from '../testdatas/Brand.json';
+import categoryData from '../testdatas/Category.json';
+import itemsData from '../testdatas/Item.json';
 import '../App.css';
 
 const ItemForm = () => {

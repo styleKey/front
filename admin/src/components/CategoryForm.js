@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import categoryData from '../datas/Category.json'; // Import the category data
+import categoryData from '../testdatas/Category.json'; // Import the category data
 import '../App.css';
 
 const CategoryForm = () => {

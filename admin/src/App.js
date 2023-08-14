@@ -13,20 +13,20 @@ const App = () => {
       <div className="container">
         <nav>
           <ul>
-            <li>
-              <Link to="/category">Category [0번대]</Link>
+          <li>
+              <Link to="/stylepoint">StylePoint 스타일포인트</Link>
             </li>
             <li>
-              <Link to="/stylepoint">StylePoint [100번대]</Link>
+              <Link to="/category">Category 카테고리(상의, 하의 등등)</Link>
             </li>
             <li>
-              <Link to="/brand">Brand [200번대]</Link>
+              <Link to="/brand">Brand 브랜드</Link>
             </li>
             <li>
-              <Link to="/item">Item [300번대]</Link>
+              <Link to="/item">Item 아이템</Link>
             </li>
             <li>
-              <Link to="/coordilook">CoordiLook [400번대]</Link>
+              <Link to="/coordilook">CoordiLook 코디룩</Link>
             </li>
           </ul>
         </nav>
