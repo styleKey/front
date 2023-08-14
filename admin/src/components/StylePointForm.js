@@ -1,90 +1,86 @@
-import React, { useState } from 'react';
-import stylePointsData from '../datas/StylePoint.json';
-import '../App.css';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const StylePointForm = () => {
-  const [stylePoint, setStylePoint] = useState({
-    stylepoint_id: '',
-    stylepoint_title: '',
-    stylepoint_description: '',
-    stylepoint_image: '',
-    created_at: '',
-    updated_at: '',
-  });
+const AdminPage = () => {
+  const [stylePoints, setStylePoints] = useState([]);
+  const [selectedStylePoint, setSelectedStylePoint] = useState(null);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    const imageURL = `public/images/stylepoint_${value}.png`;
-    setStylePoint({ ...stylePoint, [name]: value, stylepoint_image: imageURL });
+  useEffect(() => {
+    fetchStylePoints();
+  }, []);
+
+  const fetchStylePoints = async () => {
+    try {
+      const response = await axios.get('/admin/stylepoints'); // Assuming you have the appropriate API endpoint
+      setStylePoints(response.data);
+    } catch (error) {
+      console.error('Error fetching style points:', error);
+    }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const fetchStylePointDetails = async (id) => {
+    try {
+      const response = await axios.get(`/admin/stylepoint/${id}`);
+      setSelectedStylePoint(response.data);
+    } catch (error) {
+      console.error('Error fetching style point details:', error);
+    }
+  };
 
-    const currentDate = new Date().toISOString(); // Get the current date and time in ISO format
-
-    // Create a JSON object with the entered data, including the current date as created_at
-    const stylePointData = {
-      stylepoint_id: stylePoint.stylepoint_id,
-      stylepoint_title: stylePoint.stylepoint_title,
-      stylepoint_description: stylePoint.stylepoint_description,
-      stylepoint_image: stylePoint.stylepoint_image,
-      created_at: currentDate,
-      updated_at: currentDate, // Also set the updated_at field to the current date
-    };
-
-    const stylePointJson = JSON.stringify(stylePointData, null, 2);
-    const blob = new Blob([stylePointJson], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'StylePoint.json';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+  const updateStylePoint = async (id, updatedData) => {
+    try {
+      const response = await axios.put(`/admin/stylepoint/${id}`, updatedData);
+      // Update the style points list with the updated data
+      const updatedStylePoints = stylePoints.map((point) =>
+        point.id === id ? response.data : point
+      );
+      setStylePoints(updatedStylePoints);
+    } catch (error) {
+      console.error('Error updating style point:', error);
+    }
   };
 
   return (
-    <div className="stylepoint-form-container">
-      <h1>StylePoint.json 생성</h1>
-      <form onSubmit={handleSubmit}>
-        <p>100번대를 입력하라</p>
-        <select
-          name="stylepoint_id"
-          onChange={handleChange}
-          value={stylePoint.stylepoint_id}
-        >
-          <option value="">Select StylePoint</option>
-          {stylePointsData.map((stylePointData) => (
-            <option
-              key={stylePointData.stylepoint_id}
-              value={stylePointData.stylepoint_id}
-            >
-              {stylePointData.stylepoint_title} (ID: {stylePointData.stylepoint_id})
-            </option>
-          ))}
-        </select>
-        {/* Remove the 'Title' input field, it will be automatically set */}
-        <input
-          type="text"
-          name="stylepoint_description"
-          placeholder="Description"
-          value={stylePoint.stylepoint_description}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="stylepoint_image"
-          placeholder="Image URL"
-          value={stylePoint.stylepoint_image}
-          onChange={handleChange}
-        />
-        {/* 'created_at' input field is removed, as it will be automatically set */}
-        <button type="submit">Download StylePoint.json</button>
-      </form>
+    <div>
+      <h1>Admin Page</h1>
+      <h2>Style Points</h2>
+      <ul>
+        {stylePoints.map((point) => (
+          <li key={point.id}>
+            {point.title} - {point.description}
+            <button onClick={() => fetchStylePointDetails(point.id)}>Details</button>
+          </li>
+        ))}
+      </ul>
+
+      {selectedStylePoint && (
+        <div>
+          <h3>Selected Style Point: {selectedStylePoint.title}</h3>
+          <p>{selectedStylePoint.description}</p>
+          <img src={selectedStylePoint.image} alt={selectedStylePoint.title} />
+
+          <h4>Edit Style Point</h4>
+          <input
+            type="text"
+            value={selectedStylePoint.title}
+            onChange={(e) =>
+              setSelectedStylePoint((prev) => ({ ...prev, title: e.target.value }))
+            }
+          />
+          <input
+            type="text"
+            value={selectedStylePoint.description}
+            onChange={(e) =>
+              setSelectedStylePoint((prev) => ({ ...prev, description: e.target.value }))
+            }
+          />
+          <button onClick={() => updateStylePoint(selectedStylePoint.id, selectedStylePoint)}>
+            Save
+          </button>
+        </div>
+      )}
     </div>
   );
 };
 
-export default StylePointForm;
+export default AdminPage;
