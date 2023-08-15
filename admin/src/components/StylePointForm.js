@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const AdminPage = () => {
+const StylePointForm = () => {
   const [stylePoints, setStylePoints] = useState([]);
   const [selectedStylePoint, setSelectedStylePoint] = useState(null);
 
@@ -11,7 +11,7 @@ const AdminPage = () => {
 
   const fetchStylePoints = async () => {
     try {
-      const response = await axios.get('/admin/stylepoints'); // Assuming you have the appropriate API endpoint
+      const response = await axios.get('/admin/stylepoints'); // Updated relative path
       setStylePoints(response.data);
     } catch (error) {
       console.error('Error fetching style points:', error);
@@ -20,21 +20,26 @@ const AdminPage = () => {
 
   const fetchStylePointDetails = async (id) => {
     try {
-      const response = await axios.get(`/admin/stylepoint/${id}`);
-      setSelectedStylePoint(response.data);
+      const response = await axios.get(`/admin/stylepoint/${id}`); // Updated relative path
+      setSelectedStylePoint(response.data.stylePoint); // Updated to access "stylePoint" from the response data
     } catch (error) {
       console.error('Error fetching style point details:', error);
     }
   };
 
-  const updateStylePoint = async (id, updatedData) => {
+  const updateStylePoint = async () => {
     try {
-      const response = await axios.put(`/admin/stylepoint/${id}`, updatedData);
-      // Update the style points list with the updated data
-      const updatedStylePoints = stylePoints.map((point) =>
-        point.id === id ? response.data : point
+      if (!selectedStylePoint) return;
+
+      const response = await axios.put(`/admin/stylepoint/${selectedStylePoint.id}`, {
+        title: selectedStylePoint.title,
+        description: selectedStylePoint.description,
+        image: selectedStylePoint.image,
+      }); // Updated relative path
+
+      setStylePoints((prevStylePoints) =>
+        prevStylePoints.map((point) => (point.id === response.data.id ? response.data : point))
       );
-      setStylePoints(updatedStylePoints);
     } catch (error) {
       console.error('Error updating style point:', error);
     }
@@ -42,7 +47,6 @@ const AdminPage = () => {
 
   return (
     <div>
-      <h1>Admin Page</h1>
       <h2>Style Points</h2>
       <ul>
         {stylePoints.map((point) => (
@@ -74,13 +78,11 @@ const AdminPage = () => {
               setSelectedStylePoint((prev) => ({ ...prev, description: e.target.value }))
             }
           />
-          <button onClick={() => updateStylePoint(selectedStylePoint.id, selectedStylePoint)}>
-            Save
-          </button>
+          <button onClick={updateStylePoint}>Save</button>
         </div>
       )}
     </div>
   );
 };
 
-export default AdminPage;
+export default StylePointForm;
