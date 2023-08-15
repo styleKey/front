@@ -78,6 +78,13 @@ const StylePointForm = () => {
               setSelectedStylePoint((prev) => ({ ...prev, description: e.target.value }))
             }
           />
+          <input
+            type="text"
+            value={selectedStylePoint.image}
+            onChange={(e) =>
+              setSelectedStylePoint((prev) => ({ ...prev, image: e.target.value }))
+            }
+          />
           <button onClick={updateStylePoint}>Save</button>
         </div>
       )}
