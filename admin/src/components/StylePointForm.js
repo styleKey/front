@@ -1,124 +1,151 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-// StylePointForm 컴포넌트 정의
-const StylePointForm = () => {
-  // 상태 변수 선언: stylePoints과 selectedStylePoint
-  const [stylePoints, setStylePoints] = useState([]); // 빈 배열로 초기화
-  const [selectedStylePoint, setSelectedStylePoint] = useState(null); // 초기값은 null
+// BrandForm 컴포넌트 정의
+const BrandForm = () => {
+  // 상태 변수 선언: brands와 selectedBrand
+  const [brands, setBrands] = useState([]); // 빈 배열로 초기화
+  const [selectedBrand, setSelectedBrand] = useState(null); // 초기값은 null
 
   // 컴포넌트가 처음 렌더링될 때 실행되는 useEffect
   useEffect(() => {
-    // 서버에서 "StylePoint 전체 목록"을 불러오는 비동기 함수 호출
-    fetchStylePoints();
+    // 서버에서 "Brand 전체 목록"을 불러오는 비동기 함수 호출
+    fetchBrands();
   }, []);
 
-  // GET 서버에서 "StylePoint 전체 목록"을 불러오는 비동기 함수
-  const fetchStylePoints = async () => {
+  // GET 서버에서 "Brand 전체 목록"을 불러오는 비동기 함수
+  const fetchBrands = async () => {
     try {
       // HTTP GET 요청
-      const response = await axios.get('/admin/stylepoints');
-      // 가져온 데이터를 stylePoints 상태에 설정
-      setStylePoints(response.data);
+      const response = await axios.get('/admin/brands');
+      // 가져온 데이터를 brands 상태에 설정
+      setBrands(response.data.content);
     } catch (error) {
       // 에러 발생 시 에러 메시지 출력
-      console.error('Error fetching style points:', error);
+      console.error('Error fetching brands:', error);
     }
   };
 
-  // GET 서버에서 "StylePoint 단건 정보"를 불러오는 비동기 함수
-  const fetchStylePointDetails = async (id) => {
+  // GET 서버에서 "Brand 단건 정보"를 불러오는 비동기 함수
+  const fetchBrandDetails = async (id) => {
     try {
       // HTTP GET 요청
-      const response = await axios.get(`/admin/stylepoint/${id}`); // 업데이트된 상대 경로
-      // 가져온 데이터에서 "stylePoint" 정보를 SelectedStylePoint로 설정
-      setSelectedStylePoint(response.data.stylePoint);
+      const response = await axios.get(`/admin/brand/${id}`);
+      // 가져온 데이터를 selectedBrand로 설정
+      setSelectedBrand(response.data);
     } catch (error) {
       // 에러 발생 시 에러 메시지 출력
-      console.error('Error fetching style point details:', error);
+      console.error('Error fetching brand details:', error);
     }
   };
 
-  // PUT "StylePoint 단건 정보"를 업데이트하는 비동기 함수
-  const updateStylePoint = async () => {
+  // PUT "Brand 단건 정보"를 업데이트하는 비동기 함수
+  const updateBrand = async () => {
     try {
-      // selectedStylePoint가 없으면 함수 종료
-      if (!selectedStylePoint) return;
+      // selectedBrand가 없으면 함수 종료
+      if (!selectedBrand) return;
 
       // HTTP PUT 요청
-      const response = await axios.put(`/admin/stylepoint/${selectedStylePoint.id}`, {
-        title: selectedStylePoint.title,
-        description: selectedStylePoint.description,
-        image: selectedStylePoint.image,
-      }); // 업데이트된 상대 경로
+      const response = await axios.put(`/admin/brand/${selectedBrand.id}`, {
+        title: selectedBrand.title,
+        title_eng: selectedBrand.title_eng,
+        description: selectedBrand.description,
+        site_url: selectedBrand.site_url,
+        image: selectedBrand.image,
+        stylepointId: selectedBrand.stylepointId,
+      });
 
-      // 업데이트된 StylePoint로 StylePoints 목록 업데이트하기
-      setStylePoints((prevStylePoints) =>
-        prevStylePoints.map((point) => (point.id === response.data.id ? response.data : point))
+      // 업데이트된 Brand로 brands 목록 업데이트하기
+      setBrands((prevBrands) =>
+        prevBrands.map((brand) => (brand.id === response.data.id ? response.data : brand))
       );
     } catch (error) {
       // 에러 발생 시 에러 메시지 출력
-      console.error('Error updating style point:', error);
+      console.error('Error updating brand:', error);
     }
   };
 
   // 화면 렌더링 시작
   return (
     <div>
-      <h2>Style Points</h2>
+      <h2>Brands</h2>
       <ul>
-        {/* StylePoints 목록을 맵핑하여 리스트 항목으로 출력 */}
-        {stylePoints.map((point) => (
-          <li key={point.id}>
+        {/* brands 목록을 맵핑하여 리스트 항목으로 출력 */}
+        {brands.map((brand) => (
+          <li key={brand.id}>
             {/* 각 항목의 title과 description 표시 */}
-            {point.title} - {point.description}
-            {/* "Details" 버튼 클릭 시 해당 StylePoint 단건 정보 불러오기 */}
-            <button onClick={() => fetchStylePointDetails(point.id)}>Details</button>
+            {brand.title} - {brand.description}
+            {/* "Details" 버튼 클릭 시 해당 Brand 단건 정보 불러오기 */}
+            <button onClick={() => fetchBrandDetails(brand.id)}>Details</button>
           </li>
         ))}
       </ul>
 
-      {/* selectedStylePoint가 있을 경우 아래 내용 출력 */}
-      {selectedStylePoint && (
+      {/* selectedBrand가 있을 경우 아래 내용 출력 */}
+      {selectedBrand && (
         <div>
-          {/* selectedStylePoint의 title, description, image 출력 */}
-          <h3>Selected Style Point: {selectedStylePoint.title}</h3>
-          <p>{selectedStylePoint.description}</p>
-          <img src={selectedStylePoint.image} alt={selectedStylePoint.title} />
+          {/* selectedBrand의 title, description, image 출력 */}
+          <h3>Selected Brand: {selectedBrand.title}</h3>
+          <p>{selectedBrand.description}</p>
+          <img src={selectedBrand.image} alt={selectedBrand.title} />
 
-          {/* StylePoint 편집 섹션 */}
-          <h4>Edit Style Point</h4>
-          {/* title 입력 필드: 값이 변경되면 selectedStylePoint 업데이트 */}
+          {/* Brand 편집 섹션 */}
+          <h4>Edit Brand</h4>
+          {/* title 입력 필드: 값이 변경되면 selectedBrand 업데이트 */}
           <input
             type="text"
-            value={selectedStylePoint.title}
+            value={selectedBrand.title}
             onChange={(e) =>
-              setSelectedStylePoint((prev) => ({ ...prev, title: e.target.value }))
+              setSelectedBrand((prev) => ({ ...prev, title: e.target.value }))
             }
           />
-          {/* description 입력 필드: 값이 변경되면 selectedStylePoint 업데이트 */}
+          {/* 영문 title 입력 필드: 값이 변경되면 selectedBrand 업데이트 */}
           <input
             type="text"
-            value={selectedStylePoint.description}
+            value={selectedBrand.title_eng}
             onChange={(e) =>
-              setSelectedStylePoint((prev) => ({ ...prev, description: e.target.value }))
+              setSelectedBrand((prev) => ({ ...prev, title_eng: e.target.value }))
             }
           />
-          {/* image 입력 필드: 값이 변경되면 selectedStylePoint 업데이트 */}
+          {/* description 입력 필드: 값이 변경되면 selectedBrand 업데이트 */}
           <input
             type="text"
-            value={selectedStylePoint.image}
+            value={selectedBrand.description}
             onChange={(e) =>
-              setSelectedStylePoint((prev) => ({ ...prev, image: e.target.value }))
+              setSelectedBrand((prev) => ({ ...prev, description: e.target.value }))
             }
           />
-          {/* "Save" 버튼 클릭 시 StylePoint 업데이트 함수 호출 */}
-          <button onClick={updateStylePoint}>Save</button>
+          {/* 사이트 URL 입력 필드: 값이 변경되면 selectedBrand 업데이트 */}
+          <input
+            type="text"
+            value={selectedBrand.site_url}
+            onChange={(e) =>
+              setSelectedBrand((prev) => ({ ...prev, site_url: e.target.value }))
+            }
+          />
+          {/* image 입력 필드: 값이 변경되면 selectedBrand 업데이트 */}
+          <input
+            type="text"
+            value={selectedBrand.image}
+            onChange={(e) =>
+              setSelectedBrand((prev) => ({ ...prev, image: e.target.value }))
+            }
+          />
+          {/* stylepointId 입력 필드: 값이 변경되면 selectedBrand 업데이트 */}
+          <input
+            type="text"
+            value={selectedBrand.stylepointId}
+            onChange={(e) =>
+              setSelectedBrand((prev) => ({ ...prev, stylepointId: e.target.value }))
+            }
+          />
+          {/* "Save" 버튼 클릭 시 Brand 업데이트 함수 호출 */}
+          <button onClick={updateBrand}>Save</button>
         </div>
       )}
     </div>
   );
 };
 
-// StylePointForm 컴포넌트 내보내기
-export default StylePointForm;
+// BrandForm 컴포넌트 내보내기
+export default BrandForm;
