@@ -1,73 +1,117 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import brandData from '../testdatas/Brand.json'; // Import the brand data
-import '../App.css';
 
 const BrandForm = () => {
-  const [brand, setBrand] = useState({
-    brand_id: 0, // Initialize brand_id field with 0
-    brand_title: '',
-    brand_description: '',
-    brand_image: '',
-    brand_site_url: '',
-  });
+  const [brands, setBrands] = useState([]);
+  const [selectedBrand, setSelectedBrand] = useState(null);
 
-  // Calculate the next available brand_id based on existing data
   useEffect(() => {
-    const lastBrandId = brandData.length > 0 ? brandData[brandData.length - 1].brand_id : 200; // Default to 200 if no data
-    const nextBrandId = lastBrandId + 1;
-    setBrand((prevState) => ({ ...prevState, brand_id: nextBrandId }));
+    fetchBrands();
   }, []);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    // Generate the image URL based on the brand_id
-    const imageURL = `public/images/brand_${brand.brand_id}.png`; // Use brand_id from the state
-
-    setBrand({ ...brand, [name]: value, brand_image: imageURL });
+  const fetchBrands = async () => {
+    try {
+      const response = await axios.get('/admin/brands');
+      setBrands(response.data.content); // "content" 배열을 사용하여 브랜드 목록 업데이트
+    } catch (error) {
+      console.error('Error fetching brands:', error);
+    }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    axios.post('/api/brands', brand)
-      .then((response) => {
-        console.log(response.data); // Handle success, e.g., show a success message
-      })
-      .catch((error) => {
-        console.error(error); // Handle error, e.g., show an error message
+  const fetchBrandDetails = async (id) => {
+    try {
+      const response = await axios.get(`/admin/brand/${id}`);
+      setSelectedBrand(response.data); // 응답 데이터 전체를 선택된 브랜드로 설정
+    } catch (error) {
+      console.error('Error fetching brand details:', error);
+    }
+  };
+
+  const updateBrand = async () => {
+    try {
+      if (!selectedBrand) return;
+
+      const response = await axios.put(`/admin/brand/${selectedBrand.id}`, {
+        title: selectedBrand.title,
+        title_eng: selectedBrand.title_eng,
+        description: selectedBrand.description,
+        site_url: selectedBrand.site_url,
+        image: selectedBrand.image,
+        stylepointId: selectedBrand.stylepointId,
       });
 
-    // Convert the brand data to JSON format
-    const brandJson = JSON.stringify([brand], null, 2);
-
-    // Create a new Blob with the JSON data
-    const blob = new Blob([brandJson], { type: 'application/json' });
-
-    // Create a download link and trigger the download
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'Brand.json';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+      setBrands((prevBrands) =>
+        prevBrands.map((brand) => (brand.id === response.data.id ? response.data : brand))
+      );
+    } catch (error) {
+      console.error('Error updating brand:', error);
+    }
   };
 
   return (
-    <div className="brand-form-container"> {/* Apply the CSS class to the container */}
-      <h1>Brand.json 생성</h1>
-      <form onSubmit={handleSubmit}>
-        <p>200번대를 입력하라</p>
-        <input type="number" name="brand_id" placeholder="Brand ID" value={brand.brand_id} onChange={handleChange} />
-        <input type="text" name="brand_title" placeholder="Title" onChange={handleChange} />
-        <input type="text" name="brand_description" placeholder="Description" onChange={handleChange} />
-        {/* You can make this input disabled if you want to auto-generate the image URL */}
-        <input type="text" name="brand_image" placeholder="Image URL" value={brand.brand_image} onChange={handleChange} />
-        <input type="text" name="brand_site_url" placeholder="Website URL" onChange={handleChange} />
-        <button type="submit">Download Brand.json</button>
-      </form>
+    <div>
+      <h2>Brands</h2>
+      <ul>
+        {brands.map((brand) => (
+          <li key={brand.id}>
+            {brand.title} - {brand.description}
+            <button onClick={() => fetchBrandDetails(brand.id)}>Details</button>
+          </li>
+        ))}
+      </ul>
+
+      {selectedBrand && (
+        <div>
+          <h3>Selected Brand: {selectedBrand.title}</h3>
+          <p>{selectedBrand.description}</p>
+          <img src={selectedBrand.image} alt={selectedBrand.title} />
+
+          <h4>Edit Brand</h4>
+          <input
+            type="text"
+            value={selectedBrand.title}
+            onChange={(e) =>
+              setSelectedBrand((prev) => ({ ...prev, title: e.target.value }))
+            }
+          />
+          <input
+            type="text"
+            value={selectedBrand.title_eng}
+            onChange={(e) =>
+              setSelectedBrand((prev) => ({ ...prev, title_eng: e.target.value }))
+            }
+          />
+          <input
+            type="text"
+            value={selectedBrand.description}
+            onChange={(e) =>
+              setSelectedBrand((prev) => ({ ...prev, description: e.target.value }))
+            }
+          />
+          <input
+            type="text"
+            value={selectedBrand.site_url}
+            onChange={(e) =>
+              setSelectedBrand((prev) => ({ ...prev, site_url: e.target.value }))
+            }
+          />
+          <input
+            type="text"
+            value={selectedBrand.image}
+            onChange={(e) =>
+              setSelectedBrand((prev) => ({ ...prev, image: e.target.value }))
+            }
+          />
+          <input
+            type="text"
+            value={selectedBrand.stylepointId}
+            onChange={(e) =>
+              setSelectedBrand((prev) => ({ ...prev, stylepointId: e.target.value }))
+            }
+          />
+          <button onClick={updateBrand}>Save</button>
+        </div>
+      )}
     </div>
   );
 };
