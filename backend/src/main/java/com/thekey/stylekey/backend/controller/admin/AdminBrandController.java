@@ -1,6 +1,7 @@
 package com.thekey.stylekey.backend.controller.admin;
 
 import com.thekey.stylekey.backend.model.brand.entity.Brand;
+import com.thekey.stylekey.backend.model.item.entity.Item;
 import com.thekey.stylekey.backend.service.admin.BrandAdminService;
 import com.thekey.stylekey.backend.service.admin.dto.CreateBrandRequestDto;
 import com.thekey.stylekey.backend.service.admin.dto.UpdateBrandRequestDto;
@@ -11,6 +12,10 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,12 +36,18 @@ public class AdminBrandController {
 
     // Read Only One By ID
     @GetMapping("/brand/{id}")
-    public ResponseEntity<Brand> getBrandById(@PathVariable Long id) {
+    public ResponseEntity<Map<String, Object>> getBrandById(@PathVariable Long id) {
         Brand brand = brandAdminService.findById(id);
+        List<Item> items =  brandAdminService.getItemsByBrandId(id);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("brand", brand);
+        response.put("item", items);
+
         if (brand == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(brand);
+        return ResponseEntity.ok(response);
 
     }
 

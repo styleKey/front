@@ -39,8 +39,8 @@ public class Brand extends BaseTimeEntity {
     @Column(name = "brand_image", nullable = false)
     private String image;
 
-    @OneToMany(mappedBy = "brand", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Item> items = new ArrayList<>();
+//    @OneToMany(mappedBy = "brand", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private List<Item> items = new ArrayList<>();
 
     // Brand : StylePoint (N : 1)
     // 다대일 양방향 연관관계
