@@ -16,10 +16,10 @@ public class StylePoint {
     @Column(name = "stylepoint_id", nullable = false)
     private Long id;
 
-    @Column(name = "stylepoint_title", nullable = false)
+    @Column(name = "stylepoint_title", nullable = false, columnDefinition = "VARCHAR(255) CHARACTER SET UTF8")
     private String title;
 
-    @Column(name = "stylepoint_description", nullable = false)
+    @Column(name = "stylepoint_description", nullable = false, columnDefinition = "VARCHAR(255) CHARACTER SET UTF8")
     private String description;
 
     @Column(name = "stulepoint_image", nullable = false)
