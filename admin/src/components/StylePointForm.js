@@ -11,22 +11,29 @@ function StylePointForm() {
     fetchData();
   }, []);
 
-  const fetchData = async () => {
-    try {
-      const response = await fetch('/admin/stylepoints');
-      if (response.ok) {
-        const data = await response.json();
-        setStylePoints(data);
-        setError(null); // 성공 시 에러 초기화
-      } else {
-        setError(`Fetch style points failed with status: ${response.status}`);
-        console.error(`Fetch style points failed with status: ${response.status}`);
-      }
-    } catch (error) {
-      setError(`Fetch style points error: ${error.message}`);
-      console.error(`Fetch style points error: ${error.message}`);
+// fetchData 함수 수정
+const fetchData = async () => {
+  try {
+    const response = await fetch('/admin/stylepoints', {
+      // 캐시를 사용하지 않도록 추가
+      headers: {
+        'Cache-Control': 'no-cache',
+      },
+    });
+    if (response.ok) {
+      const data = await response.json();
+      setStylePoints(data);
+      setError(null); // 성공 시 에러 초기화
+    } else {
+      setError(`Fetch style points failed with status: ${response.status}`);
+      console.error(`Fetch style points failed with status: ${response.status}`);
     }
-  };
+  } catch (error) {
+    setError(`Fetch style points error: ${error.message}`);
+    console.error(`Fetch style points error: ${error.message}`);
+  }
+};
+s
 
   const handleStylePointClick = async (id) => {
     try {
