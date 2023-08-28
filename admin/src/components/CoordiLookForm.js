@@ -1,103 +1,106 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-function CoordiLookForm() {
+const CoordiLookForm = () => {
   const [coordiLooks, setCoordiLooks] = useState([]);
   const [selectedCoordiLook, setSelectedCoordiLook] = useState(null);
-  const [stylePoints, setStylePoints] = useState([]);
-  const [selectedStylePoint, setSelectedStylePoint] = useState('');
-  const [items, setItems] = useState([]);
-  const [selectedItems, setSelectedItems] = useState([]);
-  const [error, setError] = useState(null); // Add state for error messages
-
+  const [showItemInput, setShowItemInput] = useState(false);
+  const [newItemTitle, setNewItemTitle] = useState('');
+  
   useEffect(() => {
     fetchCoordiLooks();
   }, []);
 
   const fetchCoordiLooks = async () => {
     try {
-      const response = await fetch('https://bd59a4ce-26a1-451d-b3e0-8cd31bcfd682.mock.pstmn.io/admin/coordilooks');
-      const data = await response.json();
-      setCoordiLooks(data);
-      setError(null); // Clear error on successful fetch
+      const response = await axios.get('/admin/coordilooks'); // Replace with the actual API endpoint
+      setCoordiLooks(response.data);
     } catch (error) {
-      setError('Fetch coordi looks error: ' + error.message);
+      console.error('Error fetching coordi looks:', error);
     }
   };
 
-  const handleCoordiLookClick = (coordiLook) => {
-    setSelectedCoordiLook(coordiLook);
-    setSelectedStylePoint(coordiLook.stylePointId);
-    setSelectedItems(coordiLook.items.map(item => item.id));
+  const handleCoordiLookClick = async (coordiLookId) => {
+    try {
+      const response = await axios.get(`/admin/coordilook/${coordiLookId}`); // Replace with the actual API endpoint
+      setSelectedCoordiLook(response.data);
+    } catch (error) {
+      console.error('Error fetching coordi look details:', error);
+    }
   };
 
-  const handleUpdateCoordiLook = async () => {
+  const handleItemInputToggle = () => {
+    setShowItemInput(!showItemInput);
+  };
+
+  const handleItemTitleChange = (event) => {
+    setNewItemTitle(event.target.value);
+  };
+
+  const handleItemSubmit = async () => {
     try {
-      if (!selectedCoordiLook) return;
-      const updatedData = {
-        stylePointId: selectedStylePoint,
-        itemIds: selectedItems,
-      };
-      // Update coordi look data using API
-      const response = await fetch(`https://d6b41482-cbdb-4dd1-b116-c0596494faf2.mock.pstmn.io/admin/coordilook/${selectedCoordiLook.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updatedData),
-      });
-      const updatedCoordiLook = await response.json();
-      // Handle updated coordi look, e.g., refetch data
-      fetchCoordiLooks();
+      const response = await axios.post(`/admin/coordilook/${selectedCoordiLook.id}/addItem`, {
+        title: newItemTitle,
+      }); // Replace with the actual API endpoint
+      setSelectedCoordiLook(response.data);
+      setNewItemTitle('');
     } catch (error) {
-      console.error('Update coordi look error:', error);
+      console.error('Error adding item to coordi look:', error);
+    }
+  };
+
+  const handleCoordiLookUpdate = async () => {
+    try {
+      const response = await axios.put(`/admin/coordilook/${selectedCoordiLook.id}`, {
+        // Updated coordi look data
+      }); // Replace with the actual API endpoint
+      setSelectedCoordiLook(response.data);
+    } catch (error) {
+      console.error('Error updating coordi look:', error);
+    }
+  };
+
+  const handleCoordiLookDelete = async () => {
+    try {
+      await axios.delete(`/admin/coordilook/${selectedCoordiLook.id}`); // Replace with the actual API endpoint
+      setSelectedCoordiLook(null);
+      fetchCoordiLooks(); // Refresh the coordi looks list
+    } catch (error) {
+      console.error('Error deleting coordi look:', error);
     }
   };
 
   return (
     <div>
       <h2>Coordi Look Management</h2>
-      {/* Display error message */}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <div>
-        <h2>Coordi Look Management</h2>
-        <div>
-          <div>
-            <h3>Coordi Look List</h3>
-            <ul>
-              {coordiLooks.map((coordiLook) => (
-                <li key={coordiLook.id} onClick={() => handleCoordiLookClick(coordiLook)}>
-                  Coordi Look {coordiLook.id}
-                </li>
-              ))}
-            </ul>
+      <div className="coordi-looks-list">
+        {coordiLooks.map((coordiLook) => (
+          <div key={coordiLook.id} onClick={() => handleCoordiLookClick(coordiLook.id)}>
+            {coordiLook.title}
           </div>
-          {selectedCoordiLook && (
+        ))}
+      </div>
+      {selectedCoordiLook && (
+        <div className="coordi-look-details">
+          {/* Display coordi look details */}
+          {selectedCoordiLook.items.map((item) => (
+            <div key={item.id}>
+              {item.title}
+            </div>
+          ))}
+          <button onClick={handleItemInputToggle}>Add Item</button>
+          {showItemInput && (
             <div>
-              <h3>Edit Coordi Look</h3>
-              <div>
-                <label>Select Style Point:</label>
-                <select value={selectedStylePoint} onChange={(e) => setSelectedStylePoint(e.target.value)}>
-                  <option value="">Select a style point</option>
-                  {stylePoints.map((stylePoint) => (
-                    <option key={stylePoint.id} value={stylePoint.id}>{stylePoint.title}</option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label>Select Items:</label>
-                <select multiple value={selectedItems} onChange={(e) => setSelectedItems(Array.from(e.target.selectedOptions, option => option.value))}>
-                  {items.map((item) => (
-                    <option key={item.id} value={item.id}>{item.name}</option>
-                  ))}
-                </select>
-              </div>
-              <button onClick={handleUpdateCoordiLook}>Update Coordi Look</button>
+              <input type="text" value={newItemTitle} onChange={handleItemTitleChange} />
+              <button onClick={handleItemSubmit}>Submit</button>
             </div>
           )}
+          <button onClick={handleCoordiLookUpdate}>Update</button>
+          <button onClick={handleCoordiLookDelete}>Delete</button>
         </div>
-      </div>
+      )}
     </div>
   );
-}
+};
 
 export default CoordiLookForm;

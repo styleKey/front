@@ -11,7 +11,7 @@ function App() {
     <Router>
       <div className="App">
         <h1>
-          <Link to="/">Admin Page</Link>
+          <Link to="/" className="link-no-underline">Admin Page</Link>
         </h1>
         <nav>
           <ul>
