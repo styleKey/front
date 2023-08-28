@@ -1,12 +1,13 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client'; 
-import App from './App'; 
+import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client'; // Import createRoot from the correct module
+import App from './App';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = createRoot(document.getElementById('root'));
 
-// React 루트를 생성하고 App 컴포넌트를 렌더링함
 root.render(
-  <React.StrictMode> 
-    <App /> 
+  <React.StrictMode>
+    <App />
   </React.StrictMode>
 );
+

@@ -30,7 +30,7 @@ const StylePointForm = () => {
   const fetchStylePointDetails = async (id) => {
     try {
       // HTTP GET 요청
-      const response = await axios.get(`/admin/stylepoint/${id}`); // 업데이트된 상대 경로
+      const response = await axios.get(`/admin/stylepoint/${id}`);
       // 가져온 데이터에서 "stylePoint" 정보를 SelectedStylePoint로 설정
       setSelectedStylePoint(response.data.stylePoint);
     } catch (error) {
@@ -50,7 +50,7 @@ const StylePointForm = () => {
         title: selectedStylePoint.title,
         description: selectedStylePoint.description,
         image: selectedStylePoint.image,
-      }); // 업데이트된 상대 경로
+      });
 
       // 업데이트된 StylePoint로 StylePoints 목록 업데이트하기
       setStylePoints((prevStylePoints) =>
