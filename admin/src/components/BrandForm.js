@@ -1,32 +1,36 @@
 import React, { useEffect, useState } from 'react';
 
 function BrandForm() {
-  // State for brand list
   const [brands, setBrands] = useState([]);
-  // State for selected brand
   const [selectedBrand, setSelectedBrand] = useState(null);
-  // State for form inputs
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [siteUrl, setSiteUrl] = useState('');
+  const [error, setError] = useState(null);
 
-  // Fetch brands on component mount
   useEffect(() => {
     fetchBrands();
   }, []);
 
-  // Fetch list of brands
   const fetchBrands = async () => {
     try {
-      const response = await fetch('/admin/brands'); // Replace with your API endpoint
-      const data = await response.json();
-      setBrands(data);
+      const response = await fetch('/admin/brands');
+      if (response.ok) {
+        const data = await response.json();
+        setBrands(data.content);
+        setError(null);
+      } else {
+        const errorMessage = `Fetch brands failed with status: ${response.status}`;
+        setError(errorMessage);
+        console.error(errorMessage);
+      }
     } catch (error) {
-      console.error('Fetch brands error:', error);
+      const errorMessage = `Fetch brands error: ${error.message}`;
+      setError(errorMessage);
+      console.error(errorMessage);
     }
   };
 
-  // Handle brand selection
   const handleBrandClick = (brand) => {
     setSelectedBrand(brand);
     setTitle(brand.title);
@@ -34,7 +38,6 @@ function BrandForm() {
     setSiteUrl(brand.site_url);
   };
 
-  // Handle brand update
   const handleUpdateBrand = async () => {
     try {
       if (!selectedBrand) return;
@@ -50,17 +53,26 @@ function BrandForm() {
         },
         body: JSON.stringify(updatedData),
       });
-      const updatedBrand = await response.json();
-      // Handle updated brand, e.g., refetch data
-      fetchBrands();
+      if (response.ok) {
+        const updatedBrand = await response.json();
+        fetchBrands();
+        setError(null);
+      } else {
+        const errorMessage = `Update brand failed with status: ${response.status}`;
+        setError(errorMessage);
+        console.error(errorMessage);
+      }
     } catch (error) {
-      console.error('Update brand error:', error);
+      const errorMessage = `Update brand error: ${error.message}`;
+      setError(errorMessage);
+      console.error(errorMessage);
     }
   };
 
   return (
     <div>
       <h2>Brand Management</h2>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
       <div>
         <div>
           <h3>Brand List</h3>
