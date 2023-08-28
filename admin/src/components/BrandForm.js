@@ -14,7 +14,7 @@ function BrandForm() {
 
   const fetchBrands = async () => {
     try {
-      const response = await fetch('/admin/brands');
+      const response = await fetch('https://bd59a4ce-26a1-451d-b3e0-8cd31bcfd682.mock.pstmn.io/admin/brands');
       if (response.ok) {
         const data = await response.json();
         setBrands(data.content);
@@ -46,7 +46,7 @@ function BrandForm() {
         description,
         site_url: siteUrl,
       };
-      const response = await fetch(`/admin/brand/${selectedBrand.id}`, {
+      const response = await fetch(`https://bd59a4ce-26a1-451d-b3e0-8cd31bcfd682.mock.pstmn.io/admin/brand/${selectedBrand.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

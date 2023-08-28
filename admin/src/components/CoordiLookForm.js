@@ -15,7 +15,7 @@ function CoordiLookForm() {
 
   const fetchCoordiLooks = async () => {
     try {
-      const response = await fetch('/admin/coordilooks');
+      const response = await fetch('https://bd59a4ce-26a1-451d-b3e0-8cd31bcfd682.mock.pstmn.io/admin/coordilooks');
       const data = await response.json();
       setCoordiLooks(data);
       setError(null); // Clear error on successful fetch
@@ -38,7 +38,7 @@ function CoordiLookForm() {
         itemIds: selectedItems,
       };
       // Update coordi look data using API
-      const response = await fetch(`/admin/coordilook/${selectedCoordiLook.id}`, {
+      const response = await fetch(`https://bd59a4ce-26a1-451d-b3e0-8cd31bcfd682.mock.pstmn.io/admin/coordilook/${selectedCoordiLook.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

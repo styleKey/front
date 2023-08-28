@@ -12,7 +12,7 @@ const StylePointForm = () => {
 
   const fetchStylePoints = async () => {
     try {
-      const response = await axios.get('/admin/stylepoints');
+      const response = await axios.get('https://bd59a4ce-26a1-451d-b3e0-8cd31bcfd682.mock.pstmn.io/admin/stylepoints');
       setStylePoints(response.data);
       setError(null);
     } catch (error) {
@@ -22,7 +22,7 @@ const StylePointForm = () => {
 
   const fetchStylePointDetails = async (id) => {
     try {
-      const response = await axios.get(`/admin/stylepoints/${id}`);
+      const response = await axios.get(`https://bd59a4ce-26a1-451d-b3e0-8cd31bcfd682.mock.pstmn.io/admin/stylepoints/${id}`);
       setSelectedStylePoint(response.data.stylePoint);
       setError(null);
     } catch (error) {
@@ -33,7 +33,7 @@ const StylePointForm = () => {
   const updateStylePoint = async () => {
     try {
       if (!selectedStylePoint) return;
-      const response = await axios.put(`/admin/stylepoints/${selectedStylePoint.id}`, {
+      const response = await axios.put(`https://bd59a4ce-26a1-451d-b3e0-8cd31bcfd682.mock.pstmn.io/admin/stylepoints/${selectedStylePoint.id}`, {
         title: selectedStylePoint.title,
         description: selectedStylePoint.description,
         image: selectedStylePoint.image,
@@ -68,36 +68,38 @@ const StylePointForm = () => {
           </li>
         ))}
       </ul>
-      {selectedStylePoint && (
-        <div>
-          <h3>Selected Style Point: {selectedStylePoint.title}</h3>
-          <p>{selectedStylePoint.description}</p>
-          <img src={selectedStylePoint.image} alt={selectedStylePoint.title} />
-          <h4>Edit Style Point</h4>
-          <input
-            type="text"
-            value={selectedStylePoint.title}
-            onChange={(e) =>
-              setSelectedStylePoint((prev) => ({ ...prev, title: e.target.value }))
-            }
-          />
-          <input
-            type="text"
-            value={selectedStylePoint.description}
-            onChange={(e) =>
-              setSelectedStylePoint((prev) => ({ ...prev, description: e.target.value }))
-            }
-          />
-          <input
-            type="text"
-            value={selectedStylePoint.image}
-            onChange={(e) =>
-              setSelectedStylePoint((prev) => ({ ...prev, image: e.target.value }))
-            }
-          />
-          <button onClick={updateStylePoint}>Save</button>
-        </div>
-      )}
+      <div>
+        <h3>Selected Style Point: {selectedStylePoint ? selectedStylePoint.title : 'None'}</h3>
+        {selectedStylePoint && (
+          <div>
+            <p>{selectedStylePoint.description}</p>
+            <img src={selectedStylePoint.image} alt={selectedStylePoint.title} />
+            <h4>Edit Style Point</h4>
+            <input
+              type="text"
+              value={selectedStylePoint.title}
+              onChange={(e) =>
+                setSelectedStylePoint((prev) => ({ ...prev, title: e.target.value }))
+              }
+            />
+            <input
+              type="text"
+              value={selectedStylePoint.description}
+              onChange={(e) =>
+                setSelectedStylePoint((prev) => ({ ...prev, description: e.target.value }))
+              }
+            />
+            <input
+              type="text"
+              value={selectedStylePoint.image}
+              onChange={(e) =>
+                setSelectedStylePoint((prev) => ({ ...prev, image: e.target.value }))
+              }
+            />
+            <button onClick={updateStylePoint}>Save</button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
