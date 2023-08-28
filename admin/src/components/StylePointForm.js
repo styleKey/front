@@ -5,25 +5,23 @@ function StylePointForm() {
   const [selectedStylePoint, setSelectedStylePoint] = useState(null);
   const [updatedTitle, setUpdatedTitle] = useState('');
   const [updatedDescription, setUpdatedDescription] = useState('');
-  const [error, setError] = useState(null); // 추가: 에러 상태 추가
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  // fetchData 함수 수정
   const fetchData = async () => {
     try {
       const response = await fetch('/admin/stylepoints', {
-        // 캐시를 사용하지 않도록 추가
         headers: {
-          'Cache-Control': 'no-cache',
+          'Cache-Control': 'no-cache'
         },
       });
       if (response.ok) {
         const data = await response.json();
         setStylePoints(data);
-        setError(null); // 성공 시 에러 초기화
+        setError(null);
       } else {
         setError(`Fetch style points failed with status: ${response.status}`);
         console.error(`Fetch style points failed with status: ${response.status}`);
