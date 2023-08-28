@@ -12,7 +12,7 @@ function App() {
       <div className="App">
         <h1>
           <Link to="/">Admin Page</Link>
-        </h1> {/* Change the h1 to a Link component */}
+        </h1>
         <nav>
           <ul>
             <li>
@@ -42,7 +42,6 @@ function App() {
   );
 }
 
-// Home component to display home page content
 function Home() {
   return <p>패션취향테스트를 통한 사용자맞춤형 패션 정보 제공 웹 서비스</p>;
 }

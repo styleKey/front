@@ -38,7 +38,7 @@ function CoordiLookForm() {
         itemIds: selectedItems,
       };
       // Update coordi look data using API
-      const response = await fetch(`https://bd59a4ce-26a1-451d-b3e0-8cd31bcfd682.mock.pstmn.io/admin/coordilook/${selectedCoordiLook.id}`, {
+      const response = await fetch(`https://d6b41482-cbdb-4dd1-b116-c0596494faf2.mock.pstmn.io/admin/coordilook/${selectedCoordiLook.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

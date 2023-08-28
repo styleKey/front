@@ -18,7 +18,7 @@ function ItemForm() {
   const fetchItems = async () => {
     try {
       // Fetch item data from API
-      const response = await fetch('https://bd59a4ce-26a1-451d-b3e0-8cd31bcfd682.mock.pstmn.iohttps://bd59a4ce-26a1-451d-b3e0-8cd31bcfd682.mock.pstmn.io/admin/items'); // Replace with your API endpoint
+      const response = await fetch('https://d6b41482-cbdb-4dd1-b116-c0596494faf2.mock.pstmn.io/admin/items'); // Replace with your API endpoint
 
       if (!response.ok) {
         setError(`Fetch items failed with status: ${response.status}`);
@@ -44,7 +44,7 @@ function ItemForm() {
         stylePointId: selectedStylePoint,
       };
       // Add new item using API
-      await fetch('https://bd59a4ce-26a1-451d-b3e0-8cd31bcfd682.mock.pstmn.iohttps://bd59a4ce-26a1-451d-b3e0-8cd31bcfd682.mock.pstmn.io/admin/items', {
+      await fetch('https://d6b41482-cbdb-4dd1-b116-c0596494faf2.mock.pstmn.io/admin/items', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
