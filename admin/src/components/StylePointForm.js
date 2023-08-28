@@ -1,117 +1,105 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-function StylePointForm() {
+const StylePointForm = () => {
   const [stylePoints, setStylePoints] = useState([]);
   const [selectedStylePoint, setSelectedStylePoint] = useState(null);
-  const [updatedTitle, setUpdatedTitle] = useState('');
-  const [updatedDescription, setUpdatedDescription] = useState('');
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchData();
+    fetchStylePoints();
   }, []);
 
-  const fetchData = async () => {
+  const fetchStylePoints = async () => {
     try {
-      const response = await fetch('/admin/stylepoints', {
-        headers: {
-          'Cache-Control': 'no-cache'
-        },
-      });
-      if (response.ok) {
-        const data = await response.json();
-        setStylePoints(data);
-        setError(null);
-      } else {
-        setError(`Fetch style points failed with status: ${response.status}`);
-        console.error(`Fetch style points failed with status: ${response.status}`);
-      }
+      const response = await axios.get('/admin/stylepoints');
+      setStylePoints(response.data);
+      setError(null);
     } catch (error) {
-      setError(`Fetch style points error: ${error.message}`);
-      console.error(`Fetch style points error: ${error.message}`);
+      handleError(error, 'Error fetching style points');
     }
   };
 
-
-  const handleStylePointClick = async (id) => {
+  const fetchStylePointDetails = async (id) => {
     try {
-      const response = await fetch(`/admin/stylepoint/${id}`);
-      if (response.ok) {
-        const data = await response.json();
-        setSelectedStylePoint(data);
-        setUpdatedTitle(data.stylePoint.title);
-        setUpdatedDescription(data.stylePoint.description);
-        setError(null); // 성공 시 에러 초기화
-      } else {
-        setError(`Fetch style point by ID failed with status: ${response.status}`);
-        console.error(`Fetch style point by ID failed with status: ${response.status}`);
-      }
+      const response = await axios.get(`/admin/stylepoints/${id}`);
+      setSelectedStylePoint(response.data.stylePoint);
+      setError(null);
     } catch (error) {
-      setError(`Fetch style point by ID error: ${error.message}`);
-      console.error(`Fetch style point by ID error: ${error.message}`);
+      handleError(error, 'Error fetching style point details');
     }
   };
 
-  const handleUpdateClick = async () => {
+  const updateStylePoint = async () => {
     try {
       if (!selectedStylePoint) return;
-      const updatedData = {
-        title: updatedTitle,
-        description: updatedDescription,
-      };
-      const response = await fetch(`/admin/stylepoint/${selectedStylePoint.stylePoint.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updatedData),
+      const response = await axios.put(`/admin/stylepoints/${selectedStylePoint.id}`, {
+        title: selectedStylePoint.title,
+        description: selectedStylePoint.description,
+        image: selectedStylePoint.image,
       });
-      if (response.ok) {
-        const updatedStylePoint = await response.json();
-        fetchData(); // 수정 완료 후 작업 처리
-        setError(null); // 성공 시 에러 초기화
-      } else {
-        setError(`Update style point failed with status: ${response.status}`);
-        console.error(`Update style point failed with status: ${response.status}`);
-      }
+      setStylePoints((prevStylePoints) =>
+        prevStylePoints.map((point) => (point.id === response.data.id ? response.data : point))
+      );
+      setError(null);
     } catch (error) {
-      setError(`Update style point error: ${error.message}`);
-      console.error(`Update style point error: ${error.message}`);
+      handleError(error, 'Error updating style point');
     }
+  };
+
+  const handleError = (error, message) => {
+    if (error.response && error.response.status === 404) {
+      setError(`${message}: Data not found`);
+    } else {
+      setError(`${message}: ${error.message}`);
+    }
+    console.error(message, error);
   };
 
   return (
     <div>
       <h2>Style Points</h2>
-      {/* 에러 메시지 출력 */}
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <ul>
-        {stylePoints.map((stylePoint) => (
-          <li key={stylePoint.id} onClick={() => handleStylePointClick(stylePoint.id)}>
-            {stylePoint.title}
+        {stylePoints.map((point) => (
+          <li key={point.id}>
+            {point.title} - {point.description}
+            <button onClick={() => fetchStylePointDetails(point.id)}>Details</button>
           </li>
         ))}
       </ul>
       {selectedStylePoint && (
         <div>
-          <h3>Selected Style Point</h3>
-          <p>Title: {selectedStylePoint.stylePoint.title}</p>
-          <p>Description: {selectedStylePoint.stylePoint.description}</p>
+          <h3>Selected Style Point: {selectedStylePoint.title}</h3>
+          <p>{selectedStylePoint.description}</p>
+          <img src={selectedStylePoint.image} alt={selectedStylePoint.title} />
+          <h4>Edit Style Point</h4>
           <input
             type="text"
-            value={updatedTitle}
-            onChange={(e) => setUpdatedTitle(e.target.value)}
+            value={selectedStylePoint.title}
+            onChange={(e) =>
+              setSelectedStylePoint((prev) => ({ ...prev, title: e.target.value }))
+            }
           />
           <input
             type="text"
-            value={updatedDescription}
-            onChange={(e) => setUpdatedDescription(e.target.value)}
+            value={selectedStylePoint.description}
+            onChange={(e) =>
+              setSelectedStylePoint((prev) => ({ ...prev, description: e.target.value }))
+            }
           />
-          <button onClick={handleUpdateClick}>Update</button>
+          <input
+            type="text"
+            value={selectedStylePoint.image}
+            onChange={(e) =>
+              setSelectedStylePoint((prev) => ({ ...prev, image: e.target.value }))
+            }
+          />
+          <button onClick={updateStylePoint}>Save</button>
         </div>
       )}
     </div>
   );
-}
+};
 
 export default StylePointForm;
