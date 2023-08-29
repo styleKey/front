@@ -1,3 +1,4 @@
+/* Reset and basic styling */
 body {
   font-family: 'Noto Sans KR', sans-serif;
   margin: 0;
@@ -5,7 +6,8 @@ body {
   background-color: #F5F5F7;
 }
 
-.App {
+.App,
+.container {
   text-align: center;
   background-color: #fff;
   border: 1px solid #ccc;
@@ -16,10 +18,13 @@ body {
   width: 80%;
 }
 
+
+/* Typography */
 h1 {
   margin-bottom: 20px;
 }
 
+/* Navigation */
 nav ul {
   list-style: none;
   padding: 0;
@@ -36,23 +41,17 @@ nav ul li a {
   color: #007bff;
 }
 
-nav ul li a:hover {
-  text-decoration: underline;
-}
-
-/* Style for the link */
+/* Links */
 .link-no-underline {
   text-decoration: none;
   color: inherit;
 }
 
-/* Hover style for the link */
 .link-no-underline:hover {
   text-decoration: none;
 }
 
-
-/* Style for input boxes */
+/* Form Elements */
 input,
 select,
 textarea {
@@ -62,11 +61,9 @@ textarea {
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 1rem;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem; /* 아래 마진 추가 */
+  margin: 0.5rem 0;
 }
 
-/* Focus style for input boxes */
 input:focus,
 select:focus,
 textarea:focus {
@@ -75,10 +72,7 @@ textarea:focus {
   box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
 }
 
-/* Style for buttons */
-.stylepoint-button,
-.brand-button,
-/* You can use this class for other buttons too */
+/* Buttons */
 .button {
   font-family: 'Noto Sans KR', sans-serif;
   background-color: #007bff;
@@ -92,20 +86,16 @@ textarea:focus {
   margin: 0.5rem 0.2rem;
 }
 
-/* Hover style for buttons */
-.stylepoint-button:hover,
-.brand-button:hover,
 .button:hover {
   background-color: #0056b3;
 }
 
-/* UL 요소 스타일 */
+/* List Items */
 ul {
   list-style: none;
   padding: 0;
 }
 
-/* LI 요소 스타일 */
 li {
   margin-bottom: 10px;
   padding: 10px;
@@ -115,7 +105,6 @@ li {
   transition: background-color 0.3s;
 }
 
-/* 선택된 LI 요소 스타일 */
 .selected-li {
   background-color: #007bff;
   color: white;
@@ -123,7 +112,19 @@ li {
   cursor: pointer;
 }
 
-/* LI 요소 호버 효과 */
 li:hover {
   background-color: #f5f5f5;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Error Messages */
+.error-message {
+  color: #dc3545;
+  font-size: 0.9rem;
+  margin: 10px 0;
 }

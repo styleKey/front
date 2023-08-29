@@ -1,182 +1,259 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 
-const ItemForm = () => {
-  const [items, setItems] = useState([]);
-  const [selectedItem, setSelectedItem] = useState(null);
+function ItemForm() {
   const [brands, setBrands] = useState([]);
   const [categories, setCategories] = useState([]);
   const [stylePoints, setStylePoints] = useState([]);
-  const [newItemData, setNewItemData] = useState({
-    title: '',
-    brandId: '',
-    categoryId: '',
-    stylePointId: '',
-  });
+  const [items, setItems] = useState([]);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [title, setTitle] = useState('');
+  const [brandId, setBrandId] = useState('');
+  const [categoryId, setCategoryId] = useState('');
+  const [stylePointId, setStylePointId] = useState('');
+  const [selectedBrand, setSelectedBrand] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedStylePoint, setSelectedStylePoint] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchItems();
     fetchBrands();
     fetchCategories();
     fetchStylePoints();
+    fetchItems();
   }, []);
-
-  const fetchItems = async () => {
-    try {
-      const response = await axios.get('/admin/items'); // Replace with the actual API endpoint
-      setItems(response.data.content);
-    } catch (error) {
-      console.error('Error fetching items:', error);
-    }
-  };
 
   const fetchBrands = async () => {
     try {
-      const response = await axios.get('/admin/brands'); // Replace with the actual API endpoint
-      setBrands(response.data);
+      const response = await fetch(`/admin/brands`);
+      if (response.ok) {
+        const data = await response.json();
+        setBrands(data.content || []);
+        setError(null);
+      } else {
+        handleError('Brand 가져오기 실패', response.status);
+      }
     } catch (error) {
-      console.error('Error fetching brands:', error);
+      handleError('Brand 가져오기 오류', error.message);
     }
   };
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get('/admin/categories'); // Replace with the actual API endpoint
-      setCategories(response.data);
+      const response = await fetch(`/admin/categories`);
+      if (response.ok) {
+        const data = await response.json();
+        setCategories(data.content || []);
+        setError(null);
+      } else {
+        handleError('Category 가져오기 실패', response.status);
+      }
     } catch (error) {
-      console.error('Error fetching categories:', error);
+      handleError('Category 가져오기 오류', error.message);
     }
   };
 
   const fetchStylePoints = async () => {
     try {
-      const response = await axios.get('/admin/stylepoints'); // Replace with the actual API endpoint
-      setStylePoints(response.data);
+      const response = await fetch(`/admin/stylepoints`);
+      if (response.ok) {
+        const data = await response.json();
+        setStylePoints(data || []);
+        setError(null);
+      } else {
+        handleError('StylePoint 가져오기 실패', response.status);
+      }
     } catch (error) {
-      console.error('Error fetching style points:', error);
+      handleError('StylePoint 가져오기 오류', error.message);
     }
   };
 
-  const handleItemSelect = (itemId) => {
-    const selectedItem = items.find((item) => item.id === itemId);
-    setSelectedItem(selectedItem);
-  };
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setNewItemData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleItemSubmit = async () => {
+  const fetchItems = async () => {
     try {
-      const response = await axios.post('/admin/items', newItemData); // Replace with the actual API endpoint
-      setNewItemData({
-        title: '',
-        brandId: '',
-        categoryId: '',
-        stylePointId: '',
+      const response = await fetch(`/admin/items`);
+      if (response.ok) {
+        const data = await response.json();
+        setItems(data.content || []);
+        setError(null);
+      } else {
+        handleError('Item 가져오기 실패', response.status);
+      }
+    } catch (error) {
+      handleError('Item 가져오기 오류', error.message);
+    }
+  };
+
+  const handleError = (message, errorDetail) => {
+    const errorMessage = `${message}: ${errorDetail}`;
+    setError(errorMessage);
+    console.error(errorMessage);
+  };
+
+  const handleItemClick = (item) => {
+    setSelectedItem(item);
+    setTitle(item.title);
+    setBrandId(item.brandId);
+    setCategoryId(item.categoryId);
+    setStylePointId(item.stylePointId);
+    setSelectedBrand(brands.find(brand => brand.id === item.brandId));
+    setSelectedCategory(categories.find(category => category.id === item.categoryId));
+    setSelectedStylePoint(stylePoints.find(point => point.id === item.stylePointId));
+  };
+
+  const handleItemCreate = async () => {
+    try {
+      const newItemData = {
+        title,
+        brandId,
+        categoryId,
+        stylePointId,
+      };
+      const response = await fetch(`/admin/item/create`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newItemData),
       });
-      fetchItems();
+      if (response.ok) {
+        fetchItems();
+        setError(null);
+      } else {
+        handleError('Item 등록 실패', response.status);
+      }
     } catch (error) {
-      console.error('Error adding item:', error);
+      handleError('Item 등록 오류', error.message);
     }
   };
 
-  const handleItemUpdate = async () => {
+  const handleUpdateItem = async () => {
     try {
-      await axios.put(`/admin/item/${selectedItem.id}`, {
-        // Updated item data
-      }); // Replace with the actual API endpoint
-      fetchItems();
+      if (!selectedItem) return;
+      const updatedData = {
+        title,
+        brandId,
+        categoryId,
+        stylePointId,
+      };
+      const response = await fetch(`/admin/item/${selectedItem.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedData),
+      });
+      if (response.ok) {
+        fetchItems();
+        setError(null);
+      } else {
+        handleError('Item 수정 실패', response.status);
+      }
     } catch (error) {
-      console.error('Error updating item:', error);
+      handleError('Item 수정 오류', error.message);
     }
   };
 
-  const handleItemDelete = async () => {
+  const handleDeleteItem = async () => {
     try {
-      await axios.delete(`/admin/item/${selectedItem.id}`); // Replace with the actual API endpoint
-      setSelectedItem(null);
-      fetchItems();
+      if (!selectedItem) return;
+      const response = await fetch(`/admin/item/${selectedItem.id}`, {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+        fetchItems();
+        setSelectedItem(null);
+        setError(null);
+      } else {
+        handleError('Item 삭제 실패', response.status);
+      }
     } catch (error) {
-      console.error('Error deleting item:', error);
+      handleError('Item 삭제 오류', error.message);
     }
   };
 
   return (
-    <div>
-      <h2>Item Management</h2>
-      <div className="items-list">
-        {items.map((item) => (
-          <div key={item.id} onClick={() => handleItemSelect(item.id)}>
-            {item.title}
-          </div>
-        ))}
+    <div className="form">
+      <div className="container">
+        <div className="list-card">
+          <h3>Item List</h3>
+          <ul className="list">
+            {items.length > 0 ? (
+              items.map((item) => (
+                <li key={item.id} onClick={() => handleItemClick(item)}>
+                  {item.title}
+                </li>
+              ))
+            ) : (
+              <li>No items available.</li>
+            )}
+          </ul>
+        </div>
       </div>
-      <div className="item-details">
-        {/* Display item details */}
-        {selectedItem && (
-          <div>
-            <h3>Item Details</h3>
-            <div>Title: {selectedItem.title}</div>
-            {/* Display more details as needed */}
-            <button onClick={handleItemUpdate}>Update</button>
-            <button onClick={handleItemDelete}>Delete</button>
+      <div className="container">
+        <div className="card">
+          <h3>{selectedItem ? 'Update Item' : 'Create Item'}</h3>
+          <div className="input-container">
+            <label>Title</label>
+            <br />
+            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
           </div>
-        )}
-      </div>
-      <div className="item-form">
-        <h3>Add New Item</h3>
-        <input
-          type="text"
-          name="title"
-          placeholder="Title"
-          value={newItemData.title}
-          onChange={handleInputChange}
-        />
-        <select
-          name="brandId"
-          value={newItemData.brandId}
-          onChange={handleInputChange}
-        >
-          <option value="">Select Brand</option>
-          {brands.map((brand) => (
-            <option key={brand.id} value={brand.id}>
-              {brand.title}
-            </option>
-          ))}
-        </select>
-        <select
-          name="categoryId"
-          value={newItemData.categoryId}
-          onChange={handleInputChange}
-        >
-          <option value="">Select Category</option>
-          {categories.map((category) => (
-            <option key={category.id} value={category.id}>
-              {category.title}
-            </option>
-          ))}
-        </select>
-        <select
-          name="stylePointId"
-          value={newItemData.stylePointId}
-          onChange={handleInputChange}
-        >
-          <option value="">Select Style Point</option>
-          {stylePoints.map((stylePoint) => (
-            <option key={stylePoint.id} value={stylePoint.id}>
-              {stylePoint.title}
-            </option>
-          ))}
-        </select>
-        <button onClick={handleItemSubmit}>Submit</button>
+
+          {/* Brand Dropdown */}
+          <div className="input-container">
+            <label>Brand</label>
+            <br />
+            {brands && brands.length > 0 && (
+              <select value={selectedBrand ? selectedBrand.id : ''} onChange={(e) => setSelectedBrand(brands.find(brand => brand.id === parseInt(e.target.value)))}>
+                <option value="">Select Brand</option>
+                {brands.map(brand => (
+                  <option key={brand.id} value={brand.id}>{brand.name}</option>
+                ))}
+              </select>
+            )}
+          </div>
+
+          {/* Category Dropdown */}
+          <div className="input-container">
+            <label>Category</label>
+            <br />
+            {categories && categories.length > 0 && (
+              <select value={selectedCategory ? selectedCategory.id : ''} onChange={(e) => setSelectedCategory(categories.find(category => category.id === parseInt(e.target.value)))}>
+                <option value="">Select Category</option>
+                {categories.map(category => (
+                  <option key={category.id} value={category.id}>{category.name}</option>
+                ))}
+              </select>
+            )}
+          </div>
+
+          {/* Style Point Dropdown */}
+          <div className="input-container">
+            <label>Style Point</label>
+            <br />
+            {stylePoints && stylePoints.length > 0 && (
+              <select value={selectedStylePoint ? selectedStylePoint.id : ''} onChange={(e) => setSelectedStylePoint(stylePoints.find(point => point.id === parseInt(e.target.value)))}>
+                <option value="">스타일 포인트 선택</option>
+                {stylePoints.map(point => (
+                  <option key={point.id} value={point.id}>{point.title}</option>
+                ))}
+              </select>
+            )}
+          </div>
+
+          <div className="button-container">
+            <button className="button" onClick={selectedItem ? handleUpdateItem : handleItemCreate}>
+              {selectedItem ? 'Update' : 'Create'}
+            </button>
+            {selectedItem && (
+              <button className="button" onClick={handleDeleteItem}>
+                Delete
+              </button>
+            )}
+          </div>
+          {error && <div className="error-message">{error}</div>}
+        </div>
       </div>
     </div>
   );
-};
+}
 
 export default ItemForm;
