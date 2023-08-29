@@ -4,6 +4,7 @@ import StylePointForm from './components/StylePointForm';
 import BrandForm from './components/BrandForm';
 import CoordiLookForm from './components/CoordiLookForm';
 import ItemForm from './components/ItemForm';
+import Test from './components/Test'; // 추가된 라우트 파일
 import './App.css';
 
 function App() {
@@ -27,6 +28,9 @@ function App() {
             <li>
               <Link to="/items">Items</Link>
             </li>
+            <li>
+              <Link to="/test">Test</Link> {/* Test 페이지로 이동하는 링크 추가 */}
+            </li>
           </ul>
         </nav>
 
@@ -36,6 +40,7 @@ function App() {
           <Route path="/brands" element={<BrandForm />} />
           <Route path="/coordi-looks" element={<CoordiLookForm />} />
           <Route path="/items" element={<ItemForm />} />
+          <Route path="/test" element={<Test />} /> {/* Test 페이지 추가 */}
         </Routes>
       </div>
     </Router>

@@ -8,7 +8,7 @@ function BrandForm() {
   const [title_eng, setTitleEng] = useState('');
   const [description, setDescription] = useState('');
   const [siteUrl, setSiteUrl] = useState('');
-  const [selectedStylePoint, setSelectedStylePoint] = useState(null);
+  const [selectedStylePoint, setSelectedStylePoint] = useState('');
   const [image, setImage] = useState('');
   const [items, setItems] = useState([]);
   const [error, setError] = useState(null);
@@ -20,7 +20,7 @@ function BrandForm() {
 
   const fetchBrands = async () => {
     try {
-      const response = await fetch('/admin/brands'); // Use the correct API endpoint
+      const response = await fetch('/admin/brands');
       if (response.ok) {
         const data = await response.json();
         setBrands(data.content);
@@ -35,18 +35,19 @@ function BrandForm() {
 
   const fetchStylePoints = async () => {
     try {
-      const response = await fetch(`/admin/stylepoints`);
+      const response = await fetch('/admin/stylepoints');
       if (response.ok) {
         const data = await response.json();
         setStylePoints(data);
         setError(null);
       } else {
-        handleError('StylePoint 가져오기 실패', response.status);
+        handleError('Failed to fetch StylePoints', response.status);
       }
     } catch (error) {
-      handleError('StylePoint 가져오기 오류', error.message);
+      handleError('Error fetching StylePoints', error.message);
     }
   };
+
 
   const fetchBrandItems = async (brandId) => {
     try {
@@ -165,11 +166,14 @@ function BrandForm() {
         <div className="list-card">
           <h3>Brand List</h3>
           <ul className="list">
-            {brands.map((brand) => (
-              <li key={brand.id} onClick={() => handleBrandClick(brand)}>
-                {brand.title} ({brand.title_eng})
-              </li>
-            ))}
+            {brands.map((brand) => {
+              const stylePoint = stylePoints.find(point => point.id === brand.stylepointId);
+              return (
+                <li key={brand.id} onClick={() => handleBrandClick(brand)}>
+                  {brand.title} ({brand.title_eng}) - Style Point: {stylePoint ? stylePoint.title : 'None'}
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>

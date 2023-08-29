@@ -61,9 +61,17 @@ function StylePointForm() {
     setTitle(stylePoint.title);
     setDescription(stylePoint.description);
     setImage(stylePoint.image);
-    await fetchCoordiLooks(stylePoint.coordiLookList.map(coordiLook => coordiLook.id));
+    
+    // Check if coordiLookList is defined and is an array before calling map
+    if (stylePoint.coordiLookList && Array.isArray(stylePoint.coordiLookList)) {
+      await fetchCoordiLooks(stylePoint.coordiLookList.map(coordiLook => coordiLook.id));
+    } else {
+      // Handle the case where coordiLookList is undefined or not an array
+      setCoordiLooks([]);
+      setError('코디룩 정보 가져오기 오류: 데이터 형식이 잘못되었습니다.');
+    }
   };
-
+  
   const handleCreateStylePoint = async () => {
     try {
       const newStylePointData = {
