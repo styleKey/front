@@ -1,24 +1,46 @@
-import logo from './logo.svg';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
+
+import Logobar from './components/layouts/Logobar';
+import Navbar from './components/layouts/Navbar';
+import Footer from './components/layouts/Footer';
+
+import Home from './components/pages/Home';
+import Test from './components/pages/Test';
+import StylePoint from './components/pages/StylePoint';
+import SignUp from './components/pages/SignUp';
+
+const pageComponents = {
+  Home,
+  Test,
+  StylePoint,
+  SignUp,
+};
+
+const routeData = [
+  { path: '/', component: 'Home' },
+  { path: '/Test', component: 'Test' },
+  { path: '/StylePoint', component: 'StylePoint' },
+  { path: '/SignUp', component: 'SignUp' },
+];
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Logobar />
+      <Navbar />
+      <Routes>
+        {routeData.map((route, index) => (
+          <Route
+            key={index}
+            path={route.path}
+            element={React.createElement(pageComponents[route.component])}
+          />
+        ))}
+      </Routes>
+      <Footer />
+    </Router>
   );
 }
 

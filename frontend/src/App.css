@@ -1,38 +1,51 @@
-.App {
-  text-align: center;
+/* Colors */
+:root {
+  --primary-color: #C0B2DA;
+  --secondary-color: #755FA2;
+  --fff-color: #fff;
+  --000-color: #000;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Component Styles */
+.test,
+.lookbook,
+.sign-up {
   display: flex;
-  flex-direction: column;
+  height: 90px;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  font-size: 48px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: var(--fff-color);
+  font-weight: bold;
 }
 
-.App-link {
-  color: #61dafb;
+.btn {
+  padding: 12px 20px;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  background-color: var(--primary-color);
+  color: var(--fff-color);
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: none;
+  transition: background-color 0.3s ease-in-out;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.btn:hover {
+  background-color: var(--secondary-color);
+}
+
+.link {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+.link:hover {
+  color: var(--secondary-color);
 }
