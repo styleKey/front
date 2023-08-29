@@ -53,28 +53,43 @@ public class AdminBrandController {
 
     // Create
     @PostMapping("/brand/create")
-    public ResponseEntity<Brand> createBrand(@RequestBody CreateBrandRequestDto requestDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(brandAdminService.createBrand(requestDto));
+    public ResponseEntity<Map<String, Object>> createBrand(@RequestBody CreateBrandRequestDto requestDto) {
+        Long stylepointId = requestDto.getStylepointId();
+        Brand createdBrand = brandAdminService.createBrand(requestDto);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("stylepointId: ", stylepointId);
+        response.put("brand", createdBrand);
+
+        if(createdBrand == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(response);
     }
 
     // Update
     @PutMapping("/brand/{id}")
-    public ResponseEntity<Brand> updateBrand(@PathVariable Long id, @RequestBody UpdateBrandRequestDto requestDto) {
+    public ResponseEntity<Map<String, Object>> updateBrand(@PathVariable Long id, @RequestBody UpdateBrandRequestDto requestDto) {
         if (id == null) {
             return ResponseEntity.ok().build();
         }
 
+        Long stylepointId = requestDto.getStylepointId();
         Brand updatedBrand = brandAdminService.updateBrand(id, requestDto);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("stylepointId", stylepointId);
+        response.put("brand", updatedBrand);
+
         if (updatedBrand == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(updatedBrand);
+        return ResponseEntity.ok(response);
     }
 
     // Delete
     @DeleteMapping("/brand/{id}")
     public ResponseEntity<Void> deleteBrand(@PathVariable Long id) {
-
         brandAdminService.deleteBrand(id);
         return ResponseEntity.ok().build();
     }
