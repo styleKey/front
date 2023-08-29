@@ -1,6 +1,7 @@
 package com.thekey.stylekey.backend.controller.admin;
 
 import com.thekey.stylekey.backend.model.coordilook.entity.CoordiLook;
+import com.thekey.stylekey.backend.model.item.entity.Item;
 import com.thekey.stylekey.backend.service.admin.CoordiLookAdminService;
 import com.thekey.stylekey.backend.service.admin.dto.CreateCoordiLookRequestDto;
 import com.thekey.stylekey.backend.service.admin.dto.UpdateCoordiLookRequestDto;
@@ -12,6 +13,10 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,12 +40,18 @@ public class AdminCoordiLookController {
 
     // Read only one
     @GetMapping("/coordilook/{id}")
-    public ResponseEntity<CoordiLook> getCoordiLookById(@PathVariable Long id) {
+    public ResponseEntity<Map<String, Object>> getCoordiLookById(@PathVariable Long id) {
         CoordiLook coordiLook = coordiLookAdminService.findById(id);
+        List<Item> items= coordiLookAdminService.getItemsByCoordiLookId(id);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("coordiLook", coordiLook);
+        response.put("items", items);
+
         if (coordiLook == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(coordiLook);
+        return ResponseEntity.ok(response);
 
     }
 

@@ -1,6 +1,7 @@
 package com.thekey.stylekey.backend.service.admin;
 
 import com.thekey.stylekey.backend.model.coordilook.entity.CoordiLook;
+import com.thekey.stylekey.backend.model.item.entity.Item;
 import com.thekey.stylekey.backend.service.admin.dto.CreateCoordiLookRequestDto;
 import com.thekey.stylekey.backend.service.admin.dto.UpdateCoordiLookRequestDto;
 import org.springframework.data.domain.Page;
@@ -24,4 +25,6 @@ public interface CoordiLookAdminService {
 
     // delete
     void deleteCoordiLook(Long id);
+
+    List<Item> getItemsByCoordiLookId(Long coordilookId);
 }
