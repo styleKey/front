@@ -16,6 +16,7 @@ import CoordiLookDetail from './components/CoordiLook/CoordiLookDetail';
 
 import ItemList from './components/Item/ItemList';
 import ItemDetail from './components/Item/ItemDetail';
+import CreateItem from './components/Item/CreateItem';
 
 import CategoryList from './components/Category/CategoryList';
 import CategoryDetail from './components/Category/CategoryDetail';
@@ -40,6 +41,7 @@ function App() {
 
           <Route path="/items" element={<ItemList />} />
           <Route path="/item/:id" element={<ItemDetail />} />
+          <Route path="/item/create" element={<CreateItem />} />
 
           <Route path="/categories" element={<CategoryList />} />
           <Route path="/category/:id" element={<CategoryDetail />} />

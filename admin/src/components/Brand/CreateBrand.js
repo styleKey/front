@@ -48,7 +48,6 @@ const CreateBrand = () => {
     } catch (error) {
       setErrorMessage('Error creating brand.');
     }
-
   };
 
   return (
