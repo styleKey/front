@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+import BrandTableRow from './BrandTableRow';
+import BrandTable from './BrandTable';
+
 const CreateBrand = () => {
   const [stylePoints, setStylePoints] = useState([]);
   const [selectedStylePoint, setSelectedStylePoint] = useState('');
@@ -9,6 +12,11 @@ const CreateBrand = () => {
   const [description, setDescription] = useState('');
   const [site_url, setSiteUrl] = useState('');
   const [image, setImage] = useState('');
+
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [createdBrand, setCreatedBrand] = useState(null);
+
 
   useEffect(() => {
     const fetchStylePoints = async () => {
@@ -35,15 +43,20 @@ const CreateBrand = () => {
 
     try {
       const response = await axios.post('/admin/brand/create', newBrand);
-      console.log('Brand created:', response.data);
+      setSuccessMessage('Brand created successfully.');
+      setCreatedBrand(response.data.brand);
     } catch (error) {
-      console.error('Error creating brand:', error);
+      setErrorMessage('Error creating brand.');
     }
+
   };
 
   return (
     <div>
       <h2>Create New Brand</h2>
+      {successMessage && <p className="success-message">{successMessage}</p>}
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
+
       <form onSubmit={handleSubmit}>
         <div>
           <label>stylepoint</label>
@@ -82,6 +95,21 @@ const CreateBrand = () => {
         </div>
         <button type="submit" className="btn btn-create">create</button>
       </form>
+
+      {createdBrand && (
+        <div>
+          <h3>Created Brand</h3>
+          <table>
+            <thead>
+              <BrandTableRow />
+            </thead>
+            <tbody>
+              <BrandTable brand={createdBrand} />
+            </tbody>
+          </table>
+        </div>
+      )}
+
     </div>
   );
 };

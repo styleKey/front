@@ -30,7 +30,7 @@ function BrandDetail() {
           <BrandTable key={brand.id} brand={brand} />
         </tbody>
       </table>
-      
+
       <h2>items</h2>
       <table>
         <thead>

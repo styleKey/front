@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+
 import ItemTableRow from './ItemTableRow';
 import ItemTable from './ItemTable';
 
@@ -23,6 +25,7 @@ function ItemList({ coordiLookId }) {
   return (
     <div>
       <h2>items</h2>
+      <Link to={`/item/create`} className="btn btn-create">create</Link>
       <table>
         <thead>
           <ItemTableRow />
