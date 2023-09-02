@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 function ItemTable({ item }) {
   return (
-     <div>
+    <tr>
       <td>{item.createdAt}</td>
       <td>{item.updatedAt}</td>
       <td>{item.id}</td>
@@ -11,7 +11,7 @@ function ItemTable({ item }) {
       <td>{item.description}</td>
       <td><a href={item.site_url}>{item.site_url}</a></td>
       <td><img src={item.image} alt={item.title} /></td>
-    </div>
+    </tr>
   );
 }
 

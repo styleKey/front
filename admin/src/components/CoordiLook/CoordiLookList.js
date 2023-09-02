@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import CoordiLookTableRow from './CoordiLookTableRow';
 import CoordiLookTable from './CoordiLookTable';
 
 function CoordiLookList() {
@@ -23,13 +24,7 @@ function CoordiLookList() {
       <h2>coordilooks</h2>
       <table>
         <thead>
-          <tr>
-            <th>createdAt</th>
-            <th>updatedAt</th>
-            <th>id</th>
-            <th>title</th>
-            <th>image</th>
-          </tr>
+          <CoordiLookTableRow />
         </thead>
         <tbody>
           {coordiLooks.map((coordiLook) => (

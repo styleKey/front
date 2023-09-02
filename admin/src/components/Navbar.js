@@ -13,22 +13,27 @@ function Navbar() {
         <ul>
           <li >
             <a href="/admin/stylepoints">
-            stylepoint
+              stylepoint
             </a>
           </li>
           <li>
             <a href="/admin/brands">
-            brands
+              brands
             </a>
           </li>
           <li >
             <a href="/admin/coordilooks">
-            coordilooks
+              coordilooks
             </a>
           </li>
           <li >
             <a href="/admin/items">
-            items
+              items
+            </a>
+          </li>
+          <li >
+            <a href="/admin/categories">
+              categories
             </a>
           </li>
         </ul>

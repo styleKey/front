@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import BrandTableRow from './BrandTableRow';
 import BrandTable from './BrandTable';
-import ItemTable from './ItemTable'; 
+import ItemTableRow from '../Item/ItemTableRow';
+import ItemTable from '../Item/ItemTable';
 
 function BrandDetail() {
   const { id } = useParams();
-  const [brand, setBrand] = useState([]); 
+  const [brand, setBrand] = useState([]);
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -22,32 +24,17 @@ function BrandDetail() {
       <h2>brand</h2>
       <table>
         <thead>
-          <tr>
-            <th>createdAt</th>
-            <th>updatedAt</th>
-            <th>id</th>
-            <th>title</th>
-            <th>title_eng</th>
-            <th>site_url</th>
-            <th>image</th>
-          </tr>
+          <BrandTableRow />
         </thead>
         <tbody>
           <BrandTable key={brand.id} brand={brand} />
         </tbody>
       </table>
-
+      
       <h2>items</h2>
       <table>
         <thead>
-          <tr>
-            <th>createdAt</th>
-            <th>updatedAt</th>
-            <th>id</th>
-            <th>title</th>
-            <th>site_url</th>
-            <th>image</th>
-          </tr>
+          <ItemTableRow />
         </thead>
         <tbody>
           {items.map(item => (
@@ -55,6 +42,7 @@ function BrandDetail() {
           ))}
         </tbody>
       </table>
+
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import ItemTable from './ItemTable'; 
+import ItemTableRow from './ItemTableRow';
+import ItemTable from './ItemTable';
 
 function ItemList({ coordiLookId }) {
 
@@ -21,17 +22,10 @@ function ItemList({ coordiLookId }) {
 
   return (
     <div>
-       <h2>items</h2>
+      <h2>items</h2>
       <table>
         <thead>
-          <tr>
-            <th>createdAt</th>
-            <th>updatedAt</th>
-            <th>id</th>
-            <th>title</th>
-            <th>site_url</th>
-            <th>image</th>
-          </tr>
+          <ItemTableRow />
         </thead>
         <tbody>
           {items.map(item => (

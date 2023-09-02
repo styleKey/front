@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import StylePointTableRow from './StylePointTableRow';
 import StylePointTable from './StylePointTable';
-import BrandTable from './BrandTable';
-import CoordiLookTable from './CoordiLookTable';
+import BrandTableRow from '../Brand/BrandTableRow';
+import BrandTable from '../Brand/BrandTable';
+import CoordiLookTableRow from '../CoordiLook/CoordiLookTableRow';
+import CoordiLookTable from '../CoordiLook/CoordiLookTable';
 
 function StylePointDetail() {
   const { id } = useParams();
@@ -25,12 +28,7 @@ function StylePointDetail() {
       <h2>stylePoint</h2>
       <table>
         <thead>
-          <tr>
-            <th>id</th>
-            <th>title</th>
-            <th>description</th>
-            <th>image</th>
-          </tr>
+          <StylePointTableRow />
         </thead>
         <tbody>
           <StylePointTable key={stylePoint.id} stylePoint={stylePoint} />
@@ -40,15 +38,7 @@ function StylePointDetail() {
       <h2>brands</h2>
       <table>
         <thead>
-          <tr>
-            <th>createdAt</th>
-            <th>updatedAt</th>
-            <th>id</th>
-            <th>title</th>
-            <th>title_eng</th>
-            <th>site_url</th>
-            <th>image</th>
-          </tr>
+          <BrandTableRow />
         </thead>
         <tbody>
           {brands.map((brand) => (
@@ -60,13 +50,7 @@ function StylePointDetail() {
       <h2>coordilooks</h2>
       <table>
         <thead>
-          <tr>
-            <th>createdAt</th>
-            <th>updatedAt</th>
-            <th>id</th>
-            <th>title</th>
-            <th>image</th>
-          </tr>
+          <CoordiLookTableRow />
         </thead>
         <tbody>
           {coordiLooks.map(coordiLook => (

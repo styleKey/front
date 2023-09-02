@@ -1,0 +1,52 @@
+/* Reset some default styling */
+body{
+    font-family: Arial, sans-serif;
+    background-color: hsl(0, 0%, 94%);
+  }
+  
+  /* Styling for the main content area */
+  main {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Styling for tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+  }
+  
+  th, td {
+    padding: 10px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f0f0f0;
+  }
+  
+  /* Styling for buttons */
+  .btn {
+    padding: 5px 10px;
+    background-color: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+    text-decoration: none;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+  }
+  
+  /* Styling for images */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  

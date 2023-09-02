@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import ItemTableRow from './ItemTableRow';
 import ItemTable from './ItemTable';
-import BrandTable from './BrandTable';
-import CoordiLookTable from './CoordiLookTable';
+import BrandTableRow from '../Brand/BrandTableRow';
+import BrandTable from '../Brand/BrandTable';
+import CoordiLookTableRow from '../CoordiLook/CoordiLookTableRow';
+import CoordiLookTable from '../CoordiLook/CoordiLookTable';
 
 function ItemDetail() {
   const { id } = useParams();
@@ -22,17 +25,10 @@ function ItemDetail() {
 
   return (
     <div>
-      <h2>items</h2>
+      <h2>item</h2>
       <table>
         <thead>
-          <tr>
-            <th>createdAt</th>
-            <th>updatedAt</th>
-            <th>id</th>
-            <th>title</th>
-            <th>site_url</th>
-            <th>image</th>
-          </tr>
+          <ItemTableRow />
         </thead>
         <tbody>
           <ItemTable key={item.id} item={item} />
@@ -42,34 +38,20 @@ function ItemDetail() {
       <h2>brand</h2>
       <table>
         <thead>
-          <tr>
-            <th>createdAt</th>
-            <th>updatedAt</th>
-            <th>id</th>
-            <th>title</th>
-            <th>title_eng</th>
-            <th>site_url</th>
-            <th>image</th>
-          </tr>
+          <BrandTableRow />
         </thead>
         <tbody>
-            <BrandTable key={brand.id} brand={brand} />
+          <BrandTable key={brand.id} brand={brand} />
         </tbody>
       </table>
 
       <h2>coordilook</h2>
       <table>
         <thead>
-          <tr>
-            <th>createdAt</th>
-            <th>updatedAt</th>
-            <th>id</th>
-            <th>title</th>
-            <th>image</th>
-          </tr>
+          <CoordiLookTableRow />
         </thead>
         <tbody>
-            <CoordiLookTable key={coordiLook.id} coordiLook={coordiLook} />
+          <CoordiLookTable key={coordiLook.id} coordiLook={coordiLook} />
         </tbody>
       </table>
 

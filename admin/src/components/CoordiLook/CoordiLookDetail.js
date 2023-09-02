@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import CoordiLookTableRow from './CoordiLookTableRow';
 import CoordiLookTable from './CoordiLookTable';
-import Item from './ItemTable';
+import ItemTableRow from '../Item/ItemTableRow';
+import Item from '../Item/ItemTable';
 
 function CoordiLookDetail() {
   const { id } = useParams();
@@ -19,16 +21,10 @@ function CoordiLookDetail() {
 
   return (
     <div>
-      <h2>coordilooks</h2>
+      <h2>coordilook</h2>
       <table>
         <thead>
-          <tr>
-            <th>createdAt</th>
-            <th>updatedAt</th>
-            <th>id</th>
-            <th>title</th>
-            <th>image</th>
-          </tr>
+          <CoordiLookTableRow />
         </thead>
         <tbody>
           <CoordiLookTable key={coordiLook.id} coordiLook={coordiLook} />
@@ -38,14 +34,7 @@ function CoordiLookDetail() {
       <h2>items</h2>
       <table>
         <thead>
-          <tr>
-            <th>createdAt</th>
-            <th>updatedAt</th>
-            <th>id</th>
-            <th>title</th>
-            <th>site_url</th>
-            <th>image</th>
-          </tr>
+          <ItemTableRow />
         </thead>
         <tbody>
           {items.map(item => (

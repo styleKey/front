@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import StylePointTableRow from './StylePointTableRow';
 import StylePointTable from './StylePointTable';
 
 const StylePointList = () => {
@@ -22,12 +23,7 @@ const StylePointList = () => {
       <h2>stylepoints</h2>
       <table>
         <thead>
-          <tr>
-            <th>id</th>
-            <th>title</th>
-            <th>description</th>
-            <th>image</th>
-          </tr>
+          <StylePointTableRow />
         </thead>
         <tbody>
           {stylePoints.map((stylePoint) => (
