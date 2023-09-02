@@ -7,7 +7,7 @@ function ItemTableRow() {
       <th>updatedAt</th>
       <th>id</th>
       <th>title</th>
-      <th>site_url</th>
+      <th>sales_link</th>
       <th>image</th>
     </tr>
   );

@@ -27,7 +27,7 @@ function CoordiLookList() {
           <CoordiLookTableRow />
         </thead>
         <tbody>
-          {coordiLooks.map((coordiLook) => (
+          {coordiLooks && coordiLooks.map((coordiLook) => (
             <CoordiLookTable key={coordiLook.id} coordiLook={coordiLook} />
           ))}
         </tbody>

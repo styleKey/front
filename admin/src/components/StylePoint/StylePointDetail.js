@@ -41,7 +41,7 @@ function StylePointDetail() {
           <BrandTableRow />
         </thead>
         <tbody>
-          {brands.map((brand) => (
+          {brands && brands.map((brand) => (
             <BrandTable key={brand.id} brand={brand} />
           ))}
         </tbody>
@@ -53,7 +53,7 @@ function StylePointDetail() {
           <CoordiLookTableRow />
         </thead>
         <tbody>
-          {coordiLooks.map(coordiLook => (
+          {coordiLooks && coordiLooks.map(coordiLook => (
             <CoordiLookTable key={coordiLook.id} coordiLook={coordiLook} />
           ))}
         </tbody>

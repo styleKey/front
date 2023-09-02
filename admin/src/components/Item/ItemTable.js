@@ -8,8 +8,7 @@ function ItemTable({ item }) {
       <td>{item.updatedAt}</td>
       <td>{item.id}</td>
       <td><Link to={`/admin/item/${item.id}`} className="btn btn-primary">{item.title}</Link></td>
-      <td>{item.description}</td>
-      <td><a href={item.site_url}>{item.site_url}</a></td>
+      <td><a href={item.sales_link}>{item.sales_link}</a></td>
       <td><img src={item.image} alt={item.title} /></td>
     </tr>
   );

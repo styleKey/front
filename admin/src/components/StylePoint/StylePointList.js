@@ -26,7 +26,7 @@ const StylePointList = () => {
           <StylePointTableRow />
         </thead>
         <tbody>
-          {stylePoints.map((stylePoint) => (
+          {stylePoints && stylePoints.map((stylePoint) => (
             <StylePointTable key={stylePoint.id} stylePoint={stylePoint} />
           ))}
         </tbody>

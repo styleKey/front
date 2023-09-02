@@ -8,6 +8,7 @@ function BrandTableRow() {
       <th>id</th>
       <th>title</th>
       <th>title_eng</th>
+      <th>description</th>
       <th>site_url</th>
       <th>image</th>
     </tr>

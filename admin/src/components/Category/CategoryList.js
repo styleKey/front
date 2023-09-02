@@ -26,7 +26,7 @@ const CategoryList = () => {
           <CategoryTableRow />
         </thead>
         <tbody>
-          {categories.map(category => (
+          {categories && categories.map(category => (
             <CategoryTable key={category.id} category={category} />
           ))}
         </tbody>

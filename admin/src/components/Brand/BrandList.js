@@ -26,7 +26,7 @@ const BrandList = () => {
           <BrandTableRow />
         </thead>
         <tbody>
-          {brands.map((brand) => (
+          {brands && brands.map((brand) => (
             <BrandTable key={brand.id} brand={brand} />
           ))}
         </tbody>

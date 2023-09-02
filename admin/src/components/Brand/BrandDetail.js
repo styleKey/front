@@ -37,7 +37,7 @@ function BrandDetail() {
           <ItemTableRow />
         </thead>
         <tbody>
-          {items.map(item => (
+          {items && items.map(item => (
             <ItemTable key={item.id} item={item} />
           ))}
         </tbody>

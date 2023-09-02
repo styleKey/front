@@ -37,7 +37,7 @@ function CoordiLookDetail() {
           <ItemTableRow />
         </thead>
         <tbody>
-          {items.map(item => (
+          {items && items.map(item => (
             <Item key={item.id} item={item} />
           ))}
         </tbody>

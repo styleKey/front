@@ -6,12 +6,16 @@ import BrandTableRow from '../Brand/BrandTableRow';
 import BrandTable from '../Brand/BrandTable';
 import CoordiLookTableRow from '../CoordiLook/CoordiLookTableRow';
 import CoordiLookTable from '../CoordiLook/CoordiLookTable';
+import CategoryTableRow from '../Category/CategoryTableRow';
+import CategoryTable from '../Category/CategoryTable';
+
 
 function ItemDetail() {
   const { id } = useParams();
   const [item, setItem] = useState({});
   const [brand, setBrand] = useState([]);
   const [coordiLook, setCoordiLook] = useState([]);
+  const [category, setCategory] = useState([]);
 
   useEffect(() => {
     fetch(`/admin/item/${id}`)
@@ -20,6 +24,7 @@ function ItemDetail() {
         setItem(data);
         setBrand(data.brand);
         setCoordiLook(data.coordilook);
+        setCategory(data.category);
       });
   }, [id]);
 
@@ -54,7 +59,16 @@ function ItemDetail() {
           <CoordiLookTable key={coordiLook.id} coordiLook={coordiLook} />
         </tbody>
       </table>
-
+      
+      <h2>category</h2>
+      <table>
+        <thead>
+          <CategoryTableRow />
+        </thead>
+        <tbody>
+          <CategoryTable key={category.id} category={category} />
+        </tbody>
+      </table>
     </div>
   );
 }

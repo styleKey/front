@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import CategoryTableRow from './CategoryTableRow';
 import CategoryTable from './CategoryTable';
+import ItemTableRow from '../Item/ItemTableRow';
 import ItemTable from '../Item/ItemTable'; // Import the ItemTable component
 
 function CategoryDetail() {
@@ -26,17 +27,17 @@ function CategoryDetail() {
           <CategoryTableRow />
         </thead>
         <tbody>
-          <CategoryTable category={category} />
+          <CategoryTable key={category.id} category={category} />
         </tbody>
       </table>
 
       <h2>items</h2>
       <table>
         <thead>
-          <ItemTable />
+          <ItemTableRow />
         </thead>
         <tbody>
-          {items.map(item => (
+          {items && items.map(item => (
             <ItemTable key={item.id} item={item} />
           ))}
         </tbody>
