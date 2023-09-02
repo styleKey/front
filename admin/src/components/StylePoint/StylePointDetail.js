@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 import StylePointTableRow from './StylePointTableRow';
 import StylePointTable from './StylePointTable';
+
 import BrandTableRow from '../Brand/BrandTableRow';
 import BrandTable from '../Brand/BrandTable';
+
 import CoordiLookTableRow from '../CoordiLook/CoordiLookTableRow';
 import CoordiLookTable from '../CoordiLook/CoordiLookTable';
 
@@ -25,7 +29,7 @@ function StylePointDetail() {
 
   return (
     <div >
-      <h2>stylePoint</h2>
+      <h2>stylepoint</h2>
       <table>
         <thead>
           <StylePointTableRow />
@@ -36,6 +40,7 @@ function StylePointDetail() {
       </table>
 
       <h2>brands</h2>
+      <Link to={`/brand/create`} className="btn btn-create">create</Link>
       <table>
         <thead>
           <BrandTableRow />

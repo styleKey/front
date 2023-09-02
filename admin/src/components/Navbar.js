@@ -7,32 +7,28 @@ function Navbar() {
       <div>
         <div>
           <a href="/">
-            Admin Panel
+          stylepoint
           </a>
         </div>
         <ul>
-          <li >
-            <a href="/admin/stylepoints">
-              stylepoint
-            </a>
-          </li>
+        
           <li>
-            <a href="/admin/brands">
+            <a href="/brands">
               brands
             </a>
           </li>
           <li >
-            <a href="/admin/coordilooks">
+            <a href="/coordilooks">
               coordilooks
             </a>
           </li>
           <li >
-            <a href="/admin/items">
+            <a href="/items">
               items
             </a>
           </li>
           <li >
-            <a href="/admin/categories">
+            <a href="/categories">
               categories
             </a>
           </li>

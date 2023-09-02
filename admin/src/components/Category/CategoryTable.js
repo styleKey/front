@@ -5,7 +5,7 @@ function CategoryTable({ category }) {
   return (
     <tr>
       <td>{category.id}</td>
-      <td><Link to={`/admin/category/${category.id}`} className="btn btn-primary">{category.title}</Link></td>
+      <td><Link to={`/category/${category.id}`} className="btn btn-title">{category.title}</Link></td>
     </tr>
   );
 }
