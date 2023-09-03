@@ -19,7 +19,17 @@ const BrandList = () => {
     };
     fetchBrands();
   }, []);
-  
+
+
+  const handleDeleteBrand = async (brandId) => {
+    try {
+      await axios.delete(`/admin/brand/${brandId}`);
+      const updatedBrands = brands.filter((brand) => brand.id !== brandId);
+      setBrands(updatedBrands);
+    } catch (error) {
+      console.error('Error deleting brand:', error);
+    }
+  };
 
   return (
     <div>
@@ -31,7 +41,7 @@ const BrandList = () => {
         </thead>
         <tbody>
           {brands && brands.map((brand) => (
-            <BrandTable key={brand.id} brand={brand} />
+            <BrandTable key={brand.id} brand={brand} onDelete={handleDeleteBrand} />
           ))}
         </tbody>
       </table>

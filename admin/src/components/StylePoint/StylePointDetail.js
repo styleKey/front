@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import StylePointTableRow from './StylePointTableRow';
@@ -27,6 +28,15 @@ function StylePointDetail() {
       });
   }, [id]);
 
+  const handleDeleteBrand = async (brandId) => {
+    try {
+      await axios.delete(`/admin/brand/${brandId}`);
+      setBrands(prevBrands => prevBrands.filter(brand => brand.id !== brandId));
+    } catch (error) {
+      console.error('Error deleting brand:', error);
+    }
+  };
+
   return (
     <div >
       <h2>stylepoint</h2>
@@ -47,7 +57,7 @@ function StylePointDetail() {
         </thead>
         <tbody>
           {brands && brands.map((brand) => (
-            <BrandTable key={brand.id} brand={brand} />
+            <BrandTable key={brand.id} brand={brand} onDelete={handleDeleteBrand} />
           ))}
         </tbody>
       </table>

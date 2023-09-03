@@ -38,7 +38,7 @@ const EditBrand = () => {
                 const response = await axios.get(`/admin/brand/${id}`);
                 setBrandData(response.data.brand);
 
-                setSelectedStylePoint(response.data.brand.stylepointId || ''); // Use default value if undefined
+                setSelectedStylePoint(response.data.brand.stylepointId); // Use default value if undefined
                 setTitle(response.data.brand.title);
                 setTitleEng(response.data.brand.title_eng);
                 setDescription(response.data.brand.description);
@@ -50,6 +50,18 @@ const EditBrand = () => {
         };
         fetchBrandDetails();
     }, [id]);
+
+
+    const handleDeleteBrand = async (brandId) => {
+        try {
+            await axios.delete(`/admin/brand/${brandId}`);
+            setBrandData(prevBrandData => {
+                return prevBrandData.id !== brandId;
+            });
+        } catch (error) {
+            console.error('Error deleting brand:', error);
+        }
+    };
 
 
     const handleSubmit = async (event) => {
@@ -78,7 +90,7 @@ const EditBrand = () => {
                     <BrandTableRow />
                 </thead>
                 <tbody>
-                    <BrandTable key={brandData.id} brand={brandData} />
+                    <BrandTable key={brandData.id} brand={brandData} onDelete={handleDeleteBrand} />
                 </tbody>
             </table>
 
@@ -121,7 +133,7 @@ const EditBrand = () => {
                 <button type="submit" className="btn btn-edit">edit</button>
             </form>
 
-            {updatedBrand && (
+            {brandData && updatedBrand && (
                 <div>
                     <h3>Updated Brand</h3>
                     <table>
@@ -129,7 +141,7 @@ const EditBrand = () => {
                             <BrandTableRow />
                         </thead>
                         <tbody>
-                            <BrandTable brand={updatedBrand} />
+                            <BrandTable brand={updatedBrand} onDelete={handleDeleteBrand} />
                         </tbody>
                     </table>
                 </div>
