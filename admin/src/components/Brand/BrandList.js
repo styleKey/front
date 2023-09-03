@@ -19,6 +19,7 @@ const BrandList = () => {
     };
     fetchBrands();
   }, []);
+  
 
   return (
     <div>

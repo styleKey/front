@@ -1,7 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function BrandTable({ brand }) {
+function BrandTable({ brand, onDelete }) {
+
+  const handleDelete = () => {
+    if (window.confirm(`Are you sure you want to delete this brand? ${brand.title}`)) {
+      onDelete(brand.id); 
+    }
+  };
+
   return (
     <tr>
       <td>{brand.createdAt}</td>
@@ -12,8 +19,8 @@ function BrandTable({ brand }) {
       <td>{brand.description}</td>
       <td><a href={brand.site_url}>{brand.site_url}</a></td>
       <td><img src={brand.image} alt={brand.title} /></td>
-      <td> <Link to={`/brand/${brand.id}/edit`} className="btn btn-edit">edit</Link></td>
-      <td> <Link to={`/brand/${brand.id}/delete`} className="btn btn-delete">delete</Link></td>
+      <td><Link to={`/brand/${brand.id}/edit`} className="btn btn-edit">edit</Link></td>
+      <td><button className="btn btn-delete" onClick={handleDelete}>delete</button></td>
     </tr>
   );
 }
