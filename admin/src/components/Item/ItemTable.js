@@ -10,6 +10,8 @@ function ItemTable({ item }) {
       <td><Link to={`/item/${item.id}`} className="btn btn-title">{item.title}</Link></td>
       <td><a href={item.sales_link}>{item.sales_link}</a></td>
       <td><img src={item.image} alt={item.title} /></td>
+      <td> <Link to={`/item/${item.id}/edit`} className="btn btn-edit">edit</Link></td>
+      <td> <Link to={`/item/${item.id}/delete`} className="btn btn-delete">delete</Link></td>
     </tr>
   );
 }

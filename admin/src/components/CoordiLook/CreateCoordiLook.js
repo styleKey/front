@@ -10,8 +10,6 @@ const CreateCoordiLook = () => {
   const [title, setTitle] = useState('');
   const [image, setImage] = useState('');
 
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
   const [createdCoordiLook, setCreatedCoordiLook] = useState(null);
 
   useEffect(() => {
@@ -36,21 +34,14 @@ const CreateCoordiLook = () => {
 
     try {
       const response = await axios.post('/admin/coordilook/create', newCoordiLook);
-      setSuccessMessage('CoordiLook created successfully.');
       setCreatedCoordiLook(response.data);
     } catch (error) {
-      setErrorMessage('Error creating CoordiLook.');
     }
   };
 
   return (
     <div>
       <h2>Create New CoordiLook</h2>
-      {successMessage ? (
-        <p className="success-message">{successMessage}</p>
-      ) : (
-        errorMessage && <p className="error-message">{errorMessage}</p>
-      )}
       <form onSubmit={handleSubmit}>
         <div>
           <label>stylepoint</label>

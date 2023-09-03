@@ -13,8 +13,6 @@ const CreateBrand = () => {
   const [site_url, setSiteUrl] = useState('');
   const [image, setImage] = useState('');
 
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
   const [createdBrand, setCreatedBrand] = useState(null);
 
 
@@ -43,22 +41,14 @@ const CreateBrand = () => {
 
     try {
       const response = await axios.post('/admin/brand/create', newBrand);
-      setSuccessMessage('Brand created successfully.');
       setCreatedBrand(response.data.brand);
     } catch (error) {
-      setErrorMessage('Error creating brand.');
     }
   };
 
   return (
     <div>
       <h2>Create New Brand</h2>
-      {successMessage ? (
-        <p className="success-message">{successMessage}</p>
-      ) : (
-        errorMessage && <p className="error-message">{errorMessage}</p>
-      )}
-
       <form onSubmit={handleSubmit}>
         <div>
           <label>stylepoint</label>

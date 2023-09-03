@@ -17,8 +17,6 @@ const EditBrand = () => {
     const [site_url, setSiteUrl] = useState('');
     const [image, setImage] = useState('');
 
-    const [successMessage, setSuccessMessage] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
     const [updatedBrand, setUpdatedBrand] = useState(null);
 
     const [brandData, setBrandData] = useState({});
@@ -67,10 +65,8 @@ const EditBrand = () => {
 
         try {
             const response = await axios.put(`/admin/brand/${id}`, updatedBrandData);
-            setSuccessMessage('Brand updated successfully.');
             setUpdatedBrand(response.data.brand);
         } catch (error) {
-            setErrorMessage('Error updating brand.');
         }
     };
 
@@ -85,12 +81,6 @@ const EditBrand = () => {
                     <BrandTable key={brandData.id} brand={brandData} />
                 </tbody>
             </table>
-
-            {successMessage ? (
-                <p className="success-message">{successMessage}</p>
-            ) : (
-                errorMessage && <p className="error-message">{errorMessage}</p>
-            )}
 
             <form onSubmit={handleSubmit}>
                 <div>

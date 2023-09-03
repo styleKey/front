@@ -17,8 +17,6 @@ const CreateItem = () => {
   const [salesLink, setSalesLink] = useState('');
   const [image, setImage] = useState('');
 
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
   const [createdItem, setCreatedItem] = useState(null);
 
   useEffect(() => {
@@ -67,10 +65,8 @@ const CreateItem = () => {
 
     try {
       const response = await axios.post('/admin/item/create', newItem);
-      setSuccessMessage('Item created successfully.');
       setCreatedItem(response.data);
     } catch (error) {
-      setErrorMessage('Error creating item.');
     }
 
   };
@@ -78,12 +74,6 @@ const CreateItem = () => {
   return (
     <div>
       <h2>Create New Item</h2>
-      {successMessage ? (
-        <p className="success-message">{successMessage}</p>
-      ) : (
-        errorMessage && <p className="error-message">{errorMessage}</p>
-      )}
-
       <form onSubmit={handleSubmit}>
         <div>
           <label>brand</label>
