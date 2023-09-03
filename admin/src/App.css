@@ -35,6 +35,15 @@ body{
   .btn-create {
     background-color: #da7b00;
   }
+
+  .btn-edit {
+    background-color: #333;
+  }
+  
+  .btn-delete {
+    background-color: #d70808;
+  }
+  
   
   /* Styling for images */
   img {

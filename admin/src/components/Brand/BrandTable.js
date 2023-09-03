@@ -12,6 +12,8 @@ function BrandTable({ brand }) {
       <td>{brand.description}</td>
       <td><a href={brand.site_url}>{brand.site_url}</a></td>
       <td><img src={brand.image} alt={brand.title} /></td>
+      <td> <Link to={`/brand/${brand.id}/edit`} className="btn btn-edit">edit</Link></td>
+      <td> <Link to={`/brand/${brand.id}/delete`} className="btn btn-delete">delete</Link></td>
     </tr>
   );
 }

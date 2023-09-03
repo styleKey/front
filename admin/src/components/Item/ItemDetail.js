@@ -59,7 +59,7 @@ function ItemDetail() {
           <CoordiLookTable key={coordiLook.id} coordiLook={coordiLook} />
         </tbody>
       </table>
-      
+
       <h2>category</h2>
       <table>
         <thead>

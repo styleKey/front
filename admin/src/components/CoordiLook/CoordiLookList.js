@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+
 import CoordiLookTableRow from './CoordiLookTableRow';
 import CoordiLookTable from './CoordiLookTable';
 
@@ -22,6 +24,7 @@ function CoordiLookList() {
   return (
     <div>
       <h2>coordilooks</h2>
+      <Link to={`/coordilook/create`} className="btn btn-create">create</Link>
       <table>
         <thead>
           <CoordiLookTableRow />

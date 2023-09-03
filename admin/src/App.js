@@ -10,9 +10,11 @@ import StylePointDetail from './components/StylePoint/StylePointDetail';
 import BrandList from './components/Brand/BrandList';
 import BrandDetail from './components/Brand/BrandDetail';
 import CreateBrand from './components/Brand/CreateBrand';
+import EditBrand from './components/Brand/EditBrand';
 
 import CoordiLookList from './components/CoordiLook/CoordiLookList';
 import CoordiLookDetail from './components/CoordiLook/CoordiLookDetail';
+import CreateCoordiLook from './components/CoordiLook/CreateCoordiLook';
 
 import ItemList from './components/Item/ItemList';
 import ItemDetail from './components/Item/ItemDetail';
@@ -35,9 +37,11 @@ function App() {
           <Route path="/brands" element={<BrandList />} />
           <Route path="/brand/:id" element={<BrandDetail />} />
           <Route path="/brand/create" element={<CreateBrand />} />
+          <Route path="/brand/:id/edit" element={<EditBrand />} />
 
           <Route path="/coordilooks" element={<CoordiLookList />} />
           <Route path="/coordilook/:id" element={<CoordiLookDetail />} />
+          <Route path="/coordilook/create" element={<CreateCoordiLook />} />
 
           <Route path="/items" element={<ItemList />} />
           <Route path="/item/:id" element={<ItemDetail />} />

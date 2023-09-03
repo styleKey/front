@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+import ItemTableRow from './ItemTableRow';
+import ItemTable from './ItemTable';
+
 const CreateItem = () => {
   const [brands, setBrands] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -75,8 +78,11 @@ const CreateItem = () => {
   return (
     <div>
       <h2>Create New Item</h2>
-      {successMessage && <p className="success-message">{successMessage}</p>}
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
+      {successMessage ? (
+        <p className="success-message">{successMessage}</p>
+      ) : (
+        errorMessage && <p className="error-message">{errorMessage}</p>
+      )}
 
       <form onSubmit={handleSubmit}>
         <div>
@@ -148,22 +154,10 @@ const CreateItem = () => {
           <h3>Created Item</h3>
           <table>
             <thead>
-              <tr>
-                <th>Brand</th>
-                <th>Category</th>
-                <th>Title</th>
-                <th>Sales Link</th>
-                <th>Image</th>
-              </tr>
+              <ItemTableRow />
             </thead>
             <tbody>
-              <tr>
-                <td>{createdItem.brand.title}</td>
-                <td>{createdItem.category.title}</td>
-                <td>{createdItem.title}</td>
-                <td><a href={createdItem.sales_link}>{createdItem.sales_link}</a></td>
-                <td><img src={createdItem.image} alt={createdItem.title} /></td>
-              </tr>
+              <ItemTable key={createdItem.id} item={createdItem} />
             </tbody>
           </table>
         </div>

@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 import CategoryTableRow from './CategoryTableRow';
 import CategoryTable from './CategoryTable';
+
 import ItemTableRow from '../Item/ItemTableRow';
 import ItemTable from '../Item/ItemTable'; // Import the ItemTable component
 
@@ -32,6 +35,7 @@ function CategoryDetail() {
       </table>
 
       <h2>items</h2>
+      <Link to={`/item/create`} className="btn btn-create">create</Link>
       <table>
         <thead>
           <ItemTableRow />

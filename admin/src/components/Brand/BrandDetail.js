@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 import BrandTableRow from './BrandTableRow';
 import BrandTable from './BrandTable';
+
 import ItemTableRow from '../Item/ItemTableRow';
 import ItemTable from '../Item/ItemTable';
 
@@ -32,6 +35,7 @@ function BrandDetail() {
       </table>
 
       <h2>items</h2>
+      <Link to={`/item/create`} className="btn btn-create">create</Link>
       <table>
         <thead>
           <ItemTableRow />

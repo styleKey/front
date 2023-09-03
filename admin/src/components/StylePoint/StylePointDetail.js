@@ -53,6 +53,7 @@ function StylePointDetail() {
       </table>
 
       <h2>coordilooks</h2>
+      <Link to={`/coordilook/create`} className="btn btn-create">create</Link>
       <table>
         <thead>
           <CoordiLookTableRow />

@@ -1,22 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import BrandTableRow from './BrandTableRow';
-import BrandTable from './BrandTable';
+import CoordiLookTableRow from './CoordiLookTableRow';
+import CoordiLookTable from './CoordiLookTable';
 
-const CreateBrand = () => {
+const CreateCoordiLook = () => {
   const [stylePoints, setStylePoints] = useState([]);
   const [selectedStylePoint, setSelectedStylePoint] = useState('');
   const [title, setTitle] = useState('');
-  const [title_eng, setTitleEng] = useState('');
-  const [description, setDescription] = useState('');
-  const [site_url, setSiteUrl] = useState('');
   const [image, setImage] = useState('');
 
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [createdBrand, setCreatedBrand] = useState(null);
-
+  const [createdCoordiLook, setCreatedCoordiLook] = useState(null);
 
   useEffect(() => {
     const fetchStylePoints = async () => {
@@ -32,33 +28,29 @@ const CreateBrand = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const newBrand = {
+    const newCoordiLook = {
       stylepointId: selectedStylePoint,
       title,
-      title_eng,
-      description,
-      site_url,
       image,
     };
 
     try {
-      const response = await axios.post('/admin/brand/create', newBrand);
-      setSuccessMessage('Brand created successfully.');
-      setCreatedBrand(response.data.brand);
+      const response = await axios.post('/admin/coordilook/create', newCoordiLook);
+      setSuccessMessage('CoordiLook created successfully.');
+      setCreatedCoordiLook(response.data);
     } catch (error) {
-      setErrorMessage('Error creating brand.');
+      setErrorMessage('Error creating CoordiLook.');
     }
   };
 
   return (
     <div>
-      <h2>Create New Brand</h2>
+      <h2>Create New CoordiLook</h2>
       {successMessage ? (
         <p className="success-message">{successMessage}</p>
       ) : (
         errorMessage && <p className="error-message">{errorMessage}</p>
       )}
-
       <form onSubmit={handleSubmit}>
         <div>
           <label>stylepoint</label>
@@ -75,45 +67,31 @@ const CreateBrand = () => {
             ))}
           </select>
         </div>
+
         <div>
           <label>title</label>
           <input type="text" value={title} onChange={(event) => setTitle(event.target.value)} required />
         </div>
         <div>
-          <label>title_eng</label>
-          <input type="text" value={title_eng} onChange={(event) => setTitleEng(event.target.value)} required />
-        </div>
-        <div>
-          <label>description</label>
-          <textarea value={description} onChange={(event) => setDescription(event.target.value)} required />
-        </div>
-        <div>
-          <label>site_url</label>
-          <input type="text" value={site_url} onChange={(event) => setSiteUrl(event.target.value)} required />
-        </div>
-        <div>
           <label>image</label>
           <input type="text" value={image} onChange={(event) => setImage(event.target.value)} required />
         </div>
-        <button type="submit" className="btn btn-edit">Update</button>
+        <button type="submit" className="btn btn-create">Create</button>
       </form>
 
-      {createdBrand && (
-        <div>
-          <h3>Created Brand</h3>
-          <table>
-            <thead>
-              <BrandTableRow />
-            </thead>
-            <tbody>
-              <BrandTable brand={createdBrand} />
-            </tbody>
-          </table>
-        </div>
-      )}
+      {createdCoordiLook && (
 
+        <table>
+          <thead>
+            <CoordiLookTableRow />
+          </thead>
+          <tbody>
+            <CoordiLookTable key={createdCoordiLook.id} coordiLook={createdCoordiLook} />
+          </tbody>
+        </table>
+      )}
     </div>
   );
 };
 
-export default CreateBrand;
+export default CreateCoordiLook;
