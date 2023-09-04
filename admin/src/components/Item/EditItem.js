@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import getData from '../../api/getData';
 import putData from '../../api/putData';
+import deleteData from '../../api/deleteData';
 import FormField from '../FormField';
 
 import { ItemTableSingle } from '../Item/ItemTable';
@@ -62,11 +63,16 @@ const EditItem = () => {
         putData('item', id, newData, (updatedData) => { setUpdatedItem(updatedData); });
     };
 
+    const handleDelete = async (id) => {
+        await deleteData('item', id);
+        window.location.reload();
+    };
+
     return (
         <div>
             <div className="Main">
                 <h2>Edit {itemData.title} item</h2>
-                <ItemTableSingle item={itemData} />
+                <ItemTableSingle item={itemData} onDelete={handleDelete} />
             </div>
 
             <form onSubmit={handleSubmit}>
@@ -129,7 +135,7 @@ const EditItem = () => {
                 {updatedItem && (
                     <div>
                         <h2>Updated {updatedItem.title} item</h2>
-                        <ItemTableSingle item={updatedItem} />
+                        <ItemTableSingle item={updatedItem} onDelete={handleDelete} />
                     </div>
                 )}
             </div>

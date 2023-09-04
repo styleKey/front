@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import getData from '../../api/getData';
+import deleteData from '../../api/deleteData';
 
 import { CategoryTableSingle } from './CategoryTable';
 import { ItemTableMap } from '../Item/ItemTable';
@@ -21,6 +22,11 @@ function CategoryDetail() {
     fetchData();
   }, [id]);
 
+  const handleDelete = async (id) => {
+    await deleteData('item', id);
+    window.location.reload();
+  };
+
   return (
     <div>
       <div className="Main">
@@ -30,7 +36,7 @@ function CategoryDetail() {
 
       <div className="Sub">
         <h2>items</h2>
-        <ItemTableMap items={items} />
+        <ItemTableMap items={items} onDelete={handleDelete} />
       </div>
     </div>
   );

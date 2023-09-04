@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import getData from '../../api/getData';
 import postData from '../../api/postData';
+import deleteData from '../../api/deleteData';
+
 import FormField from '../FormField';
 
 import { BrandTableSingle } from './BrandTable';
@@ -39,6 +41,11 @@ const CreateBrand = () => {
     postData('brand', newData, (createdData) => { setCreatedBrand(createdData.brand); });
   };
 
+  const handleDelete = async (id) => {
+    await deleteData('brand', id);
+    window.location.reload();
+  };
+
   return (
     <div>
       <h2>Create New brand</h2>
@@ -67,7 +74,7 @@ const CreateBrand = () => {
         {createdBrand && (
           <div>
             <h3>Created {createdBrand.title} brand</h3>
-            <BrandTableSingle brand={createdBrand} />
+            <BrandTableSingle brand={createdBrand} onDelete={handleDelete} />
           </div>
         )}
       </div>

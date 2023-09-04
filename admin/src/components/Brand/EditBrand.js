@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import getData from '../../api/getData';
 import putData from '../../api/putData';
+import deleteData from '../../api/deleteData';
 import FormField from '../FormField';
-
 
 import { BrandTableSingle } from './BrandTable';
 
@@ -52,11 +52,16 @@ const EditBrand = () => {
         putData('brand', id, newData, (updatedData) => { setUpdatedBrand(updatedData.brand); });
     };
 
+    const handleDelete = async (id) => {
+        await deleteData('brand', id);
+        window.location.reload();
+    };
+
     return (
         <div>
             <div className="Main">
                 <h2>Edit {brandData.title} brand</h2>
-                <BrandTableSingle brand={brandData} />
+                <BrandTableSingle brand={brandData} onDelete={handleDelete} />
             </div>
 
             <form onSubmit={handleSubmit}>
@@ -90,7 +95,7 @@ const EditBrand = () => {
                 {updatedBrand && (
                     <div>
                         <h2>Updated {updatedBrand.title} brand</h2>
-                        <BrandTableSingle brand={updatedBrand} />
+                        <BrandTableSingle brand={updatedBrand} onDelete={handleDelete} />
                     </div>
                 )}
             </div>

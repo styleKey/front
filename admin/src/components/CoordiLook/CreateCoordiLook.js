@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import getData from '../../api/getData';
 import postData from '../../api/postData';
+import deleteData from '../../api/deleteData';
 import FormField from '../FormField';
 
 import { CoordiLookTableSingle } from './CoordiLookTable';
@@ -33,6 +34,11 @@ const CreateCoordiLook = () => {
     postData('coordilook', newData, (createdData) => { setCreatedCoordiLook(createdData); });
   };
 
+  const handleDelete = async (id) => {
+    await deleteData('coordiLook', id);
+    window.location.reload();
+  };
+
   return (
     <div>
       <h2>Create New coordilook</h2>
@@ -58,7 +64,7 @@ const CreateCoordiLook = () => {
         {createdCoordiLook && (
           <div>
             <h3>Created {createdCoordiLook.title} coordiLook</h3>
-            <CoordiLookTableSingle coordiLook={createdCoordiLook} />
+            <CoordiLookTableSingle coordiLook={createdCoordiLook} onDelete={handleDelete} />
           </div>
         )}
       </div>

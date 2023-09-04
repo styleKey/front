@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import getData from '../../api/getData';
 import putData from '../../api/putData';
+import deleteData from '../../api/deleteData';
 import FormField from '../FormField';
 
 import { CoordiLookTableSingle } from './CoordiLookTable';
@@ -42,11 +43,16 @@ const EditCoordiLook = () => {
         putData('coordilook', id, newData, (updatedData) => { setUpdatedCoordiLook(updatedData); });
     };
 
+    const handleDelete = async (id) => {
+        await deleteData('coordiLook', id);
+        window.location.reload();
+    };
+
     return (
         <div>
             <div className="Main">
                 <h2>Edit {coordiLookData.title} coordiLook</h2>
-                <CoordiLookTableSingle coordiLook={coordiLookData} />
+                <CoordiLookTableSingle coordiLook={coordiLookData} onDelete={handleDelete} />
             </ div>
 
             <form onSubmit={handleSubmit}>
@@ -76,7 +82,7 @@ const EditCoordiLook = () => {
                 {updatedCoordiLook && (
                     <div>
                         <h2>Updated {updatedCoordiLook.title} coordiLook</h2>
-                        <CoordiLookTableSingle coordiLook={updatedCoordiLook} />
+                        <CoordiLookTableSingle coordiLook={updatedCoordiLook} onDelete={handleDelete} />
                     </div>
                 )}
             </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import getData from '../../api/getData';
 import postData from '../../api/postData';
+import deleteData from '../../api/deleteData';
 import FormField from '../FormField';
 
 import { ItemTableSingle } from '../Item/ItemTable';
@@ -49,6 +50,11 @@ const CreateItem = () => {
     postData('item', newData, (createdData) => { setCreatedItem(createdData) });
   };
 
+  const handleDelete = async (id) => {
+    await deleteData('item', id);
+    window.location.reload();
+  };
+
   return (
     <div>
       <h2>Create New item</h2>
@@ -94,7 +100,7 @@ const CreateItem = () => {
         {createdItem && (
           <div>
             <h3>Created {createdItem.title} item</h3>
-            <ItemTableSingle item={createdItem} />
+            <ItemTableSingle item={createdItem} onDelete={handleDelete} />
           </div>
         )}
       </div>

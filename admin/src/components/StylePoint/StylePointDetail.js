@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import getData from '../../api/getData';
+import deleteData from '../../api/deleteData';
 
 import { StylePointTableSingle } from './StylePointTable';
 import { BrandTableMap } from '../Brand/BrandTable';
@@ -24,6 +25,17 @@ function StylePointDetail() {
     fetchData();
   }, [id]);
 
+  const handleDeletebrand = async (id) => {
+    await deleteData('brand', id);
+    window.location.reload();
+  };
+
+  const handleDeletecoordiLook = async (id) => {
+    await deleteData('coordilook', id);
+    window.location.reload();
+  };
+
+
   return (
     <div >
       <div className="Main">
@@ -33,12 +45,12 @@ function StylePointDetail() {
 
       <div className="Sub">
         <h2>brands</h2>
-        <BrandTableMap brands={brands} />
+        <BrandTableMap brands={brands} onDelete={handleDeletebrand} />
       </div>
 
       <div className="Sub">
         <h2>coordiLooks</h2>
-        <CoordiLookTableMap coordiLooks={coordiLooks} />
+        <CoordiLookTableMap coordiLooks={coordiLooks} onDelete={handleDeletecoordiLook} />
       </div>
     </div >
   );
