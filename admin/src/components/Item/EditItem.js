@@ -1,108 +1,70 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import getData from '../../api/getData';
+import putData from '../../api/putData';
 
-import ItemTableRow from './ItemTableRow';
-import ItemTable from './ItemTable';
+import { ItemTableSingle } from '../Item/ItemTable';
 
 const EditItem = () => {
     const { id } = useParams();
-
     const [brands, setBrands] = useState([]);
     const [categories, setCategories] = useState([]);
     const [coordiLooks, setCoordiLooks] = useState([]);
+    const [title, setTitle] = useState('');
+    const [sales_link, setSalesLink] = useState('');
+    const [image, setImage] = useState('');
 
     const [selectedBrand, setSelectedBrand] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedCoordiLook, setSelectedCoordiLook] = useState('');
-
-    const [title, setTitle] = useState('');
-    const [salesLink, setSalesLink] = useState('');
-    const [image, setImage] = useState('');
-
+    const [itemData, setItemData] = useState({});
     const [updatedItem, setUpdatedItem] = useState(null);
 
-    const [itemData, setItemData] = useState({});
-
     useEffect(() => {
-        const fetchBrands = async () => {
-            try {
-                const response = await axios.get('/admin/brands');
-                setBrands(response.data.content);
-            } catch (error) {
-                console.error('Error fetching brands:', error);
+        const fetchData = async () => {
+            const brandsdata = await getData('brands');
+            if (brandsdata) {
+                setBrands(brandsdata.content);
+            }
+            const coordilooksdata = await getData('coordilooks');
+            if (coordilooksdata) {
+                setCoordiLooks(coordilooksdata.content);
+            }
+            const categoriesdata = await getData('categories');
+            if (categoriesdata) {
+                setCategories(categoriesdata);
+            }
+            const data = await getData(`item/${id}`);
+            if (data) {
+                setItemData(data);
+                setSelectedBrand(data.brand.id);
+                setSelectedCoordiLook(data.coordilook.id);
+                setSelectedCategory(data.category.id);
+                setTitle(data.title);
+                setSalesLink(data.sales_link);
+                setImage(data.image);
             }
         };
-        fetchBrands();
-
-        const fetchCoordiLooks = async () => {
-            try {
-                const response = await axios.get('/admin/coordilooks');
-                setCoordiLooks(response.data.content);
-            } catch (error) {
-                console.error('Error fetching coordilooks:', error);
-            }
-        };
-        fetchCoordiLooks();
-
-        const fetchCategories = async () => {
-            try {
-                const response = await axios.get('/admin/categories');
-                setCategories(response.data);
-            } catch (error) {
-                console.error('Error fetching categories:', error);
-            }
-        };
-        fetchCategories();
-
-        const fetchItemDetails = async () => {
-            try {
-                const response = await axios.get(`/admin/item/${id}`);
-                setItemData(response.data);
-
-                setSelectedBrand(response.data.brand.id);
-                setSelectedCoordiLook(response.data.coordilook.id);
-                setSelectedCategory(response.data.category.id);
-
-                setTitle(response.data.title);
-                setSalesLink(response.data.sales_link);
-                setImage(response.data.image);
-            } catch (error) {
-                console.error('Error fetching item details:', error);
-            }
-        };
-        fetchItemDetails();
+        fetchData();
     }, [id]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const updatedItemData = {
+        const newData = {
             brandId: selectedBrand,
             coordilookId: selectedCoordiLook,
             categoryId: selectedCategory,
             title,
-            sales_link: salesLink,
+            sales_link,
             image,
         };
-
-        try {
-            const response = await axios.put(`/admin/item/${id}`, updatedItemData);
-            setUpdatedItem(response.data);
-        } catch (error) {
-        }
+        putData('item', id, newData, (updatedData) => { setUpdatedItem(updatedData); });
     };
 
     return (
         <div>
             <h2>Edit Item</h2>
-            <table>
-                <thead>
-                    <ItemTableRow />
-                </thead>
-                <tbody>
-                    <ItemTable key={itemData.id} item={itemData} />
-                </tbody>
-            </table>
+            <ItemTableSingle item={itemData} />
 
             <form onSubmit={handleSubmit}>
                 <div>
@@ -160,7 +122,7 @@ const EditItem = () => {
 
                 <div>
                     <label>sales_link</label>
-                    <input type="text" value={salesLink} onChange={(event) => setSalesLink(event.target.value)} />
+                    <input type="text" value={sales_link} onChange={(event) => setSalesLink(event.target.value)} />
                 </div>
 
                 <div>
@@ -174,14 +136,8 @@ const EditItem = () => {
             {updatedItem && (
                 <div>
                     <h3>Updated Item</h3>
-                    <table>
-                        <thead>
-                            <ItemTableRow />
-                        </thead>
-                        <tbody>
-                            <ItemTable item={updatedItem} />
-                        </tbody>
-                    </table>
+                    <ItemTableSingle item={updatedItem} />
+
                 </div>
             )}
         </div>

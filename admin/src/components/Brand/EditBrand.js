@@ -1,72 +1,46 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import getData from '../../api/getData';
+import putData from '../../api/putData';
 
-import BrandTableRow from './BrandTableRow';
-import BrandTable from './BrandTable';
+import { BrandTableSingle } from './BrandTable';
 
 const EditBrand = () => {
     const { id } = useParams();
-
     const [stylePoints, setStylePoints] = useState([]);
-    const [selectedStylePoint, setSelectedStylePoint] = useState('');
-
     const [title, setTitle] = useState('');
     const [title_eng, setTitleEng] = useState('');
     const [description, setDescription] = useState('');
     const [site_url, setSiteUrl] = useState('');
     const [image, setImage] = useState('');
 
+    const [selectedStylePoint, setSelectedStylePoint] = useState('');
+    const [brandData, setBrandData] = useState({});
     const [updatedBrand, setUpdatedBrand] = useState(null);
 
-    const [brandData, setBrandData] = useState({});
-
-
     useEffect(() => {
-        const fetchStylePoints = async () => {
-            try {
-                const response = await axios.get('/admin/stylepoints');
-                setStylePoints(response.data);
-            } catch (error) {
-                console.error('Error fetching stylepoints:', error);
+        const fetchData = async () => {
+            const stylepointsdata = await getData('stylepoints');
+            if (stylepointsdata) {
+                setStylePoints(stylepointsdata);
+            }
+            const data = await getData(`brand/${id}`);
+            if (data && data.brand) {
+                setBrandData(data);
+                setSelectedStylePoint(data.stylepointId);
+                setTitle(data.title);
+                setTitleEng(data.title_eng);
+                setDescription(data.description);
+                setSiteUrl(data.site_url);
+                setImage(data.image);
             }
         };
-        fetchStylePoints();
-
-        const fetchBrandDetails = async () => {
-            try {
-                const response = await axios.get(`/admin/brand/${id}`);
-                setBrandData(response.data.brand);
-
-                setSelectedStylePoint(response.data.brand.stylepointId); // Use default value if undefined
-                setTitle(response.data.brand.title);
-                setTitleEng(response.data.brand.title_eng);
-                setDescription(response.data.brand.description);
-                setSiteUrl(response.data.brand.site_url);
-                setImage(response.data.brand.image);
-            } catch (error) {
-                console.error('Error fetching brand details:', error);
-            }
-        };
-        fetchBrandDetails();
+        fetchData();
     }, [id]);
-
-
-    const handleDeleteBrand = async (brandId) => {
-        try {
-            await axios.delete(`/admin/brand/${brandId}`);
-            setBrandData(prevBrandData => {
-                return prevBrandData.id !== brandId;
-            });
-        } catch (error) {
-            console.error('Error deleting brand:', error);
-        }
-    };
-
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const updatedBrandData = {
+        const newData = {
             stylepointId: selectedStylePoint,
             title,
             title_eng,
@@ -74,25 +48,13 @@ const EditBrand = () => {
             site_url,
             image,
         };
-
-        try {
-            const response = await axios.put(`/admin/brand/${id}`, updatedBrandData);
-            setUpdatedBrand(response.data.brand);
-        } catch (error) {
-        }
+        putData('brand', id, newData, (updatedData) => { setUpdatedBrand(updatedData); });
     };
 
     return (
         <div>
             <h2>Edit Brand</h2>
-            <table>
-                <thead>
-                    <BrandTableRow />
-                </thead>
-                <tbody>
-                    <BrandTable key={brandData.id} brand={brandData} onDelete={handleDeleteBrand} />
-                </tbody>
-            </table>
+            <BrandTableSingle brand={brandData} />
 
             <form onSubmit={handleSubmit}>
                 <div>
@@ -136,14 +98,7 @@ const EditBrand = () => {
             {brandData && updatedBrand && (
                 <div>
                     <h3>Updated Brand</h3>
-                    <table>
-                        <thead>
-                            <BrandTableRow />
-                        </thead>
-                        <tbody>
-                            <BrandTable brand={updatedBrand} onDelete={handleDeleteBrand} />
-                        </tbody>
-                    </table>
+                    <BrandTableSingle brand={updatedBrand} />
                 </div>
             )}
         </div>

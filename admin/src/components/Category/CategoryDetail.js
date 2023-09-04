@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import getData from '../../api/getData';
 
-import CategoryTableRow from './CategoryTableRow';
-import CategoryTable from './CategoryTable';
-
-import ItemTableRow from '../Item/ItemTableRow';
-import ItemTable from '../Item/ItemTable'; // Import the ItemTable component
+import { CategoryTableSingle } from './CategoryTable';
+import { ItemTableMap } from '../Item/ItemTable';
 
 function CategoryDetail() {
   const { id } = useParams();
@@ -14,38 +11,20 @@ function CategoryDetail() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    fetch(`/admin/category/${id}`)
-      .then(response => response.json())
-      .then(data => {
+    const fetchData = async () => {
+      const data = await getData(`/admin/category/${id}`);
+      if (data) {
         setCategory(data.category);
         setItems(data.item);
-      });
+      }
+    };
+    fetchData();
   }, [id]);
 
   return (
     <div>
-      <h2>category</h2>
-      <table>
-        <thead>
-          <CategoryTableRow />
-        </thead>
-        <tbody>
-          <CategoryTable key={category.id} category={category} />
-        </tbody>
-      </table>
-
-      <h2>items</h2>
-      <Link to={`/item/create`} className="btn btn-create">create</Link>
-      <table>
-        <thead>
-          <ItemTableRow />
-        </thead>
-        <tbody>
-          {items && items.map(item => (
-            <ItemTable key={item.id} item={item} />
-          ))}
-        </tbody>
-      </table>
+      <CategoryTableSingle category={category} />
+      <ItemTableMap items={items} />
     </div>
   );
 }

@@ -1,95 +1,63 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import getData from '../../api/getData';
+import putData from '../../api/putData';
+import FormField from '../FormField';
 
-import StylePointTableRow from './StylePointTableRow';
-import StylePointTable from './StylePointTable';
+import { StylePointTableSingle } from './StylePointTable';
 
 const EditStylePoint = () => {
     const { id } = useParams();
-
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState('');
 
+    const [stylePointData, setStylePointData] = useState({});
     const [updatedStylePoint, setUpdatedStylePoint] = useState(null);
 
-    const [stylePointData, setStylePointData] = useState({});
-
     useEffect(() => {
-        const fetchStylePointDetails = async () => {
-            try {
-                const response = await axios.get(`/admin/stylepoint/${id}`);
-                setStylePointData(response.data.stylePoint);
-                
-                setTitle(response.data.stylePoint.title);
-                setDescription(response.data.stylePoint.description);
-                setImage(response.data.stylePoint.image);
-            } catch (error) {
-                console.error('Error fetching style point details:', error);
+        const fetchData = async () => {
+            const data = await getData(`stylepoint/${id}`);
+            if (data) {
+                setStylePointData(data.stylePoint);
+                setTitle(data.stylePoint.title);
+                setDescription(data.stylePoint.description);
+                setImage(data.stylePoint.image);
             }
         };
-        fetchStylePointDetails();
+        fetchData();
     }, [id]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const updatedStylePointData = {
+        const newData = {
             title,
             description,
             image,
         };
-
-        try {
-            const response = await axios.put(`/admin/stylepoint/${id}`, updatedStylePointData);
-            setUpdatedStylePoint(response.data);
-        } catch (error) {
-        }
+        putData('stylepoint', id, newData, (updatedData) => { setUpdatedStylePoint(updatedData); });
     };
 
     return (
         <div>
             <h2>Edit Style Point</h2>
-            <table>
-                <thead>
-                    <StylePointTableRow />
-                </thead>
-                <tbody>
-                    <StylePointTable key={stylePointData.id} stylePoint={stylePointData} />
-                </tbody>
-            </table>
+            <StylePointTableSingle stylePoint={stylePointData} />
 
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label>title</label>
-                    <input type="text" value={title} onChange={(event) => setTitle(event.target.value)} required />
-                </div>
-                <div>
-                    <label>description</label>
-                    <textarea value={description} onChange={(event) => setDescription(event.target.value)} required />
-                </div>
-                <div>
-                    <label>image</label>
-                    <input type="text" value={image} onChange={(event) => setImage(event.target.value)} required />
-                </div>
+                <FormField label="Title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+                <FormField label="Description" type="textarea" value={description} onChange={(e) => setDescription(e.target.value)} />
+                <FormField label="Image" type="text" value={image} onChange={(e) => setImage(e.target.value)} />
                 <button type="submit" className="btn btn-edit">edit</button>
             </form>
 
             {updatedStylePoint && (
                 <div>
                     <h3>Updated Style Point</h3>
-                    <table>
-                        <thead>
-                            <StylePointTableRow />
-                        </thead>
-                        <tbody>
-                            <StylePointTable stylePoint={updatedStylePoint} />
-                        </tbody>
-                    </table>
+                    <StylePointTableSingle stylePoint={updatedStylePoint} />
                 </div>
             )}
 
-            
+
         </div>
     );
 };

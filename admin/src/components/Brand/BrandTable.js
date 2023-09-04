@@ -1,11 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function BrandTable({ brand, onDelete }) {
+function BrandTableRow() {
+  return (
+    <tr>
+      <th>createdAt</th>
+      <th>updatedAt</th>
+      <th>id</th>
+      <th>title</th>
+      <th>title_eng</th>
+      <th>description</th>
+      <th>site_url</th>
+      <th>image</th>
+      <th>edit</th>
+      <th>delete</th>
+    </tr>
+  );
+}
 
+function BrandTable({ brand, onDelete }) {
   const handleDelete = () => {
     if (window.confirm(`Are you sure you want to delete this brand? ${brand.title}`)) {
-      onDelete(brand.id); 
+      onDelete(brand.id);
     }
   };
 
@@ -25,4 +41,41 @@ function BrandTable({ brand, onDelete }) {
   );
 }
 
-export default BrandTable;
+
+function BrandTableMap({ brands, onDelete }) {
+  return (
+    <div>
+      <h2>Brands</h2>
+      <Link to={`/brand/create`} className="btn btn-create">create</Link>
+      <table>
+        <thead>
+          <BrandTableRow />
+        </thead>
+        <tbody>
+          {brands && brands.map((brand) => (
+            <BrandTable key={brand.id} brand={brand} onDelete={onDelete} />
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+
+function BrandTableSingle({ brand, onDelete }) {
+  return (
+    <div>
+      <h2>{brand.title} Brand</h2>
+      <table>
+        <thead>
+          <BrandTableRow />
+        </thead>
+        <tbody>
+          <BrandTable key={brand.id} brand={brand} onDelete={onDelete} />
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+export { BrandTableMap, BrandTableSingle };

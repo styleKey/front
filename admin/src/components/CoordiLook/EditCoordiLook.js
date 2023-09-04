@@ -1,77 +1,51 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import getData from '../../api/getData';
+import putData from '../../api/putData';
 
-import CoordiLookTableRow from './CoordiLookTableRow';
-import CoordiLookTable from './CoordiLookTable';
+import { CoordiLookTableSingle } from './CoordiLookTable';
 
 const EditCoordiLook = () => {
     const { id } = useParams();
-
     const [stylePoints, setStylePoints] = useState([]);
-    const [selectedStylePoint, setSelectedStylePoint] = useState('');
-
     const [title, setTitle] = useState('');
     const [image, setImage] = useState('');
 
+    const [selectedStylePoint, setSelectedStylePoint] = useState('');
+    const [coordiLookData, setCoordiLookData] = useState({});
     const [updatedCoordiLook, setUpdatedCoordiLook] = useState(null);
 
-    const [coordiLookData, setCoordiLookData] = useState({});
-
-
     useEffect(() => {
-        const fetchStylePoints = async () => {
-            try {
-                const response = await axios.get('/admin/stylepoints');
-                setStylePoints(response.data);
-            } catch (error) {
-                console.error('Error fetching stylepoints:', error);
+        const fetchData = async () => {
+            const stylepointsdata = await getData('stylepoints');
+            if (stylepointsdata) {
+                setStylePoints(stylepointsdata.content);
+            }
+            const data = await getData(`coordilook/${id}`);
+            if (data) {
+                setCoordiLookData(data.coordiLook);
+                setSelectedStylePoint(data.coordiLook.stylepointId);
+                setTitle(data.coordiLook.title);
+                setImage(data.coordiLook.image);
             }
         };
-        fetchStylePoints();
-
-        const fetchCoordiLookDetails = async () => {
-            try {
-                const response = await axios.get(`/admin/coordilook/${id}`);
-                setCoordiLookData(response.data.coordiLook);
-
-                setSelectedStylePoint(response.data.coordiLook.stylepointId || ''); // Use default value if undefined
-                setTitle(response.data.coordiLook.title);
-                setImage(response.data.coordiLook.image);
-            } catch (error) {
-                console.error('Error fetching coordilook details:', error);
-            }
-        };
-        fetchCoordiLookDetails();
+        fetchData();
     }, [id]);
-
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const updatedCoordiLookData = {
+        const newData = {
             stylepointId: selectedStylePoint,
             title,
             image,
         };
-
-        try {
-            const response = await axios.put(`/admin/coordilook/${id}`, updatedCoordiLookData);
-            setUpdatedCoordiLook(response.data);
-        } catch (error) {
-        }
+        putData('brand', id, newData, (updatedData) => { setUpdatedCoordiLook(updatedData); });
     };
 
     return (
         <div>
             <h2>Edit CoordiLook</h2>
-            <table>
-                <thead>
-                    <CoordiLookTableRow />
-                </thead>
-                <tbody>
-                    <CoordiLookTable key={coordiLookData.id} coordiLook={coordiLookData} />
-                </tbody>
-            </table>
+            <CoordiLookTableSingle coordiLook={coordiLookData} />
 
             <form onSubmit={handleSubmit}>
                 <div>
@@ -103,14 +77,7 @@ const EditCoordiLook = () => {
             {updatedCoordiLook && (
                 <div>
                     <h3>Updated CoordiLook</h3>
-                    <table>
-                        <thead>
-                            <CoordiLookTableRow />
-                        </thead>
-                        <tbody>
-                            <CoordiLookTable coordiLook={updatedCoordiLook} />
-                        </tbody>
-                    </table>
+                    <CoordiLookTableSingle coordiLook={updatedCoordiLook} />
                 </div>
             )}
         </div>

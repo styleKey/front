@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import getData from '../../api/getData';
 
-import CoordiLookTableRow from './CoordiLookTableRow';
-import CoordiLookTable from './CoordiLookTable';
-
-import ItemTableRow from '../Item/ItemTableRow';
-import Item from '../Item/ItemTable';
+import { CoordiLookTableSingle } from './CoordiLookTable';
+import { ItemTableMap } from '../Item/ItemTable';
 
 function CoordiLookDetail() {
   const { id } = useParams();
@@ -14,38 +11,20 @@ function CoordiLookDetail() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    fetch(`/admin/coordilook/${id}`)
-      .then(response => response.json())
-      .then(data => {
+    const fetchData = async () => {
+      const data = await getData(`/admin/coordilook/${id}`);
+      if (data) {
         setCoordiLook(data.coordiLook);
         setItems(data.items);
-      })
+      }
+    };
+    fetchData();
   }, [id]);
 
   return (
     <div>
-      <h2>coordilook</h2>
-      <table>
-        <thead>
-          <CoordiLookTableRow />
-        </thead>
-        <tbody>
-          <CoordiLookTable key={coordiLook.id} coordiLook={coordiLook} />
-        </tbody>
-      </table>
-
-      <h2>items</h2>
-      <Link to={`/item/create`} className="btn btn-create">create</Link>
-      <table>
-        <thead>
-          <ItemTableRow />
-        </thead>
-        <tbody>
-          {items && items.map(item => (
-            <Item key={item.id} item={item} />
-          ))}
-        </tbody>
-      </table>
+      <CoordiLookTableSingle coordiLook={coordiLook} />
+      <ItemTableMap items={items} />
     </div>
   );
 }

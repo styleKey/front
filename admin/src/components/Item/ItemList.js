@@ -1,41 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-
-import ItemTableRow from './ItemTableRow';
-import ItemTable from './ItemTable';
+import getData from '../../api/getData';
+import { ItemTableMap } from '../Item/ItemTable';
 
 function ItemList({ coordiLookId }) {
-
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    const fetchItems = async () => {
-      try {
-        const response = await axios.get('/admin/items');
-        setItems(response.data.content);
-      } catch (error) {
-        console.error('Error fetching items', error);
+    const fetchData = async () => {
+      const data = await getData('items');
+      if (data) {
+        setItems(data.content);
       }
     };
-    fetchItems();
+    fetchData();
   }, []);
-
 
   return (
     <div>
-      <h2>items</h2>
-      <Link to={`/item/create`} className="btn btn-create">create</Link>
-      <table>
-        <thead>
-          <ItemTableRow />
-        </thead>
-        <tbody>
-          {items && items.map(item => (
-            <ItemTable key={item.id} item={item} />
-          ))}
-        </tbody>
-      </table>
+      <ItemTableMap items={items} />
     </div>
   );
 }

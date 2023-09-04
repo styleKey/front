@@ -1,74 +1,51 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import getData from '../../api/getData';
+import postData from '../../api/postData';
 
-import ItemTableRow from './ItemTableRow';
-import ItemTable from './ItemTable';
+import { ItemTableSingle } from '../Item/ItemTable';
 
 const CreateItem = () => {
   const [brands, setBrands] = useState([]);
   const [categories, setCategories] = useState([]);
   const [coordiLooks, setCoordiLooks] = useState([]);
+  const [title, setTitle] = useState('');
+  const [sales_link, setSalesLink] = useState('');
+  const [image, setImage] = useState('');
 
   const [selectedBrand, setSelectedBrand] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedCoordiLook, setSelectedCoordiLook] = useState('');
-
-  const [title, setTitle] = useState('');
-  const [salesLink, setSalesLink] = useState('');
-  const [image, setImage] = useState('');
-
   const [createdItem, setCreatedItem] = useState(null);
 
   useEffect(() => {
-    const fetchBrands = async () => {
-      try {
-        const response = await axios.get('/admin/brands');
-        setBrands(response.data.content);
-      } catch (error) {
-        console.error('Error fetching brands:', error);
+    const fetchData = async () => {
+      const brandsData = await getData('brands');
+      if (brandsData) {
+        setBrands(brandsData.content);
+      }
+      const coordiLooksData = await getData('coordilooks');
+      if (coordiLooksData) {
+        setCoordiLooks(coordiLooksData.content);
+      }
+      const categoriesData = await getData('categories');
+      if (categoriesData) {
+        setCategories(categoriesData);
       }
     };
-    fetchBrands();
-
-    const fetchCoordiLooks = async () => {
-      try {
-        const response = await axios.get('/admin/coordilooks');
-        setCoordiLooks(response.data.content);
-      } catch (error) {
-        console.error('Error fetching coordilooks:', error);
-      }
-    };
-    fetchCoordiLooks();
-
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get('/admin/categories');
-        setCategories(response.data);
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-      }
-    };
-    fetchCategories();
+    fetchData();
   }, []);
-
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const newItem = {
+    const newData = {
       brandId: selectedBrand,
       categoryId: selectedCategory,
       coordilookId: selectedCoordiLook,
       title,
-      sales_link: salesLink,
+      sales_link,
       image,
     };
-
-    try {
-      const response = await axios.post('/admin/item/create', newItem);
-      setCreatedItem(response.data);
-    } catch (error) {
-    }
-
+    postData('item', newData, (createdData) => { setCreatedItem(createdData) });
   };
 
   return (
@@ -77,49 +54,30 @@ const CreateItem = () => {
       <form onSubmit={handleSubmit}>
         <div>
           <label>brand</label>
-          <select
-            value={selectedBrand}
-            onChange={(event) => setSelectedBrand(event.target.value)}
-            required
-          >
+          <select value={selectedBrand} onChange={(event) => setSelectedBrand(event.target.value)} required>
             <option value="">brand</option>
             {brands && brands.map((brand) => (
-              <option key={brand.id} value={brand.id}>
-                {brand.title}
-              </option>
+              <option key={brand.id} value={brand.id}>{brand.title}</option>
             ))}
           </select>
         </div>
 
-
         <div>
           <label>coordilook</label>
-          <select
-            value={selectedCoordiLook}
-            onChange={(event) => setSelectedCoordiLook(event.target.value)}
-            required
-          >
+          <select value={selectedCoordiLook} onChange={(event) => setSelectedCoordiLook(event.target.value)} required>
             <option value="">coordilook</option>
             {coordiLooks && coordiLooks.map((coordiLook) => (
-              <option key={coordiLook.id} value={coordiLook.id}>
-                {coordiLook.title}
-              </option>
+              <option key={coordiLook.id} value={coordiLook.id}>{coordiLook.title}</option>
             ))}
           </select>
         </div>
 
         <div>
           <label>category</label>
-          <select
-            value={selectedCategory}
-            onChange={(event) => setSelectedCategory(event.target.value)}
-            required
-          >
+          <select value={selectedCategory} onChange={(event) => setSelectedCategory(event.target.value)} required>
             <option value="">category</option>
             {categories && categories.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.title}
-              </option>
+              <option key={category.id} value={category.id}>{category.title}</option>
             ))}
           </select>
         </div>
@@ -128,10 +86,12 @@ const CreateItem = () => {
           <label>title</label>
           <input type="text" value={title} onChange={(event) => setTitle(event.target.value)} required />
         </div>
+
         <div>
           <label>sales_link</label>
-          <input type="text" value={salesLink} onChange={(event) => setSalesLink(event.target.value)} />
+          <input type="text" value={sales_link} onChange={(event) => setSalesLink(event.target.value)} />
         </div>
+
         <div>
           <label>image</label>
           <input type="text" value={image} onChange={(event) => setImage(event.target.value)} required />
@@ -142,14 +102,7 @@ const CreateItem = () => {
       {createdItem && (
         <div>
           <h3>Created Item</h3>
-          <table>
-            <thead>
-              <ItemTableRow />
-            </thead>
-            <tbody>
-              <ItemTable key={createdItem.id} item={createdItem} />
-            </tbody>
-          </table>
+          <ItemTableSingle item={createdItem} />
         </div>
       )}
 

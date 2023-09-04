@@ -1,50 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
+import getData from '../../api/getData';
 
-import BrandTableRow from './BrandTableRow';
-import BrandTable from './BrandTable';
+import { BrandTableMap } from './BrandTable';
 
 const BrandList = () => {
   const [brands, setBrands] = useState([]);
 
   useEffect(() => {
-    const fetchBrands = async () => {
-      try {
-        const response = await axios.get('/admin/brands');
-        setBrands(response.data.content);
-      } catch (error) {
-        console.error('Error fetching brands:', error);
+    const fetchData = async () => {
+      const data = await getData('brands');
+      if (data) {
+        setBrands(data.content);
       }
     };
-    fetchBrands();
+    fetchData();
   }, []);
-
-
-  const handleDeleteBrand = async (brandId) => {
-    try {
-      await axios.delete(`/admin/brand/${brandId}`);
-      const updatedBrands = brands.filter((brand) => brand.id !== brandId);
-      setBrands(updatedBrands);
-    } catch (error) {
-      console.error('Error deleting brand:', error);
-    }
-  };
 
   return (
     <div>
-      <h2>brands</h2>
-      <Link to={`/brand/create`} className="btn btn-create">create</Link>
-      <table>
-        <thead>
-          <BrandTableRow />
-        </thead>
-        <tbody>
-          {brands && brands.map((brand) => (
-            <BrandTable key={brand.id} brand={brand} onDelete={handleDeleteBrand} />
-          ))}
-        </tbody>
-      </table>
+      <BrandTableMap brands={brands} />
     </div>
   );
 }

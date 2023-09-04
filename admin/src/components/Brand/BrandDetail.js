@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import getData from '../../api/getData';
 
-import BrandTableRow from './BrandTableRow';
-import BrandTable from './BrandTable';
-
-import ItemTableRow from '../Item/ItemTableRow';
-import ItemTable from '../Item/ItemTable';
+import { BrandTableSingle } from './BrandTable';
+import { ItemTableMap } from '../Item/ItemTable';
 
 function BrandDetail() {
   const { id } = useParams();
@@ -14,39 +11,20 @@ function BrandDetail() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    fetch(`/admin/brand/${id}`)
-      .then(response => response.json())
-      .then(data => {
+    const fetchData = async () => {
+      const data = await getData(`/admin/brand/${id}`);
+      if (data) {
         setBrand(data.brand);
         setItems(data.item);
-      });
+      }
+    };
+    fetchData();
   }, [id]);
 
   return (
     <div>
-      <h2>brand</h2>
-      <table>
-        <thead>
-          <BrandTableRow />
-        </thead>
-        <tbody>
-          <BrandTable key={brand.id} brand={brand} />
-        </tbody>
-      </table>
-
-      <h2>items</h2>
-      <Link to={`/item/create`} className="btn btn-create">create</Link>
-      <table>
-        <thead>
-          <ItemTableRow />
-        </thead>
-        <tbody>
-          {items && items.map(item => (
-            <ItemTable key={item.id} item={item} />
-          ))}
-        </tbody>
-      </table>
-
+      <BrandTableSingle brand={brand} />
+      <ItemTableMap items={items} />
     </div>
   );
 }

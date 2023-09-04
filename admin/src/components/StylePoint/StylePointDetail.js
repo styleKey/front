@@ -1,16 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
+import getData from '../../api/getData';
 
-import StylePointTableRow from './StylePointTableRow';
-import StylePointTable from './StylePointTable';
-
-import BrandTableRow from '../Brand/BrandTableRow';
-import BrandTable from '../Brand/BrandTable';
-
-import CoordiLookTableRow from '../CoordiLook/CoordiLookTableRow';
-import CoordiLookTable from '../CoordiLook/CoordiLookTable';
+import { StylePointTableSingle } from './StylePointTable';
+import { BrandTableMap } from '../Brand/BrandTable';
+import { CoordiLookTableMap } from '../CoordiLook/CoordiLookTable';
 
 function StylePointDetail() {
   const { id } = useParams();
@@ -19,61 +13,22 @@ function StylePointDetail() {
   const [coordiLooks, setCoordiLooks] = useState([]);
 
   useEffect(() => {
-    fetch(`/admin/stylepoint/${id}`)
-      .then(response => response.json())
-      .then(data => {
+    const fetchData = async () => {
+      const data = await getData(`stylepoint/${id}`);
+      if (data) {
         setStylePoint(data.stylePoint);
         setBrands(data.brands);
         setCoordiLooks(data.coordilooks);
-      });
+      }
+    };
+    fetchData();
   }, [id]);
-
-  const handleDeleteBrand = async (brandId) => {
-    try {
-      await axios.delete(`/admin/brand/${brandId}`);
-      setBrands(prevBrands => prevBrands.filter(brand => brand.id !== brandId));
-    } catch (error) {
-      console.error('Error deleting brand:', error);
-    }
-  };
 
   return (
     <div >
-      <h2>stylepoint</h2>
-      <table>
-        <thead>
-          <StylePointTableRow />
-        </thead>
-        <tbody>
-          <StylePointTable key={stylePoint.id} stylePoint={stylePoint} />
-        </tbody>
-      </table>
-
-      <h2>brands</h2>
-      <Link to={`/brand/create`} className="btn btn-create">create</Link>
-      <table>
-        <thead>
-          <BrandTableRow />
-        </thead>
-        <tbody>
-          {brands && brands.map((brand) => (
-            <BrandTable key={brand.id} brand={brand} onDelete={handleDeleteBrand} />
-          ))}
-        </tbody>
-      </table>
-
-      <h2>coordilooks</h2>
-      <Link to={`/coordilook/create`} className="btn btn-create">create</Link>
-      <table>
-        <thead>
-          <CoordiLookTableRow />
-        </thead>
-        <tbody>
-          {coordiLooks && coordiLooks.map(coordiLook => (
-            <CoordiLookTable key={coordiLook.id} coordiLook={coordiLook} />
-          ))}
-        </tbody>
-      </table>
+      <StylePointTableSingle stylePoint={stylePoint} />
+      <BrandTableMap brands={brands} />
+      <CoordiLookTableMap coordiLooks={coordiLooks} />
     </div >
   );
 }
