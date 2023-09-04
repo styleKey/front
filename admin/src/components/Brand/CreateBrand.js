@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import getData from '../../api/getData';
 import postData from '../../api/postData';
+import FormField from '../FormField';
 
 import { BrandTableSingle } from './BrandTable';
 
@@ -40,7 +41,8 @@ const CreateBrand = () => {
 
   return (
     <div>
-      <h2>Create New Brand</h2>
+      <h2>Create New brand</h2>
+
       <form onSubmit={handleSubmit}>
         <div>
           <label>stylepoint</label>
@@ -52,41 +54,23 @@ const CreateBrand = () => {
           </select>
         </div>
 
-        <div>
-          <label>title</label>
-          <input type="text" value={title} onChange={(event) => setTitle(event.target.value)} required />
-        </div>
+        <FormField label="title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+        <FormField label="title_eng" type="text" value={title_eng} onChange={(e) => setTitleEng(e.target.value)} />
+        <FormField label="description" type="textarea" value={description} onChange={(e) => setDescription(e.target.value)} />
+        <FormField label="site_url" type="text" value={site_url} onChange={(e) => setSiteUrl(e.target.value)} />
+        <FormField label="image" type="text" value={image} onChange={(e) => setImage(e.target.value)} />
 
-        <div>
-          <label>title_eng</label>
-          <input type="text" value={title_eng} onChange={(event) => setTitleEng(event.target.value)} required />
-        </div>
-
-        <div>
-          <label>description</label>
-          <textarea value={description} onChange={(event) => setDescription(event.target.value)} required />
-        </div>
-
-        <div>
-          <label>site_url</label>
-          <input type="text" value={site_url} onChange={(event) => setSiteUrl(event.target.value)} required />
-        </div>
-
-        <div>
-          <label>image</label>
-          <input type="text" value={image} onChange={(event) => setImage(event.target.value)} required />
-        </div>
-
-        <button type="submit" className="btn btn-edit">edit</button>
+        <button type="submit" className="btn btn-create">create</button>
       </form>
 
-      {createdBrand && (
-        <div>
-          <h3>Created Brand</h3>
-          <BrandTableSingle brand={createdBrand} />
-        </div>
-      )}
-
+      <div className="New">
+        {createdBrand && (
+          <div>
+            <h3>Created {createdBrand.title} brand</h3>
+            <BrandTableSingle brand={createdBrand} />
+          </div>
+        )}
+      </div>
     </div>
   );
 };

@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-import '../styles/Navbar.css';
-
 function Navbar() {
 
   const [stylePoints, setStylePoints] = useState([]);
@@ -23,41 +21,13 @@ function Navbar() {
   return (
     <nav>
       <div>
-        <div>
-          <a href="/">
-            stylepoint
-          </a>
-        </div>
-
         <ul>
+          <li><a href="/" className="Nav"> stylepoint </a> </li>
           {stylePoints.map((stylePoint) => (
             <li key={stylePoint.id}>
               <Link to={`/stylepoint/${stylePoint.id}`} className="btn btn-title">{stylePoint.title}</Link>
             </li>
           ))}
-        </ul>
-
-        <ul>
-          <li>
-            <a href="/brands">
-              brands
-            </a>
-          </li>
-          <li >
-            <a href="/coordilooks">
-              coordilooks
-            </a>
-          </li>
-          <li >
-            <a href="/items">
-              items
-            </a>
-          </li>
-          <li >
-            <a href="/categories">
-              categories
-            </a>
-          </li>
         </ul>
       </div>
     </nav >

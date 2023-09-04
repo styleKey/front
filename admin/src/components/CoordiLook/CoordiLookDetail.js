@@ -12,7 +12,7 @@ function CoordiLookDetail() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getData(`/admin/coordilook/${id}`);
+      const data = await getData(`/coordilook/${id}`);
       if (data) {
         setCoordiLook(data.coordiLook);
         setItems(data.items);
@@ -23,8 +23,15 @@ function CoordiLookDetail() {
 
   return (
     <div>
-      <CoordiLookTableSingle coordiLook={coordiLook} />
-      <ItemTableMap items={items} />
+      <div className="Main">
+        <h1>{coordiLook.title} coordiLook</h1>
+        <CoordiLookTableSingle coordiLook={coordiLook} />
+      </div>
+
+      <div className="Sub">
+        <h2>items</h2>
+        <ItemTableMap items={items} />
+      </div>
     </div>
   );
 }

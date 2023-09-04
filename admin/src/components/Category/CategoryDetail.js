@@ -12,7 +12,7 @@ function CategoryDetail() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getData(`/admin/category/${id}`);
+      const data = await getData(`/category/${id}`);
       if (data) {
         setCategory(data.category);
         setItems(data.item);
@@ -23,8 +23,15 @@ function CategoryDetail() {
 
   return (
     <div>
-      <CategoryTableSingle category={category} />
-      <ItemTableMap items={items} />
+      <div className="Main">
+        <h1>{category.title} category</h1>
+        <CategoryTableSingle category={category} />
+      </div>
+
+      <div className="Sub">
+        <h2>items</h2>
+        <ItemTableMap items={items} />
+      </div>
     </div>
   );
 }

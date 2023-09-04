@@ -6,7 +6,6 @@ function CategoryTableRow() {
     <tr>
       <th>id</th>
       <th>title</th>
-      <th>edit</th>
     </tr>
   );
 }
@@ -23,7 +22,6 @@ function CategoryTable({ category }) {
 function CategoryTableMap({ categories }) {
   return (
     <div>
-      <h2>Categories</h2>
       <table>
         <thead>
           <CategoryTableRow />
@@ -41,7 +39,6 @@ function CategoryTableMap({ categories }) {
 function CategoryTableSingle({ category }) {
   return (
     <div>
-      <h2>{category.title} Category</h2>
       <table>
         <thead>
           <CategoryTableRow />

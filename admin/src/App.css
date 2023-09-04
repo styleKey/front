@@ -1,53 +1,161 @@
-/* Reset some default styling */
-body{
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-  }
-  
-  /* Styling for tables */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    border: 1px solid #ccc;
-  }
-  
-  th, td {
-    padding: 10px;
-    text-align: left;
-  }
-  
-  /* Styling for buttons */
-  .btn {
-    padding: 5px 10px;
-    background-color: #333;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 3px;
-    text-decoration: none;
-  }
-  
-  .btn-title {
-    background-color: #007bff;
-  }
+/* Reset default margin and padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  .btn-create {
-    background-color: #da7b00;
-  }
+body {
+  background-color: #f0f0f0;
+  color: #333;
+  font-family: Arial, sans-serif;
+}
 
-  .btn-edit {
-    background-color: #333;
-  }
-  
-  .btn-delete {
-    background-color: #d70808;
-  }
-  
-  
-  /* Styling for images */
-  img {
-    max-width: 100%;
-    height: auto;
-  }
-  
+/* App-container */
+.App-container {
+  max-width: 1200px; 
+  margin: 0 auto; 
+}
+
+/* nav */
+nav {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  display: flex; 
+  justify-content: center; 
+  padding: 20px;
+  text-decoration: none;
+}
+
+.Nav {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  font-size: 25px;
+  padding: 10px 20px;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+nav li {
+  margin-right: 10px;
+}
+
+/* btn */
+.btn {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #444;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.btn:hover {
+  background-color: #555;
+}
+
+.btn-title {
+  background-color: #444;
+}
+
+.btn-title:hover {
+  background-color: #555;;
+}
+
+.btn-create {
+  background-color: #ca9b00;
+}
+
+.btn-create:hover {
+  background-color: #cfb75a;
+}
+
+.btn-delete {
+  background-color: #af0000;
+}
+
+.btn-delete:hover {
+  background-color: #bd4d4d;
+}
+
+/* table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 30px;
+  font-size: 15px;
+}
+
+table th, table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+/* form */
+form {
+  margin: 20px 0;
+}
+
+label {
+  font-weight: bold;
+}
+
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  appearance: none;
+}
+
+
+.Main {
+  padding: 20px;
+  background-color: #fff;
+  box-sizing: border-box;
+  transition: 0.5s; 
+}
+
+.Sub {
+  padding: 20px;
+  box-sizing: border-box;
+  transition: 0.5s; 
+}
+
+.Sub:hover {
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #eaeaea;
+}
+
+.New {
+  padding: 20px;
+  background-color: #eaeaea;
+  box-sizing: border-box;
+}

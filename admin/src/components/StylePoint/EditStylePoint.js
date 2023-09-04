@@ -40,24 +40,26 @@ const EditStylePoint = () => {
 
     return (
         <div>
-            <h2>Edit Style Point</h2>
-            <StylePointTableSingle stylePoint={stylePointData} />
+            <div className="Main">
+                <h2>Edit {stylePointData.title} stylepoint</h2>
+                <StylePointTableSingle stylePoint={stylePointData} />
+            </div>
 
             <form onSubmit={handleSubmit}>
-                <FormField label="Title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-                <FormField label="Description" type="textarea" value={description} onChange={(e) => setDescription(e.target.value)} />
-                <FormField label="Image" type="text" value={image} onChange={(e) => setImage(e.target.value)} />
+                <FormField label="title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+                <FormField label="description" type="textarea" value={description} onChange={(e) => setDescription(e.target.value)} />
+                <FormField label="image" type="text" value={image} onChange={(e) => setImage(e.target.value)} />
                 <button type="submit" className="btn btn-edit">edit</button>
             </form>
 
-            {updatedStylePoint && (
-                <div>
-                    <h3>Updated Style Point</h3>
-                    <StylePointTableSingle stylePoint={updatedStylePoint} />
-                </div>
-            )}
-
-
+            <div className="New">
+                {updatedStylePoint && (
+                    <div>
+                        <h2>Updated {updatedStylePoint.title} stylepoint</h2>
+                        <StylePointTableSingle stylePoint={updatedStylePoint} />
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

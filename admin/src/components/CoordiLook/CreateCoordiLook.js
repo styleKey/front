@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import getData from '../../api/getData';
 import postData from '../../api/postData';
+import FormField from '../FormField';
 
 import { CoordiLookTableSingle } from './CoordiLookTable';
 
@@ -34,7 +35,8 @@ const CreateCoordiLook = () => {
 
   return (
     <div>
-      <h2>Create New CoordiLook</h2>
+      <h2>Create New coordilook</h2>
+
       <form onSubmit={handleSubmit}>
         <div>
           <label>stylepoint</label>
@@ -46,25 +48,20 @@ const CreateCoordiLook = () => {
           </select>
         </div>
 
-        <div>
-          <label>title</label>
-          <input type="text" value={title} onChange={(event) => setTitle(event.target.value)} required />
-        </div>
+        <FormField label="title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+        <FormField label="image" type="text" value={image} onChange={(e) => setImage(e.target.value)} />
 
-        <div>
-          <label>image</label>
-          <input type="text" value={image} onChange={(event) => setImage(event.target.value)} required />
-        </div>
-
-        <button type="submit" className="btn btn-create">Create</button>
+        <button type="submit" className="btn btn-create">create</button>
       </form>
 
-      {createdCoordiLook && (
-        <div>
-          <h3>Created CoordiLook</h3>
-          <CoordiLookTableSingle coordiLook={createdCoordiLook} />
-        </div>
-      )}
+      <div className="New">
+        {createdCoordiLook && (
+          <div>
+            <h3>Created {createdCoordiLook.title} coordiLook</h3>
+            <CoordiLookTableSingle coordiLook={createdCoordiLook} />
+          </div>
+        )}
+      </div>
     </div>
   );
 };

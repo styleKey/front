@@ -30,10 +30,23 @@ function ItemDetail() {
 
   return (
     <div>
-      <ItemTableSingle item={item} />
-      <BrandTableSingle brand={brand} />
-      <CoordiLookTableSingle coordiLook={coordiLook} />
-      <CategoryTableSingle category={category} />
+      <div className="Main">
+        <h1>{item.title} item</h1>
+        <ItemTableSingle item={item} />
+      </div>
+
+      <div className="Sub">
+        <h2>brand</h2>
+        <BrandTableSingle brand={brand} />
+      </div>
+      <div className="Sub">
+        <h2>coordiLook</h2>
+        <CoordiLookTableSingle coordiLook={coordiLook} />
+      </div>
+      <div className="Sub">
+        <h2>category</h2>
+        <CategoryTableSingle category={category} />
+      </div>
     </div>
   );
 }

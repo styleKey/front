@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import getData from '../../api/getData';
 import putData from '../../api/putData';
+import FormField from '../FormField';
 
 import { ItemTableSingle } from '../Item/ItemTable';
 
@@ -63,8 +64,10 @@ const EditItem = () => {
 
     return (
         <div>
-            <h2>Edit Item</h2>
-            <ItemTableSingle item={itemData} />
+            <div className="Main">
+                <h2>Edit {itemData.title} item</h2>
+                <ItemTableSingle item={itemData} />
+            </div>
 
             <form onSubmit={handleSubmit}>
                 <div>
@@ -115,31 +118,21 @@ const EditItem = () => {
                     </select>
                 </div>
 
-                <div>
-                    <label>title</label>
-                    <input type="text" value={title} onChange={(event) => setTitle(event.target.value)} required />
-                </div>
-
-                <div>
-                    <label>sales_link</label>
-                    <input type="text" value={sales_link} onChange={(event) => setSalesLink(event.target.value)} />
-                </div>
-
-                <div>
-                    <label>image</label>
-                    <input type="text" value={image} onChange={(event) => setImage(event.target.value)} required />
-                </div>
+                <FormField label="title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+                <FormField label="sales_link" type="text" value={sales_link} onChange={(e) => setTitle(e.target.value)} />
+                <FormField label="image" type="text" value={image} onChange={(e) => setImage(e.target.value)} />
 
                 <button type="submit" className="btn btn-edit">Edit</button>
             </form>
 
-            {updatedItem && (
-                <div>
-                    <h3>Updated Item</h3>
-                    <ItemTableSingle item={updatedItem} />
-
-                </div>
-            )}
+            <div className="New">
+                {updatedItem && (
+                    <div>
+                        <h2>Updated {updatedItem.title} item</h2>
+                        <ItemTableSingle item={updatedItem} />
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

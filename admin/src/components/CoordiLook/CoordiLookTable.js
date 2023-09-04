@@ -15,7 +15,6 @@ function CoordiLookTableRow() {
     );
 }
 
-
 function CoordiLookTable({ coordiLook, onDelete }) {
     const handleDelete = () => {
         if (window.confirm(`Are you sure you want to delete this coordiLook? ${coordiLook.title}`)) {
@@ -39,7 +38,6 @@ function CoordiLookTable({ coordiLook, onDelete }) {
 function CoordiLookTableMap({ coordiLooks, onDelete }) {
     return (
         <div>
-            <h2>CoordiLooks</h2>
             <Link to={`/coordiLook/create`} className="btn btn-create">create</Link>
             <table>
                 <thead>
@@ -58,7 +56,6 @@ function CoordiLookTableMap({ coordiLooks, onDelete }) {
 function CoordiLookTableSingle({ coordiLook, onDelete }) {
     return (
         <div>
-            <h2>{coordiLook.title} CoordiLook</h2>
             <table>
                 <thead>
                     <CoordiLookTableRow />

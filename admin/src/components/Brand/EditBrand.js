@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import getData from '../../api/getData';
 import putData from '../../api/putData';
+import FormField from '../FormField';
+
 
 import { BrandTableSingle } from './BrandTable';
 
@@ -25,14 +27,13 @@ const EditBrand = () => {
                 setStylePoints(stylepointsdata);
             }
             const data = await getData(`brand/${id}`);
-            if (data && data.brand) {
-                setBrandData(data);
-                setSelectedStylePoint(data.stylepointId);
-                setTitle(data.title);
-                setTitleEng(data.title_eng);
-                setDescription(data.description);
-                setSiteUrl(data.site_url);
-                setImage(data.image);
+            if (data) {
+                setBrandData(data.brand);
+                setTitle(data.brand.title);
+                setTitleEng(data.brand.title_eng);
+                setDescription(data.brand.description);
+                setSiteUrl(data.brand.site_url);
+                setImage(data.brand.image);
             }
         };
         fetchData();
@@ -48,13 +49,15 @@ const EditBrand = () => {
             site_url,
             image,
         };
-        putData('brand', id, newData, (updatedData) => { setUpdatedBrand(updatedData); });
+        putData('brand', id, newData, (updatedData) => { setUpdatedBrand(updatedData.brand); });
     };
 
     return (
         <div>
-            <h2>Edit Brand</h2>
-            <BrandTableSingle brand={brandData} />
+            <div className="Main">
+                <h2>Edit {brandData.title} brand</h2>
+                <BrandTableSingle brand={brandData} />
+            </div>
 
             <form onSubmit={handleSubmit}>
                 <div>
@@ -72,35 +75,25 @@ const EditBrand = () => {
                         ))}
                     </select>
                 </div>
-                <div>
-                    <label>title</label>
-                    <input type="text" value={title} onChange={(event) => setTitle(event.target.value)} required />
-                </div>
-                <div>
-                    <label>title_eng</label>
-                    <input type="text" value={title_eng} onChange={(event) => setTitleEng(event.target.value)} required />
-                </div>
-                <div>
-                    <label>description</label>
-                    <textarea value={description} onChange={(event) => setDescription(event.target.value)} required />
-                </div>
-                <div>
-                    <label>site_url</label>
-                    <input type="text" value={site_url} onChange={(event) => setSiteUrl(event.target.value)} required />
-                </div>
-                <div>
-                    <label>image</label>
-                    <input type="text" value={image} onChange={(event) => setImage(event.target.value)} required />
-                </div>
+
+                <FormField label="title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+                <FormField label="title_eng" type="text" value={title_eng} onChange={(e) => setTitleEng(e.target.value)} />
+                <FormField label="description" type="textarea" value={description} onChange={(e) => setDescription(e.target.value)} />
+                <FormField label="site_url" type="text" value={site_url} onChange={(e) => setSiteUrl(e.target.value)} />
+                <FormField label="image" type="text" value={image} onChange={(e) => setImage(e.target.value)} />
+
                 <button type="submit" className="btn btn-edit">edit</button>
             </form>
 
-            {brandData && updatedBrand && (
-                <div>
-                    <h3>Updated Brand</h3>
-                    <BrandTableSingle brand={updatedBrand} />
-                </div>
-            )}
+
+            <div className="New">
+                {updatedBrand && (
+                    <div>
+                        <h2>Updated {updatedBrand.title} brand</h2>
+                        <BrandTableSingle brand={updatedBrand} />
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

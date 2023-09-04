@@ -12,7 +12,7 @@ function BrandDetail() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getData(`/admin/brand/${id}`);
+      const data = await getData(`/brand/${id}`);
       if (data) {
         setBrand(data.brand);
         setItems(data.item);
@@ -21,10 +21,18 @@ function BrandDetail() {
     fetchData();
   }, [id]);
 
+
   return (
     <div>
-      <BrandTableSingle brand={brand} />
-      <ItemTableMap items={items} />
+      <div className="Main">
+        <h1>{brand.title} brand</h1>
+        <BrandTableSingle brand={brand} />
+      </div>
+
+      <div className="Sub">
+        <h2>items</h2>
+        <ItemTableMap items={items} />
+      </div>
     </div>
   );
 }

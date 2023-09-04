@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import getData from '../../api/getData';
 import putData from '../../api/putData';
+import FormField from '../FormField';
 
 import { CoordiLookTableSingle } from './CoordiLookTable';
 
@@ -19,12 +20,11 @@ const EditCoordiLook = () => {
         const fetchData = async () => {
             const stylepointsdata = await getData('stylepoints');
             if (stylepointsdata) {
-                setStylePoints(stylepointsdata.content);
+                setStylePoints(stylepointsdata);
             }
             const data = await getData(`coordilook/${id}`);
             if (data) {
                 setCoordiLookData(data.coordiLook);
-                setSelectedStylePoint(data.coordiLook.stylepointId);
                 setTitle(data.coordiLook.title);
                 setImage(data.coordiLook.image);
             }
@@ -39,13 +39,15 @@ const EditCoordiLook = () => {
             title,
             image,
         };
-        putData('brand', id, newData, (updatedData) => { setUpdatedCoordiLook(updatedData); });
+        putData('coordilook', id, newData, (updatedData) => { setUpdatedCoordiLook(updatedData); });
     };
 
     return (
         <div>
-            <h2>Edit CoordiLook</h2>
-            <CoordiLookTableSingle coordiLook={coordiLookData} />
+            <div className="Main">
+                <h2>Edit {coordiLookData.title} coordiLook</h2>
+                <CoordiLookTableSingle coordiLook={coordiLookData} />
+            </ div>
 
             <form onSubmit={handleSubmit}>
                 <div>
@@ -62,24 +64,22 @@ const EditCoordiLook = () => {
                             </option>
                         ))}
                     </select>
+
+                    <FormField label="title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+                    <FormField label="image" type="text" value={image} onChange={(e) => setImage(e.target.value)} />
+
+                    <button type="submit" className="btn btn-edit">edit</button>
                 </div>
-                <div>
-                    <label>title</label>
-                    <input type="text" value={title} onChange={(event) => setTitle(event.target.value)} required />
-                </div>
-                <div>
-                    <label>image</label>
-                    <input type="text" value={image} onChange={(event) => setImage(event.target.value)} required />
-                </div>
-                <button type="submit" className="btn btn-edit">edit</button>
             </form>
 
-            {updatedCoordiLook && (
-                <div>
-                    <h3>Updated CoordiLook</h3>
-                    <CoordiLookTableSingle coordiLook={updatedCoordiLook} />
-                </div>
-            )}
+            <div className="New">
+                {updatedCoordiLook && (
+                    <div>
+                        <h2>Updated {updatedCoordiLook.title} coordiLook</h2>
+                        <CoordiLookTableSingle coordiLook={updatedCoordiLook} />
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

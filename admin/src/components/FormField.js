@@ -6,15 +6,6 @@ const FormField = ({ label, type, value, onChange, options }) => {
             <label>{label}</label>
             {type === 'textarea' ? (
                 <textarea value={value} onChange={onChange} required />
-            ) : type === 'select' ? (
-                <select value={value} onChange={onChange}>
-                    <option value="">Select an option</option>
-                    {options.map((option) => (
-                        <option key={option.value} value={option.value}>
-                            {option.label}
-                        </option>
-                    ))}
-                </select>
             ) : (
                 <input type={type} value={value} onChange={onChange} required />
             )}

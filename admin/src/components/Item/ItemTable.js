@@ -41,7 +41,6 @@ function ItemTable({ item, onDelete }) {
 function ItemTableMap({ items, onDelete }) {
   return (
     <div>
-      <h2>Items</h2>
       <Link to={`/item/create`} className="btn btn-create">create</Link>
       <table>
         <thead>
@@ -60,7 +59,6 @@ function ItemTableMap({ items, onDelete }) {
 function ItemTableSingle({ item, onDelete }) {
   return (
     <div>
-      <h2>{item.title} Item</h2>
       <table>
         <thead>
           <ItemTableRow />

@@ -17,6 +17,7 @@ const StylePointList = () => {
 
   return (
     <div>
+      <h1>stylepoints</h1>
       <StylePointTableMap stylePoints={stylePoints} />
     </div>
   );

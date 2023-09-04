@@ -26,9 +26,20 @@ function StylePointDetail() {
 
   return (
     <div >
-      <StylePointTableSingle stylePoint={stylePoint} />
-      <BrandTableMap brands={brands} />
-      <CoordiLookTableMap coordiLooks={coordiLooks} />
+      <div className="Main">
+        <h1>{stylePoint.title} stylepoint</h1>
+        <StylePointTableSingle stylePoint={stylePoint} />
+      </div>
+
+      <div className="Sub">
+        <h2>brands</h2>
+        <BrandTableMap brands={brands} />
+      </div>
+
+      <div className="Sub">
+        <h2>coordiLooks</h2>
+        <CoordiLookTableMap coordiLooks={coordiLooks} />
+      </div>
     </div >
   );
 }

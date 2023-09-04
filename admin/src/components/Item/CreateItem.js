@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import getData from '../../api/getData';
 import postData from '../../api/postData';
+import FormField from '../FormField';
 
 import { ItemTableSingle } from '../Item/ItemTable';
 
@@ -50,7 +51,7 @@ const CreateItem = () => {
 
   return (
     <div>
-      <h2>Create New Item</h2>
+      <h2>Create New item</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label>brand</label>
@@ -82,30 +83,21 @@ const CreateItem = () => {
           </select>
         </div>
 
-        <div>
-          <label>title</label>
-          <input type="text" value={title} onChange={(event) => setTitle(event.target.value)} required />
-        </div>
+        <FormField label="title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+        <FormField label="sales_link" type="text" value={sales_link} onChange={(e) => setSalesLink(e.target.value)} />
+        <FormField label="image" type="text" value={image} onChange={(e) => setImage(e.target.value)} />
 
-        <div>
-          <label>sales_link</label>
-          <input type="text" value={sales_link} onChange={(event) => setSalesLink(event.target.value)} />
-        </div>
-
-        <div>
-          <label>image</label>
-          <input type="text" value={image} onChange={(event) => setImage(event.target.value)} required />
-        </div>
-        <button type="submit" className="btn btn-create">Create</button>
+        <button type="submit" className="btn btn-create">create</button>
       </form>
 
-      {createdItem && (
-        <div>
-          <h3>Created Item</h3>
-          <ItemTableSingle item={createdItem} />
-        </div>
-      )}
-
+      <div className="New">
+        {createdItem && (
+          <div>
+            <h3>Created {createdItem.title} item</h3>
+            <ItemTableSingle item={createdItem} />
+          </div>
+        )}
+      </div>
     </div>
   );
 };
