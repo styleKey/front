@@ -29,5 +29,5 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     Optional<Item> findById(Long id);
 
     @EntityGraph(attributePaths = { "brand", "coordilook", "category" })
-    Page<Item> findAll(Pageable pageable);
+    List<Item> findAll();
 }

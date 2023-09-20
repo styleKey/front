@@ -12,12 +12,11 @@ import com.thekey.stylekey.backend.service.admin.dto.CreateItemRequestDto;
 import com.thekey.stylekey.backend.service.admin.dto.UpdateItemRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -52,8 +51,8 @@ public class ItemAdminServiceImpl implements ItemAdminService {
     }
 
     @Override
-    public Page<Item> findAll(Pageable pageable) {
-        return itemRepository.findAll(pageable);
+    public List<Item> findAll() {
+        return itemRepository.findAll();
     }
 
     @Override

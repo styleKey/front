@@ -11,8 +11,6 @@ import com.thekey.stylekey.backend.service.admin.dto.UpdateBrandRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
@@ -42,8 +40,8 @@ public class BrandAdminServiceImpl implements BrandAdminService {
     }
 
     @Override
-    public Page<Brand> findAll(Pageable pageable) {
-        return brandRepository.findAll(pageable);
+    public List<Brand> findAll() {
+        return brandRepository.findAll();
     }
 
     @Override

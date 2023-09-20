@@ -6,6 +6,8 @@ import com.thekey.stylekey.backend.service.admin.dto.UpdateItemRequestDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface ItemAdminService {
 
     // create
@@ -15,7 +17,7 @@ public interface ItemAdminService {
     Item findById(Long id);
 
     // read all
-    Page<Item> findAll(Pageable pageable);
+    List<Item> findAll();
 
     // update
     Item updateItem(Long id, UpdateItemRequestDto requestDto);

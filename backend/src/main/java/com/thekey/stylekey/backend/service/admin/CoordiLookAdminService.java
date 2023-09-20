@@ -15,7 +15,7 @@ public interface CoordiLookAdminService {
     CoordiLook createCoordiLook(CreateCoordiLookRequestDto requestDto);
 
     // read All
-    Page<CoordiLook> findAll(Pageable pageable);
+    List<CoordiLook> findAll();
 
     // read only one
     CoordiLook findById(Long id);
