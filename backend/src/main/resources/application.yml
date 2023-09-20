@@ -1,6 +1,10 @@
 server:
   port: 9000
 
+spring:
+  config:
+      import: application-database.yml
+
   jpa:
     open-in-view: true
     hibernate:
@@ -22,3 +26,4 @@ logging:
   level:
     org.hibernate.SQL: DEBUG
     org.springframework.transaction: DEBUG
+

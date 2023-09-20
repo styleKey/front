@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin")
@@ -21,8 +23,8 @@ public class AdminItemController {
 
     // Read All
     @GetMapping("/items")
-    public ResponseEntity<Page<Item>> getAllItems(@PageableDefault(size = 10) Pageable pageable) {
-        Page<Item> itemsPage = itemAdminService.findAll(pageable);
+    public ResponseEntity<List<Item>> getAllItems() {
+        List<Item> itemsPage = itemAdminService.findAll();
         if (itemsPage.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(itemsPage);
         }

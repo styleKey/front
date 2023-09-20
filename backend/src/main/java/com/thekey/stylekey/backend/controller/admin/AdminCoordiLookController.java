@@ -28,14 +28,12 @@ public class AdminCoordiLookController {
 
     // Read All
     @GetMapping("/coordilooks")
-    public ResponseEntity<Page<CoordiLook>> getAllCoordiLooks(@PageableDefault(size = 10) Pageable pageable) {
-        Page<CoordiLook> CoordiLooksPage = coordiLookAdminService.findAll(pageable);
+    public ResponseEntity<List<CoordiLook>> getAllCoordiLooks() {
+        List<CoordiLook> CoordiLooksPage = coordiLookAdminService.findAll();
         if (CoordiLooksPage.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(CoordiLooksPage);
         }
-
         return ResponseEntity.ok(CoordiLooksPage);
-
     }
 
     // Read only one
@@ -43,10 +41,12 @@ public class AdminCoordiLookController {
     public ResponseEntity<Map<String, Object>> getCoordiLookById(@PathVariable Long id) {
         CoordiLook coordiLook = coordiLookAdminService.findById(id);
         List<Item> items= coordiLookAdminService.getItemsByCoordiLookId(id);
+        Long stylepointId = coordiLook.getStylepoint().getId();
 
         Map<String, Object> response = new HashMap<>();
         response.put("coordiLook", coordiLook);
         response.put("items", items);
+        response.put("stylepointId: ", stylepointId);
 
         if (coordiLook == null) {
             return ResponseEntity.notFound().build();
