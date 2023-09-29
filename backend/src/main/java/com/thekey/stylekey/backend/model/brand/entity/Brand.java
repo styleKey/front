@@ -39,8 +39,8 @@ public class Brand extends BaseTimeEntity {
     @Column(name = "brand_image", nullable = false)
     private String image;
 
-    @OneToMany(mappedBy = "brand", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Item> items = new ArrayList<>();
+//    @OneToMany(mappedBy = "brand", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private List<Item> items = new ArrayList<>();
 
     // Brand : StylePoint (N : 1)
     // 다대일 양방향 연관관계
@@ -50,21 +50,21 @@ public class Brand extends BaseTimeEntity {
     private StylePoint stylepoint;
 
     @Builder
-    public Brand(String title, String title_eng, String description, String site_url, String image, StylePoint stylePoint) {
+    public Brand(String title, String title_eng, String description, String site_url, String image, StylePoint stylepoint) {
         this.title = title;
         this.title_eng = title_eng;
         this.description = description;
         this.site_url = site_url;
         this.image = image;
-        this.stylepoint = stylePoint;
+        this.stylepoint = stylepoint;
     }
 
-    public void update(String title, String title_eng, String description, String site_url, String image, StylePoint stylePoint) {
+    public void update(String title, String title_eng, String description, String site_url, String image, StylePoint stylepoint) {
         this.title = title;
         this.title_eng = title_eng;
         this.description = description;
         this.site_url = site_url;
         this.image = image;
-        this.stylepoint = stylePoint;
+        this.stylepoint = stylepoint;
     }
 }

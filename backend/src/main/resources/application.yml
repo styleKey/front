@@ -1,10 +1,10 @@
 server:
-  port: 8088
+  port: 9000
 
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://stylekeydb.cf08d3xfd2vx.ap-northeast-2.rds.amazonaws.com:3306/thekey_db
+    url: jdbc:mysql://stylekey-db.cf08d3xfd2vx.ap-northeast-2.rds.amazonaws.com:3306/thekey_db
     username: user
     password: thekeyuser
 
@@ -27,4 +27,5 @@ spring:
 
 logging:
   level:
-    org.hibernate.SQL: debug
+    org.hibernate.SQL: DEBUG
+    org.springframework.transaction: DEBUG
