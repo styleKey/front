@@ -11,10 +11,10 @@
 
 |이름|github|담당|
 |------|---|---|
-|고우라|||
-|김경민|||
-|전두이|[@enjoy89](https://github.com/enjoy89)|backend|
-|허윤수|[@sugoring](https://github.com/sugoring)|frontend|
+|고우라||Design|
+|김경민||Design|
+|전두이|[@enjoy89](https://github.com/enjoy89)|Backend|
+|허윤수|[@sugoring](https://github.com/sugoring)|Frontend|
 
 
 ## 💡 주요 기능
