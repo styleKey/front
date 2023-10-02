@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StylePointRepository extends JpaRepository<StylePoint, Long> {
+    Long findStylePointByTitle(String title);
 }
