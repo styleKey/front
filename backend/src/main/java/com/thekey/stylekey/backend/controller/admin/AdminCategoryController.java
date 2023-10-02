@@ -1,6 +1,5 @@
 package com.thekey.stylekey.backend.controller.admin;
 
-import com.thekey.stylekey.backend.model.brand.entity.Brand;
 import com.thekey.stylekey.backend.model.category.entity.Category;
 import com.thekey.stylekey.backend.model.item.entity.Item;
 import com.thekey.stylekey.backend.service.admin.CategoryAdminService;
