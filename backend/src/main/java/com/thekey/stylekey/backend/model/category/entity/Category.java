@@ -1,6 +1,8 @@
 package com.thekey.stylekey.backend.model.category.entity;
 
-import com.thekey.stylekey.backend.model.item.entity.Item_Category;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.thekey.stylekey.backend.model.item.entity.Item;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,11 +19,8 @@ public class Category {
     @Column(name = "category_id", nullable = false)
     private Long id;
 
-    @Column(name = "category_title", nullable = false)
+    @Column(name = "category_title", nullable = false, columnDefinition = "VARCHAR(255) CHARACTER SET UTF8")
     private String title;
-
-    @OneToMany(mappedBy = "item")
-    private List<Item_Category> itemList = new ArrayList<>();
 
     @Builder
     public Category(String title) {

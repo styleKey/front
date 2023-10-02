@@ -2,7 +2,6 @@ package com.thekey.stylekey.backend.controller.admin;
 
 import com.thekey.stylekey.backend.model.brand.entity.Brand;
 import com.thekey.stylekey.backend.model.coordilook.entity.CoordiLook;
-import com.thekey.stylekey.backend.model.coordilook.repository.CoordiLookRepository;
 import com.thekey.stylekey.backend.model.stylepoint.entity.StylePoint;
 import com.thekey.stylekey.backend.service.admin.StylePointAdminService;
 import com.thekey.stylekey.backend.service.admin.dto.UpdateStylePointRequestDto;

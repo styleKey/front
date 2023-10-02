@@ -24,21 +24,18 @@ public class CoordiLook extends BaseTimeEntity {
     @Column(name = "coordilook_id", nullable = false)
     private Long id;
 
-    @Column(name = "coordilook_title", nullable = false)
+    @Column(name = "coordilook_title", nullable = false, columnDefinition = "VARCHAR(255) CHARACTER SET UTF8")
     private String title;
 
     @Column(name = "coordilook_image", nullable = false)
     private String image;
 
     // CoordiLook : StylePoint (N : 1)
-    // 다대일 양방향 관계
+    // 다대일 단방향 관계
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "stylepoint_id")
     @JsonIgnore
     private StylePoint stylepoint;
-
-    @OneToMany(mappedBy = "coordilook", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Item> items = new ArrayList<>();
 
     @Builder
     public CoordiLook(String title, String image, StylePoint stylepoint) {

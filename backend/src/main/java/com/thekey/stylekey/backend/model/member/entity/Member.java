@@ -1,6 +1,7 @@
 package com.thekey.stylekey.backend.model.member.entity;
 
 import com.thekey.stylekey.backend.model.base.BaseTimeEntity;
+import com.thekey.stylekey.backend.model.test.entity.TestResult;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,11 +22,17 @@ public class Member extends BaseTimeEntity {
     @Column(name = "member_id", nullable = false)
     private Long id;
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<MemberHistory> memberHistoryList = new ArrayList<>();
+    @Column(name = "member_name")
+    private String name;
+
+//    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private List<TestResult> testResultList;
+
+//    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private List<MemberHistory> memberHistoryList = new ArrayList<>();
 
     @Builder
-    public Member(Long id) {
-        this.id = id;
+    public Member(String name) {
+        this.name = name;
     }
 }

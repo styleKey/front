@@ -2,7 +2,6 @@ package com.thekey.stylekey.backend.model.brand.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.thekey.stylekey.backend.model.base.BaseTimeEntity;
-import com.thekey.stylekey.backend.model.item.entity.Item;
 import com.thekey.stylekey.backend.model.stylepoint.entity.StylePoint;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -10,8 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -24,13 +21,13 @@ public class Brand extends BaseTimeEntity {
     @Column(name = "brand_id", nullable = false)
     private Long id;
 
-    @Column(name = "brand_title", nullable = false)
+    @Column(name = "brand_title", nullable = false, columnDefinition = "VARCHAR(255) CHARACTER SET UTF8")
     private String title;
 
     @Column(name = "brand_title_eng", nullable = false)
     private String title_eng;
 
-    @Column(name = "brand_description", nullable = false)
+    @Column(name = "brand_description", nullable = false, columnDefinition = "VARCHAR(255) CHARACTER SET UTF8")
     private String description;
 
     @Column(name = "brand_site_url", nullable = false)
@@ -39,11 +36,8 @@ public class Brand extends BaseTimeEntity {
     @Column(name = "brand_image", nullable = false)
     private String image;
 
-//    @OneToMany(mappedBy = "brand", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    private List<Item> items = new ArrayList<>();
-
     // Brand : StylePoint (N : 1)
-    // 다대일 양방향 연관관계
+    // 다대일 단방향 연관관계
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "stylepoint_id")
     @JsonIgnore

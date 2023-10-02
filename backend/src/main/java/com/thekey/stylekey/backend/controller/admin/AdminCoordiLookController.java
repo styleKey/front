@@ -1,17 +1,19 @@
 package com.thekey.stylekey.backend.controller.admin;
 
 import com.thekey.stylekey.backend.model.coordilook.entity.CoordiLook;
+import com.thekey.stylekey.backend.model.item.entity.Item;
 import com.thekey.stylekey.backend.service.admin.CoordiLookAdminService;
 import com.thekey.stylekey.backend.service.admin.dto.CreateCoordiLookRequestDto;
 import com.thekey.stylekey.backend.service.admin.dto.UpdateCoordiLookRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,24 +25,30 @@ public class AdminCoordiLookController {
 
     // Read All
     @GetMapping("/coordilooks")
-    public ResponseEntity<Page<CoordiLook>> getAllCoordiLooks(@PageableDefault(size = 10) Pageable pageable) {
-        Page<CoordiLook> CoordiLooksPage = coordiLookAdminService.findAll(pageable);
-        if (CoordiLooksPage.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(CoordiLooksPage);
+    public ResponseEntity<List<CoordiLook>> getAllCoordiLooks() {
+        List<CoordiLook> CoordiLooks = coordiLookAdminService.findAll();
+        if (CoordiLooks.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(CoordiLooks);
         }
-
-        return ResponseEntity.ok(CoordiLooksPage);
-
+        return ResponseEntity.ok(CoordiLooks);
     }
 
     // Read only one
     @GetMapping("/coordilook/{id}")
-    public ResponseEntity<CoordiLook> getCoordiLookById(@PathVariable Long id) {
+    public ResponseEntity<Map<String, Object>> getCoordiLookById(@PathVariable Long id) {
         CoordiLook coordiLook = coordiLookAdminService.findById(id);
+        List<Item> items= coordiLookAdminService.getItemsByCoordiLookId(id);
+        Long stylepointId = coordiLook.getStylepoint().getId();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("coordiLook", coordiLook);
+        response.put("items", items);
+        response.put("stylepointId: ", stylepointId);
+
         if (coordiLook == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(coordiLook);
+        return ResponseEntity.ok(response);
 
     }
 

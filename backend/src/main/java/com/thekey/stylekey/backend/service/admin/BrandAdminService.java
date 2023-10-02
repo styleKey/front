@@ -4,8 +4,6 @@ import com.thekey.stylekey.backend.model.brand.entity.Brand;
 import com.thekey.stylekey.backend.model.item.entity.Item;
 import com.thekey.stylekey.backend.service.admin.dto.CreateBrandRequestDto;
 import com.thekey.stylekey.backend.service.admin.dto.UpdateBrandRequestDto;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -18,7 +16,7 @@ public interface BrandAdminService {
     Brand findById(Long id);
 
     // read all
-    Page<Brand> findAll(Pageable pageable);
+    List<Brand> findAll();
 
     // update
     Brand updateBrand(Long id, UpdateBrandRequestDto requestDto);
