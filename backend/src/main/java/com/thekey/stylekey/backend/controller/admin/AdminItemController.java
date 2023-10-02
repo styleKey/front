@@ -21,11 +21,11 @@ public class AdminItemController {
     // Read All
     @GetMapping("/items")
     public ResponseEntity<List<Item>> getAllItems() {
-        List<Item> itemsPage = itemAdminService.findAll();
-        if (itemsPage.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(itemsPage);
+        List<Item> items = itemAdminService.findAll();
+        if (items.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(items);
         }
-        return ResponseEntity.ok(itemsPage);
+        return ResponseEntity.ok(items);
     }
 
     // Read Only One By ID

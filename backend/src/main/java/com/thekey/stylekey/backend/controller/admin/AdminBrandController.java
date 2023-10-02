@@ -26,11 +26,11 @@ public class AdminBrandController {
     // Paging 기능 삭제
     @GetMapping("/brands")
     public ResponseEntity<List<Brand>> getAllBrands() {
-        List<Brand> brandsPage = brandAdminService.findAll();
-        if (brandsPage.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(brandsPage);
+        List<Brand> brands = brandAdminService.findAll();
+        if (brands.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(brands);
         }
-        return ResponseEntity.ok(brandsPage);
+        return ResponseEntity.ok(brands);
     }
 
     // Read Only One By ID

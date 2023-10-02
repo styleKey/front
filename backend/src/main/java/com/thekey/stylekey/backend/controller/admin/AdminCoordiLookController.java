@@ -26,11 +26,11 @@ public class AdminCoordiLookController {
     // Read All
     @GetMapping("/coordilooks")
     public ResponseEntity<List<CoordiLook>> getAllCoordiLooks() {
-        List<CoordiLook> CoordiLooksPage = coordiLookAdminService.findAll();
-        if (CoordiLooksPage.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(CoordiLooksPage);
+        List<CoordiLook> CoordiLooks = coordiLookAdminService.findAll();
+        if (CoordiLooks.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(CoordiLooks);
         }
-        return ResponseEntity.ok(CoordiLooksPage);
+        return ResponseEntity.ok(CoordiLooks);
     }
 
     // Read only one
