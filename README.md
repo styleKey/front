@@ -10,8 +10,8 @@
 
 |이름|github|담당|
 |------|---|---|
-|고우라|[@goura00](https://github.com/goura007)|Design|
 |김경민||Design|
+|고우라|[@goura00](https://github.com/goura007)|Design|
 |전두이|[@enjoy89](https://github.com/enjoy89)|Backend|
 |허윤수|[@sugoring](https://github.com/sugoring)|Frontend|
 
