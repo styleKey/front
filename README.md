@@ -31,6 +31,6 @@
 - Frontend: HTML, CSS, JavaScript (React.js)
 - Backend: Java, Spring Boot Framework, Spring Data JPA
 - Database: MySQL
-- 인프라 및 서버: AWS EC2, AWS RDS
+- 인프라 및 서버: AWS EC2, AWS RDS, AWS S3
   
 ## 📂 디렉토리 구조
