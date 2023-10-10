@@ -4,13 +4,13 @@ import { Link } from 'react-router-dom';
 function CoordiLookTableRow() {
     return (
         <tr>
-            <th>createdAt</th>
-            <th>updatedAt</th>
             <th>id</th>
             <th>title</th>
             <th>image</th>
             <th>edit</th>
             <th>delete</th>
+            <th>createdAt</th>
+            <th>updatedAt</th>
         </tr>
     );
 }
@@ -24,11 +24,11 @@ function CoordiLookTable({ coordiLook, onDelete }) {
 
     return (
         <tr>
-            <td>{coordiLook.createdAt}</td>
-            <td>{coordiLook.updatedAt}</td>
             <td>{coordiLook.id}</td>
             <td><Link to={`/coordiLook/${coordiLook.id}`} className="btn btn-title">{coordiLook.title}</Link></td>
             <td><img src={coordiLook.image} alt={coordiLook.title} /></td>
+            <td>{coordiLook.createdAt}</td>
+            <td>{coordiLook.updatedAt}</td>
             <td><Link to={`/coordiLook/${coordiLook.id}/edit`} className="btn btn-edit">edit</Link></td>
             <td><button className="btn btn-delete" onClick={handleDelete}>delete</button></td>
         </tr>
