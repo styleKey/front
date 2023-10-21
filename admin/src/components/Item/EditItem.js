@@ -26,11 +26,11 @@ const EditItem = () => {
         const fetchData = async () => {
             const brandsdata = await getData('brands');
             if (brandsdata) {
-                setBrands(brandsdata.content);
+                setBrands(brandsdata);
             }
             const coordilooksdata = await getData('coordilooks');
             if (coordilooksdata) {
-                setCoordiLooks(coordilooksdata.content);
+                setCoordiLooks(coordilooksdata);
             }
             const categoriesdata = await getData('categories');
             if (categoriesdata) {
