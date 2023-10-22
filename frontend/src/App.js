@@ -12,18 +12,25 @@ import ItemList from './components/pages/ItemList';
 import ItemDetail from './components/pages/ItemDetail';
 
 function App() {
+  const routes = [
+    { path: '/', element: <StylePointList /> },
+    { path: '/stylepoints', element: <StylePointList /> },
+    { path: '/stylepoint/:stylepointId', element: <StylePointDetail /> },
+    { path: '/brands', element: <BrandList /> },
+    { path: '/coordilooks', element: <CoordiLookList /> },
+    { path: '/items', element: <ItemList /> },
+    { path: '/item/:itemId', element: <ItemDetail /> },
+  ];
+
   return (
     <Router>
       <div className="App">
         <Logobar />
         <Navbar />
         <Routes>
-          <Route path="/" element={<StylePointList />} />
-          <Route path="/stylepoint/:stylepointId" element={<StylePointDetail />} />
-          <Route path="/brands" element={<BrandList />} />
-          <Route path="/coordilooks" element={<CoordiLookList />} />
-          <Route path="/items" element={<ItemList />} />
-          <Route path="/item/:itemId" element={<ItemDetail />} />
+          {routes.map((route, index) => (
+            <Route key={index} path={route.path} element={route.element} />
+          ))}
         </Routes>
         <Footer />
       </div>

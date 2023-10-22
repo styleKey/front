@@ -5,7 +5,7 @@ function Navbar() {
   return (
     <nav>
       <Link to='/test'>TEST</Link>
-      <Link to='/style'>STYLE</Link>
+      <Link to='/stylepoints'>STYLE</Link>
     </nav>
   );
 }

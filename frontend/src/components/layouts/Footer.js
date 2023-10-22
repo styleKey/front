@@ -13,8 +13,7 @@ function Footer() {
       <div className="social-links">
         {/* Social icon links */}
       </div>
-      <div className="other-links">
-        {/* 다른 링크들 */}
+      <div>
         <small>THEKEY © 2023</small>
       </div>
     </footer>
