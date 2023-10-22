@@ -1,45 +1,32 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import './App.css';
 
 import Logobar from './components/layouts/Logobar';
 import Navbar from './components/layouts/Navbar';
 import Footer from './components/layouts/Footer';
-
-import Home from './components/pages/Home';
-import Test from './components/pages/Test';
-import StylePoint from './components/pages/StylePoint';
-import SignUp from './components/pages/SignUp';
-
-const pageComponents = {
-  Home,
-  Test,
-  StylePoint,
-  SignUp,
-};
-
-const routeData = [
-  { path: '/', component: 'Home' },
-  { path: '/Test', component: 'Test' },
-  { path: '/StylePoint', component: 'StylePoint' },
-  { path: '/SignUp', component: 'SignUp' },
-];
+import StylePointList from './components/pages/StylePointList';
+import StylePointDetail from './components/pages/StylePointDetail';
+import BrandList from './components/pages/BrandList';
+import CoordiLookList from './components/pages/CoordiLookList';
+import ItemList from './components/pages/ItemList';
+import ItemDetail from './components/pages/ItemDetail';
 
 function App() {
   return (
     <Router>
-      <Logobar />
-      <Navbar />
-      <Routes>
-        {routeData.map((route, index) => (
-          <Route
-            key={index}
-            path={route.path}
-            element={React.createElement(pageComponents[route.component])}
-          />
-        ))}
-      </Routes>
-      <Footer />
+      <div className="App">
+        <Logobar />
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<StylePointList />} />
+          <Route path="/stylepoint/:stylepointId" element={<StylePointDetail />} />
+          <Route path="/brands" element={<BrandList />} />
+          <Route path="/coordilooks" element={<CoordiLookList />} />
+          <Route path="/items" element={<ItemList />} />
+          <Route path="/item/:itemId" element={<ItemDetail />} />
+        </Routes>
+        <Footer />
+      </div>
     </Router>
   );
 }
