@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { formatTimestamp } from '../formatTimestamp';
 
 function CoordiLookTableRow() {
     return (
@@ -7,10 +8,10 @@ function CoordiLookTableRow() {
             <th>id</th>
             <th>title</th>
             <th>image</th>
-            <th>edit</th>
-            <th>delete</th>
             <th>createdAt</th>
             <th>updatedAt</th>
+            <th>edit</th>
+            <th>delete</th>
         </tr>
     );
 }
@@ -27,8 +28,8 @@ function CoordiLookTable({ coordiLook, onDelete }) {
             <td>{coordiLook.id}</td>
             <td><Link to={`/coordiLook/${coordiLook.id}`} className="btn btn-title">{coordiLook.title}</Link></td>
             <td><img src={coordiLook.image} alt={coordiLook.title} /></td>
-            <td>{coordiLook.createdAt}</td>
-            <td>{coordiLook.updatedAt}</td>
+            <td>{formatTimestamp(coordiLook.createdAt)}</td>
+            <td>{formatTimestamp(coordiLook.updatedAt)}</td>
             <td><Link to={`/coordiLook/${coordiLook.id}/edit`} className="btn btn-edit">edit</Link></td>
             <td><button className="btn btn-delete" onClick={handleDelete}>delete</button></td>
         </tr>
