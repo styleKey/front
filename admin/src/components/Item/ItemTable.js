@@ -1,17 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { formatTimestamp } from '../formatTimestamp';
 
 function ItemTableRow() {
   return (
     <tr>
-      <th>createdAt</th>
-      <th>updatedAt</th>
       <th>id</th>
       <th>title</th>
       <th>sales_link</th>
       <th>image</th>
       <th>edit</th>
       <th>delete</th>
+      <th>createdAt</th>
+      <th>updatedAt</th>
     </tr>
   );
 }
@@ -26,12 +27,12 @@ function ItemTable({ item, onDelete }) {
 
   return (
     <tr>
-      <td>{item.createdAt}</td>
-      <td>{item.updatedAt}</td>
       <td>{item.id}</td>
       <td><a href={`/item/${item.id}`} className="btn btn-title">{item.title}</a></td>
       <td><a href={item.sales_link}>{item.sales_link}</a></td>
       <td><img src={item.image} alt={item.title} /></td>
+      <td>{formatTimestamp(item.createdAt)}</td>
+      <td>{formatTimestamp(item.updatedAt)}</td>
       <td><a href={`/item/${item.id}/edit`} className="btn btn-edit">edit</a></td>
       <td><button className="btn btn-delete" onClick={handleDelete}>delete</button></td>
     </tr>

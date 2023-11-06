@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "StyleKEY",
+  "name": "StyleKEY - 패션 성향 테스트와 사용자 맞춤형 패션 정보 제공",
   "icons": [
     {
       "src": "favicon.ico",
@@ -18,8 +18,15 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#ffffff",
+  "description": "StyleKEY 서비스 - 패션 성향 테스트를 통한 사용자 맞춤형 패션 정보 제공 웹 서비스",
+  "scope": "/",
+  "lang": "ko",
+  "orientation": "portrait",
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "dir": "auto"
 }

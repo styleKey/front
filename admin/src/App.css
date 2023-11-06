@@ -13,7 +13,7 @@ body {
 
 /* App-container */
 .App-container {
-  max-width: 1200px; 
+  max-width: 1300px; 
   margin: 0 auto; 
 }
 
@@ -105,6 +105,10 @@ table th, table td {
 table th {
   background-color: #f2f2f2;
   font-weight: bold;
+}
+
+img {
+  width: 150px;
 }
 
 /* form */

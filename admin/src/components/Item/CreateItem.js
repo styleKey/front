@@ -23,17 +23,18 @@ const CreateItem = () => {
     const fetchData = async () => {
       const brandsData = await getData('brands');
       if (brandsData) {
-        setBrands(brandsData.content);
+        setBrands(brandsData);
       }
       const coordiLooksData = await getData('coordilooks');
       if (coordiLooksData) {
-        setCoordiLooks(coordiLooksData.content);
+        setCoordiLooks(coordiLooksData);
       }
       const categoriesData = await getData('categories');
       if (categoriesData) {
         setCategories(categoriesData);
       }
     };
+    
     fetchData();
   }, []);
 
