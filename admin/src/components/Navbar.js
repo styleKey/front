@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 function Navbar() {
-
   const [stylePoints, setStylePoints] = useState([]);
 
   useEffect(() => {
@@ -15,6 +14,7 @@ function Navbar() {
         console.error('Error fetching stylepoints:', error);
       }
     };
+
     fetchStylePoints();
   }, []);
 
@@ -22,15 +22,21 @@ function Navbar() {
     <nav>
       <div>
         <ul>
-          <li><a href="/" className="Nav"> stylepoint </a> </li>
-          {stylePoints.map((stylePoint) => (
-            <li key={stylePoint.id}>
-              <Link to={`/stylepoint/${stylePoint.id}`} className="btn btn-title">{stylePoint.title}</Link>
+          <li>
+            <Link to="/">
+              <img src="/icon_stylekey.ico" alt="StyleKey" className="icon" />
+            </Link>
+          </li>
+          {stylePoints.map((point) => (
+            <li key={point.id}>
+              <Link to={`/stylepoint/${point.id}`} className="btn btn-title">
+                {point.title}
+              </Link>
             </li>
           ))}
         </ul>
       </div>
-    </nav >
+    </nav>
   );
 }
 

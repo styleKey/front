@@ -15,6 +15,7 @@ body {
 .App-container {
   max-width: 1300px; 
   margin: 0 auto; 
+  padding: 20px 0 0 0;
 }
 
 /* nav */
@@ -24,8 +25,7 @@ nav {
   padding: 10px;
   display: flex; 
   justify-content: center; 
-  padding: 20px;
-  text-decoration: none;
+  align-items: center; 
 }
 
 .Nav {
@@ -33,7 +33,6 @@ nav {
   color: #fff;
   font-weight: bold;
   font-size: 25px;
-  padding: 10px 20px;
 }
 
 nav ul {
@@ -41,10 +40,14 @@ nav ul {
   display: flex;
   margin: 0;
   padding: 0;
+  justify-content: center; 
+  align-items: center; 
 }
 
 nav li {
   margin-right: 10px;
+  justify-content: center; 
+  align-items: center; 
 }
 
 /* btn */
@@ -92,23 +95,35 @@ nav li {
 table {
   width: 100%;
   border-collapse: collapse;
-  margin: 10px 0 30px;
-  font-size: 15px;
+  margin: 10px 0;
 }
 
 table th, table td {
   border: 1px solid #ddd;
   padding: 8px;
-  text-align: left;
+  text-align: center; 
+  vertical-align: middle; 
 }
 
 table th {
   background-color: #f2f2f2;
   font-weight: bold;
+  font-size: 15px;
 }
 
+table td {
+  font-size: 13px;
+}
+
+/* img */
 img {
   width: 150px;
+}
+
+.icon {
+  width: 50px;
+  justify-content: center; 
+  align-items: center; 
 }
 
 /* form */
@@ -138,7 +153,7 @@ select {
   appearance: none;
 }
 
-
+/* 형태 */
 .Main {
   padding: 20px;
   background-color: #fff;
@@ -162,4 +177,9 @@ select {
   padding: 20px;
   background-color: #eaeaea;
   box-sizing: border-box;
+}
+
+/* text */
+h2 {
+  padding: 0 0 10px 0;
 }
