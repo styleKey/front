@@ -43,7 +43,7 @@ public class AdminCoordiLookController {
         Map<String, Object> response = new HashMap<>();
         response.put("coordiLook", coordiLook);
         response.put("items", items);
-        response.put("stylepointId: ", stylepointId);
+        response.put("stylepointId", stylepointId);
 
         if (coordiLook == null) {
             return ResponseEntity.notFound().build();
