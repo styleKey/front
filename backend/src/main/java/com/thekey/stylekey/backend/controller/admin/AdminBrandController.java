@@ -43,7 +43,7 @@ public class AdminBrandController {
         Map<String, Object> response = new HashMap<>();
         response.put("brand", brand);
         response.put("item", items);
-        response.put("stylepointId: ", stylepointId);
+        response.put("stylepointId", stylepointId);
 
         if (brand == null) {
             return ResponseEntity.notFound().build();
@@ -59,7 +59,7 @@ public class AdminBrandController {
         Brand createdBrand = brandAdminService.createBrand(requestDto);
 
         Map<String, Object> response = new HashMap<>();
-        response.put("stylepointId: ", stylepointId);
+        response.put("stylepointId", stylepointId);
         response.put("brand", createdBrand);
 
         if(createdBrand == null) {
