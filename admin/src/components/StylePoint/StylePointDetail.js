@@ -39,17 +39,17 @@ function StylePointDetail() {
   return (
     <div >
       <div className="Main">
-        <h1>{stylePoint.title} stylepoint</h1>
+        <h1>{stylePoint.title}</h1>
         <StylePointTableSingle stylePoint={stylePoint} />
       </div>
 
       <div className="Sub">
-        <h2>brands</h2>
+        <h2>{stylePoint.title} brands</h2>
         <BrandTableMap brands={brands} onDelete={handleDeletebrand} />
       </div>
 
       <div className="Sub">
-        <h2>coordiLooks</h2>
+        <h2>{stylePoint.title} coordiLooks</h2>
         <CoordiLookTableMap coordiLooks={coordiLooks} onDelete={handleDeletecoordiLook} />
       </div>
     </div >
