@@ -15,10 +15,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/admin")
 public class AdminItemController {
-
     private final ItemAdminService itemAdminService;
 
-    // Read All
     @GetMapping("/items")
     public ResponseEntity<List<Item>> getAllItems() {
         List<Item> items = itemAdminService.findAll();
@@ -28,7 +26,6 @@ public class AdminItemController {
         return ResponseEntity.ok(items);
     }
 
-    // Read Only One By ID
     @GetMapping("/item/{id}")
     public ResponseEntity<Item> getItemById(@PathVariable Long id) {
         Item item = itemAdminService.findById(id);
@@ -38,13 +35,11 @@ public class AdminItemController {
         return ResponseEntity.ok(item);
     }
 
-    // Create
     @PostMapping("/item/create")
     public ResponseEntity<Item> createItem(@RequestBody CreateItemRequestDto requestDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(itemAdminService.createItem(requestDto));
     }
 
-    // Update
     @PutMapping("/item/{id}")
     public ResponseEntity<Item> updateItem(@PathVariable Long id, @RequestBody UpdateItemRequestDto requestDto) {
         if (id == null) {
@@ -58,7 +53,6 @@ public class AdminItemController {
         return ResponseEntity.ok(updatedItem);
     }
 
-    // Delete
     @DeleteMapping("/item/{id}")
     public ResponseEntity<Void> deleteItem(@PathVariable Long id) {
         itemAdminService.deleteItem(id);

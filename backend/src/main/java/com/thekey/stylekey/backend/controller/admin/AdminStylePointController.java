@@ -21,17 +21,17 @@ import java.util.Map;
 public class AdminStylePointController {
     private final StylePointAdminService styleAdminService;
 
-    // Read All
     @GetMapping("/stylepoints")
     public ResponseEntity<List<StylePoint>> getAllStylePoints() {
         return ResponseEntity.ok(styleAdminService.findAll());
-
     }
 
-    // Read Only One By ID
     @GetMapping("/stylepoint/{id}")
     public ResponseEntity<Map<String, Object>> getStylePointById(@PathVariable Long id) {
         StylePoint stylePoint = styleAdminService.findById(id);
+        if (stylePoint == null) {
+            return ResponseEntity.notFound().build();
+        }
         List<Brand> brands = styleAdminService.getBrandsByStylePointId(id);
         List<CoordiLook> coordiLooks = styleAdminService.getCoordilooksStylePointId(id);
 
@@ -40,14 +40,12 @@ public class AdminStylePointController {
         response.put("brands", brands);
         response.put("coordilooks", coordiLooks);
 
-        if (stylePoint == null) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(response);
     }
 
     @PutMapping("/stylepoint/{id}")
-    public ResponseEntity<StylePoint> updateStylePoint(@PathVariable Long id, @RequestBody UpdateStylePointRequestDto requestDto) {
+    public ResponseEntity<StylePoint> updateStylePoint(@PathVariable Long id,
+                                                       @RequestBody UpdateStylePointRequestDto requestDto) {
         if (id == null) {
             return ResponseEntity.ok().build();
         }
@@ -58,5 +56,4 @@ public class AdminStylePointController {
         }
         return ResponseEntity.ok(updatedStylePoint);
     }
-
 }

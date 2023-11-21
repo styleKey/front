@@ -28,15 +28,15 @@ public class AdminCategoryController {
     @GetMapping("/category/{id}")
     public ResponseEntity<Map<String, Object>> getCategoryById(@PathVariable Long id) {
         Category category = categoryAdminService.findById(id);
+        if (category == null) {
+            return ResponseEntity.notFound().build();
+        }
         List<Item> items = categoryAdminService.getItemsByCategoryId(id);
 
         Map<String, Object> response = new HashMap<>();
         response.put("category", category);
         response.put("item", items);
 
-        if (category == null) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(response);
     }
 }

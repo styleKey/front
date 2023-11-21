@@ -20,10 +20,8 @@ import java.util.Map;
 @Slf4j
 @RequestMapping("/admin")
 public class AdminCoordiLookController {
-
     private final CoordiLookAdminService coordiLookAdminService;
 
-    // Read All
     @GetMapping("/coordilooks")
     public ResponseEntity<List<CoordiLook>> getAllCoordiLooks() {
         List<CoordiLook> CoordiLooks = coordiLookAdminService.findAll();
@@ -33,11 +31,14 @@ public class AdminCoordiLookController {
         return ResponseEntity.ok(CoordiLooks);
     }
 
-    // Read only one
     @GetMapping("/coordilook/{id}")
     public ResponseEntity<Map<String, Object>> getCoordiLookById(@PathVariable Long id) {
         CoordiLook coordiLook = coordiLookAdminService.findById(id);
-        List<Item> items= coordiLookAdminService.getItemsByCoordiLookId(id);
+        if (coordiLook == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        List<Item> items = coordiLookAdminService.getItemsByCoordiLookId(id);
         Long stylepointId = coordiLook.getStylepoint().getId();
 
         Map<String, Object> response = new HashMap<>();
@@ -45,22 +46,17 @@ public class AdminCoordiLookController {
         response.put("items", items);
         response.put("stylepointId", stylepointId);
 
-        if (coordiLook == null) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(response);
-
     }
 
-    // Create
     @PostMapping("/coordilook/create")
     public ResponseEntity<CoordiLook> createCoordiLook(@RequestBody CreateCoordiLookRequestDto requestDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(coordiLookAdminService.createCoordiLook(requestDto));
     }
 
-    // Update
     @PutMapping("/coordilook/{id}")
-    public ResponseEntity<CoordiLook> updateCoordiLook(@PathVariable Long id, @RequestBody UpdateCoordiLookRequestDto requestDto) {
+    public ResponseEntity<CoordiLook> updateCoordiLook(@PathVariable Long id,
+                                                       @RequestBody UpdateCoordiLookRequestDto requestDto) {
         if (id == null) {
             log.info(String.valueOf(id));
             return ResponseEntity.ok().build();
@@ -73,7 +69,6 @@ public class AdminCoordiLookController {
         return ResponseEntity.ok(updatedCoordiLook);
     }
 
-    // Delete
     @DeleteMapping("/coordilook/{id}")
     public ResponseEntity<Void> deleteCoordiLook(@PathVariable Long id) {
         coordiLookAdminService.deleteCoordiLook(id);
