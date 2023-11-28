@@ -2,15 +2,16 @@ package com.thekey.stylekey.backend.controller.admin;
 
 import com.thekey.stylekey.backend.model.brand.entity.Brand;
 import com.thekey.stylekey.backend.model.item.entity.Item;
+import com.thekey.stylekey.backend.model.stylepoint.entity.StylePoint;
 import com.thekey.stylekey.backend.service.admin.BrandAdminService;
 import com.thekey.stylekey.backend.service.admin.dto.CreateBrandRequestDto;
 import com.thekey.stylekey.backend.service.admin.dto.UpdateBrandRequestDto;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping("/admin")
 public class AdminBrandController {
+
     private final BrandAdminService brandAdminService;
 
     @GetMapping("/brands")
@@ -32,17 +34,19 @@ public class AdminBrandController {
     @GetMapping("/brand/{id}")
     public ResponseEntity<Map<String, Object>> getBrandById(@PathVariable Long id) {
         Brand brand = brandAdminService.findById(id);
-        if (brand == null) {
+
+        if (isNull(brand)) {
             return ResponseEntity.notFound().build();
         }
 
         List<Item> items = brandAdminService.getItemsByBrandId(id);
-        Long stylepointId = brand.getStylepoint().getId();
+        Long stylepointId = getStylepointId(brand);
 
-        Map<String, Object> response = new HashMap<>();
-        response.put("brand", brand);
-        response.put("item", items);
-        response.put("stylepointId", stylepointId);
+        Map<String, Object> response = Map.of(
+                "brand", brand,
+                "item", items,
+                "stylepointId", stylepointId
+        );
 
         return ResponseEntity.ok(response);
     }
@@ -50,14 +54,15 @@ public class AdminBrandController {
     @PostMapping("/brand/create")
     public ResponseEntity<Map<String, Object>> createBrand(@RequestBody CreateBrandRequestDto requestDto) {
         Brand createdBrand = brandAdminService.createBrand(requestDto);
-        if (createdBrand == null) {
+
+        if (isNull(createdBrand)) {
             return ResponseEntity.notFound().build();
         }
-        Long stylepointId = requestDto.getStylepointId();
 
-        Map<String, Object> response = new HashMap<>();
-        response.put("stylepointId", stylepointId);
-        response.put("brand", createdBrand);
+        Map<String, Object> response = Map.of(
+                "stylepointId", requestDto.getStylepointId(),
+                "brand", createdBrand
+        );
 
         return ResponseEntity.ok(response);
     }
@@ -68,15 +73,17 @@ public class AdminBrandController {
         if (id == null) {
             return ResponseEntity.ok().build();
         }
+
         Brand updatedBrand = brandAdminService.updateBrand(id, requestDto);
-        if (updatedBrand == null) {
+
+        if (isNull(updatedBrand)) {
             return ResponseEntity.notFound().build();
         }
 
-        Long stylepointId = requestDto.getStylepointId();
-        Map<String, Object> response = new HashMap<>();
-        response.put("stylepointId", stylepointId);
-        response.put("brand", updatedBrand);
+        Map<String, Object> response = Map.of(
+                "stylepointId", requestDto.getStylepointId(),
+                "brand", updatedBrand
+        );
 
         return ResponseEntity.ok(response);
     }
@@ -85,5 +92,15 @@ public class AdminBrandController {
     public ResponseEntity<Void> deleteBrand(@PathVariable Long id) {
         brandAdminService.deleteBrand(id);
         return ResponseEntity.ok().build();
+    }
+
+    private Long getStylepointId(Brand brand) {
+        return Optional.ofNullable(brand.getStylepoint())
+                .map(StylePoint::getId)
+                .orElse(null);
+    }
+
+    private boolean isNull(Brand brand) {
+        return brand == null;
     }
 }

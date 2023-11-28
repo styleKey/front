@@ -6,11 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @NoArgsConstructor
 public class UpdateBrandRequestDto {
-
     private String title;
     private String title_eng;
     private String description;
@@ -19,7 +17,8 @@ public class UpdateBrandRequestDto {
     private Long stylepointId;
 
     @Builder
-    public UpdateBrandRequestDto(String title, String title_eng, String description, String site_url, String image, Long stylepointId) {
+    public UpdateBrandRequestDto(String title, String title_eng, String description, String site_url, String image,
+                                 Long stylepointId) {
         this.title = title;
         this.title_eng = title_eng;
         this.description = description;
