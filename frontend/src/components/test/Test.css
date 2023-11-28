@@ -1,0 +1,36 @@
+.testLayout {
+    width: 100vw;
+    height: calc(var(--vh,1vh)*100);
+    font-size: 14px;
+    display: flex;
+    justify-self: center;
+    background-color: #eee;
+}
+
+.startPageLayout{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: yellow;
+    width: 100%;
+    max-width: 900px;
+    height: 100%;
+    color: black;
+
+
+    
+}
+.startLogo{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 25px;
+    font-weight: 700;
+    
+}
+
+
+.startButton{
+    s
+}
