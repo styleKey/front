@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +18,7 @@ import java.util.Map;
 @RequestMapping("/admin")
 @Slf4j
 public class AdminStylePointController {
+
     private final StylePointAdminService styleAdminService;
 
     @GetMapping("/stylepoints")
@@ -29,16 +29,19 @@ public class AdminStylePointController {
     @GetMapping("/stylepoint/{id}")
     public ResponseEntity<Map<String, Object>> getStylePointById(@PathVariable Long id) {
         StylePoint stylePoint = styleAdminService.findById(id);
-        if (stylePoint == null) {
+
+        if (isNull(stylePoint)) {
             return ResponseEntity.notFound().build();
         }
-        List<Brand> brands = styleAdminService.getBrandsByStylePointId(id);
-        List<CoordiLook> coordiLooks = styleAdminService.getCoordilooksStylePointId(id);
 
-        Map<String, Object> response = new HashMap<>();
-        response.put("stylePoint", stylePoint);
-        response.put("brands", brands);
-        response.put("coordilooks", coordiLooks);
+        List<Brand> brands = getBrands(id);
+        List<CoordiLook> coordiLooks = getCoordiLooks(id);
+
+        Map<String, Object> response = Map.of(
+                "stylepoint", stylePoint,
+                "brands", brands,
+                "coordilooks", coordiLooks
+        );
 
         return ResponseEntity.ok(response);
     }
@@ -51,9 +54,23 @@ public class AdminStylePointController {
         }
 
         StylePoint updatedStylePoint = styleAdminService.updateStylePoint(id, requestDto);
-        if (updatedStylePoint == null) {
+
+        if (isNull(updatedStylePoint)) {
             return ResponseEntity.notFound().build();
         }
+
         return ResponseEntity.ok(updatedStylePoint);
+    }
+
+    private boolean isNull(StylePoint stylePoint) {
+        return stylePoint == null;
+    }
+
+    private List<Brand> getBrands(Long id) {
+        return styleAdminService.getBrandsByStylePointId(id);
+    }
+
+    private List<CoordiLook> getCoordiLooks(Long id) {
+        return styleAdminService.getCoordilooksStylePointId(id);
     }
 }
