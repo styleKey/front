@@ -1,5 +1,6 @@
 package com.thekey.stylekey.backend.service.admin;
 
+import com.thekey.stylekey.backend.common.ErrorMessage;
 import com.thekey.stylekey.backend.model.category.entity.Category;
 import com.thekey.stylekey.backend.model.category.repository.CategoryRepository;
 import com.thekey.stylekey.backend.model.item.entity.Item;
@@ -17,8 +18,8 @@ import java.util.List;
 @Slf4j
 @Transactional
 public class CategoryAdminServiceImpl implements CategoryAdminService {
-    private final ItemRepository itemRepository;
 
+    private final ItemRepository itemRepository;
     private final CategoryRepository categoryRepository;
 
     @Override
@@ -28,14 +29,17 @@ public class CategoryAdminServiceImpl implements CategoryAdminService {
 
     @Override
     public Category findById(Long id) {
-        return categoryRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("category does not exist:" + id));
+        return findCategory(id);
     }
 
     @Override
     public List<Item> getItemsByCategoryId(Long categoryId) {
-        Category category = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new EntityNotFoundException("Invalid category ID: " + categoryId));
+        Category category = findCategory(categoryId);
         return itemRepository.findByCategory(category);
+    }
+
+    private Category findCategory(Long id) {
+        return categoryRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.NOT_FOUND_CATEGORY.get() + id));
     }
 }
