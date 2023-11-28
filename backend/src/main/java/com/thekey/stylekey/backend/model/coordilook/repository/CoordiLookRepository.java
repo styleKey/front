@@ -9,6 +9,5 @@ import java.util.List;
 
 @Repository
 public interface CoordiLookRepository extends JpaRepository<CoordiLook, Long> {
-
     List<CoordiLook> findByStylepoint(StylePoint stylePoint);
 }

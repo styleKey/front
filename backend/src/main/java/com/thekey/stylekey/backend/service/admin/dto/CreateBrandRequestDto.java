@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class CreateBrandRequestDto {
-
     private String title;
     private String title_eng;
     private String description;
@@ -18,7 +17,8 @@ public class CreateBrandRequestDto {
     private Long stylepointId;
 
     @Builder
-    public CreateBrandRequestDto(String title, String title_eng, String description, String site_url, String image, Long stylepointId) {
+    public CreateBrandRequestDto(String title, String title_eng, String description, String site_url, String image,
+                                 Long stylepointId) {
         this.title = title;
         this.title_eng = title_eng;
         this.description = description;
@@ -28,7 +28,6 @@ public class CreateBrandRequestDto {
     }
 
     public Brand toEntity(StylePoint stylepoint) {
-
         return Brand.builder()
                 .title(this.title)
                 .title_eng(this.title_eng)

@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class CreateCoordiLookRequestDto {
-
     private String title;
     private String image;
     private Long stylepointId;

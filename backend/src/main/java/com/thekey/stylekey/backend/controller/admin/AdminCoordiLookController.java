@@ -2,16 +2,17 @@ package com.thekey.stylekey.backend.controller.admin;
 
 import com.thekey.stylekey.backend.model.coordilook.entity.CoordiLook;
 import com.thekey.stylekey.backend.model.item.entity.Item;
+import com.thekey.stylekey.backend.model.stylepoint.entity.StylePoint;
 import com.thekey.stylekey.backend.service.admin.CoordiLookAdminService;
 import com.thekey.stylekey.backend.service.admin.dto.CreateCoordiLookRequestDto;
 import com.thekey.stylekey.backend.service.admin.dto.UpdateCoordiLookRequestDto;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +24,6 @@ public class AdminCoordiLookController {
 
     private final CoordiLookAdminService coordiLookAdminService;
 
-    // Read All
     @GetMapping("/coordilooks")
     public ResponseEntity<List<CoordiLook>> getAllCoordiLooks() {
         List<CoordiLook> CoordiLooks = coordiLookAdminService.findAll();
@@ -33,50 +33,60 @@ public class AdminCoordiLookController {
         return ResponseEntity.ok(CoordiLooks);
     }
 
-    // Read only one
     @GetMapping("/coordilook/{id}")
     public ResponseEntity<Map<String, Object>> getCoordiLookById(@PathVariable Long id) {
         CoordiLook coordiLook = coordiLookAdminService.findById(id);
-        List<Item> items= coordiLookAdminService.getItemsByCoordiLookId(id);
-        Long stylepointId = coordiLook.getStylepoint().getId();
 
-        Map<String, Object> response = new HashMap<>();
-        response.put("coordiLook", coordiLook);
-        response.put("items", items);
-        response.put("stylepointId", stylepointId);
-
-        if (coordiLook == null) {
+        if (isNull(coordiLook)) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(response);
 
+        List<Item> items = coordiLookAdminService.getItemsByCoordiLookId(id);
+        Long stylepointId = getStylepointId(coordiLook);
+
+        Map<String, Object> response = Map.of(
+                "coordiLook", coordiLook,
+                "item", items,
+                "stylepointId", stylepointId
+        );
+
+        return ResponseEntity.ok(response);
     }
 
-    // Create
     @PostMapping("/coordilook/create")
     public ResponseEntity<CoordiLook> createCoordiLook(@RequestBody CreateCoordiLookRequestDto requestDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(coordiLookAdminService.createCoordiLook(requestDto));
     }
 
-    // Update
     @PutMapping("/coordilook/{id}")
-    public ResponseEntity<CoordiLook> updateCoordiLook(@PathVariable Long id, @RequestBody UpdateCoordiLookRequestDto requestDto) {
+    public ResponseEntity<CoordiLook> updateCoordiLook(@PathVariable Long id,
+                                                       @RequestBody UpdateCoordiLookRequestDto requestDto) {
         if (id == null) {
-            log.info(String.valueOf(id));
             return ResponseEntity.ok().build();
         }
 
         CoordiLook updatedCoordiLook = coordiLookAdminService.updateCoordiLook(id, requestDto);
-        if (updatedCoordiLook == null) {
+
+        if (isNull(updatedCoordiLook)) {
             return ResponseEntity.notFound().build();
         }
+
         return ResponseEntity.ok(updatedCoordiLook);
     }
 
-    // Delete
     @DeleteMapping("/coordilook/{id}")
     public ResponseEntity<Void> deleteCoordiLook(@PathVariable Long id) {
         coordiLookAdminService.deleteCoordiLook(id);
         return ResponseEntity.ok().build();
+    }
+
+    private Long getStylepointId(CoordiLook coordiLook) {
+        return Optional.ofNullable(coordiLook.getStylepoint())
+                .map(StylePoint::getId)
+                .orElse(null);
+    }
+
+    private boolean isNull(CoordiLook coordiLook) {
+        return coordiLook == null;
     }
 }

@@ -1,5 +1,6 @@
 package com.thekey.stylekey.backend.service.admin;
 
+import com.thekey.stylekey.backend.common.ErrorMessage;
 import com.thekey.stylekey.backend.model.coordilook.entity.CoordiLook;
 import com.thekey.stylekey.backend.model.coordilook.repository.CoordiLookRepository;
 import com.thekey.stylekey.backend.model.item.entity.Item;
@@ -28,9 +29,7 @@ public class CoordiLookAdminServiceImpl implements CoordiLookAdminService {
 
     @Override
     public CoordiLook createCoordiLook(CreateCoordiLookRequestDto requestDto) {
-        StylePoint stylePoint = stylePointRepository.findById(requestDto.getStylepointId())
-                .orElseThrow(() -> new EntityNotFoundException("StylePoint not found with id: " + requestDto.getStylepointId()));
-
+        StylePoint stylePoint = findStylePoint(requestDto.getStylepointId());
         return coordiLookRepository.save(requestDto.toEntity(stylePoint));
     }
 
@@ -41,34 +40,39 @@ public class CoordiLookAdminServiceImpl implements CoordiLookAdminService {
 
     @Override
     public CoordiLook findById(Long id) {
-        return coordiLookRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("coordilook does not exist:" + id));
+        return findCoordiLook(id);
     }
 
     @Override
     @Transactional
     public CoordiLook updateCoordiLook(Long id, UpdateCoordiLookRequestDto requestDto) {
-        CoordiLook coordiLook = coordiLookRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("coordilook does not exist: " + id));
+        CoordiLook coordiLook = findCoordiLook(id);
+        StylePoint stylePoint = findStylePoint(requestDto.getStylepointId());
 
-        StylePoint stylePoint = stylePointRepository.findById(requestDto.getStylepointId())
-                .orElseThrow(() -> new EntityNotFoundException("StylePoint not found with id: " + requestDto.getStylepointId()));
+        coordiLook.update(requestDto.getTitle(), requestDto.getImage(),
+                requestDto.toEntity(stylePoint).getStylepoint());
 
-        coordiLook.update(requestDto.getTitle(), requestDto.getImage(), requestDto.toEntity(stylePoint).getStylepoint());
         return coordiLook;
     }
 
     @Override
     public void deleteCoordiLook(Long id) {
         coordiLookRepository.deleteById(id);
-
     }
 
     @Override
     public List<Item> getItemsByCoordiLookId(Long coordilookId) {
-        CoordiLook coordiLook = coordiLookRepository.findById(coordilookId)
-                .orElseThrow(() -> new IllegalArgumentException("coordilook does not exist:" + coordilookId));
-
+        CoordiLook coordiLook = findCoordiLook(coordilookId);
         return itemRepository.findByCoordilook(coordiLook);
+    }
+
+    private CoordiLook findCoordiLook(Long id) {
+        return coordiLookRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.NOT_FOUND_COORDILOOK.get() + id));
+    }
+
+    private StylePoint findStylePoint(Long id) {
+        return stylePointRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.NOT_FOUND_STYLEPOINT.get() + id));
     }
 }

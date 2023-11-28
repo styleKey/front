@@ -49,12 +49,6 @@ public class Item extends BaseTimeEntity {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    // Item : StylePoint (N : 1)
-    // 다대일 단방향 연관관계
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "stylepoint_id")
-//    private StylePoint stylePoint;
-
     @Builder
     public Item(String title, String sales_link, String image, Brand brand, CoordiLook coordilook, Category category) {
         this.title = title;

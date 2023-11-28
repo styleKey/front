@@ -1,5 +1,6 @@
 package com.thekey.stylekey.backend.service.admin;
 
+import com.thekey.stylekey.backend.common.ErrorMessage;
 import com.thekey.stylekey.backend.model.brand.entity.Brand;
 import com.thekey.stylekey.backend.model.brand.repository.BrandRepository;
 import com.thekey.stylekey.backend.model.category.entity.Category;
@@ -31,23 +32,16 @@ public class ItemAdminServiceImpl implements ItemAdminService {
 
     @Override
     public Item createItem(CreateItemRequestDto requestDto) {
-        Category category = categoryRepository.findById(requestDto.getCategoryId())
-                .orElseThrow(() -> new EntityNotFoundException("Category not found with id: " + requestDto.getCategoryId()));
-
-        Brand brand = brandRepository.findById(requestDto.getBrandId())
-                .orElseThrow(() -> new EntityNotFoundException("Brand not found with id: " + requestDto.getBrandId()));
-
-        CoordiLook coordiLook = coordiLookRepository.findById(requestDto.getCoordilookId())
-                .orElseThrow(() -> new EntityNotFoundException("CoordiLook not found with id: " + requestDto.getCoordilookId()));
+        Category category = findCategory(requestDto.getCategoryId());
+        Brand brand = findBrand(requestDto.getCategoryId());
+        CoordiLook coordiLook = findCoordiLook(requestDto.getCategoryId());
 
         return itemRepository.save(requestDto.toEntity(brand, coordiLook, category));
-
     }
 
     @Override
     public Item findById(Long id) {
-        return itemRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("item does not exist: " + id));
+        return findItem(id);
     }
 
     @Override
@@ -58,22 +52,15 @@ public class ItemAdminServiceImpl implements ItemAdminService {
     @Override
     public Item updateItem(Long id, UpdateItemRequestDto requestDto) {
 
-        Category category = categoryRepository.findById(requestDto.getCategoryId())
-                .orElseThrow(() -> new EntityNotFoundException("Category not found with id: " + requestDto.getCategoryId()));
-
-        Brand brand = brandRepository.findById(requestDto.getBrandId())
-                .orElseThrow(() -> new EntityNotFoundException("Brand not found with id: " + requestDto.getBrandId()));
-
-        CoordiLook coordiLook = coordiLookRepository.findById(requestDto.getCoordilookId())
-                .orElseThrow(() -> new EntityNotFoundException("CoordiLook not found with id: " + requestDto.getCoordilookId()));
-
-
-        Item item = itemRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("item does not exist: " + id));
+        Category category = findCategory(requestDto.getCategoryId());
+        Brand brand = findBrand(requestDto.getCategoryId());
+        CoordiLook coordiLook = findCoordiLook(requestDto.getCategoryId());
+        Item item = findItem(id);
 
         Item updatedItem = requestDto.toEntity(brand, coordiLook, category);
 
-        item.update(requestDto.getTitle(), requestDto.getSales_link(), requestDto.getImage(), updatedItem.getBrand(), updatedItem.getCoordilook(),
+        item.update(requestDto.getTitle(), requestDto.getSales_link(), requestDto.getImage(), updatedItem.getBrand(),
+                updatedItem.getCoordilook(),
                 updatedItem.getCategory());
 
         return item;
@@ -84,4 +71,23 @@ public class ItemAdminServiceImpl implements ItemAdminService {
         itemRepository.deleteById(id);
     }
 
+    private Category findCategory(Long id) {
+        return categoryRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.NOT_FOUND_CATEGORY.get() + id));
+    }
+
+    private Brand findBrand(Long id) {
+        return brandRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.INVALID_BRAND_ID.get() + id));
+    }
+
+    private CoordiLook findCoordiLook(Long id) {
+        return coordiLookRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.NOT_FOUND_COORDILOOK.get() + id));
+    }
+
+    private Item findItem(Long id) {
+        return itemRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.NOT_FOUND_ITEM.get() + id));
+    }
 }

@@ -8,11 +8,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class UpdateStylePointRequestDto {
-
     private String title;
-
     private String description;
-
     private String image;
 
     @Builder
