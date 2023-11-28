@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Table(name = "stylepoint")
 @DynamicUpdate
 public class StylePoint {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "stylepoint_id", nullable = false)
@@ -24,12 +25,6 @@ public class StylePoint {
 
     @Column(name = "stulepoint_image", nullable = false)
     private String image;
-
-//    @OneToMany(mappedBy = "stylepoint", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    private List<CoordiLook> coordiLookList = new ArrayList<>();
-
-//    @OneToMany(mappedBy = "stylepoint", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    private List<Brand> brandList = new ArrayList<>();
 
     @Builder
     public StylePoint(String title, String description, String image) {
