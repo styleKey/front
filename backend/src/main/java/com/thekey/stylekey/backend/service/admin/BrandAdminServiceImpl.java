@@ -1,5 +1,6 @@
 package com.thekey.stylekey.backend.service.admin;
 
+import com.thekey.stylekey.backend.common.ErrorMessage;
 import com.thekey.stylekey.backend.model.brand.entity.Brand;
 import com.thekey.stylekey.backend.model.brand.repository.BrandRepository;
 import com.thekey.stylekey.backend.model.item.entity.Item;
@@ -27,16 +28,13 @@ public class BrandAdminServiceImpl implements BrandAdminService {
 
     @Override
     public Brand createBrand(CreateBrandRequestDto requestDto) {
-        StylePoint stylePoint = stylePointRepository.findById(requestDto.getStylepointId())
-                .orElseThrow(() -> new EntityNotFoundException("StylePoint not found with id: " + requestDto.getStylepointId()));
-
+        StylePoint stylePoint = findStylePoint(requestDto.getStylepointId());
         return brandRepository.save(requestDto.toEntity(stylePoint));
     }
 
     @Override
     public Brand findById(Long id) {
-        return brandRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("brand does not exist:" + id));
+        return findBrand(id);
     }
 
     @Override
@@ -46,15 +44,12 @@ public class BrandAdminServiceImpl implements BrandAdminService {
 
     @Override
     public Brand updateBrand(Long id, UpdateBrandRequestDto requestDto) {
-        Brand brand = brandRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("brand does not exist: " + id));
-
-        StylePoint stylePoint = stylePointRepository.findById(requestDto.getStylepointId())
-                .orElseThrow(() -> new EntityNotFoundException("StylePoint not found with id: " + requestDto.getStylepointId()));
-
+        Brand brand = findBrand(id);
+        StylePoint stylePoint = findStylePoint(requestDto.getStylepointId());
 
         brand.update(requestDto.getTitle(), requestDto.getTitle_eng(), requestDto.getDescription(),
                 requestDto.getSite_url(), requestDto.getImage(), requestDto.toEntity(stylePoint).getStylepoint());
+
         return brand;
     }
 
@@ -65,10 +60,18 @@ public class BrandAdminServiceImpl implements BrandAdminService {
 
     @Override
     public List<Item> getItemsByBrandId(Long brandId) {
-        Brand brand = brandRepository.findById(brandId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid Brand ID: " + brandId));
-
+        Brand brand = findBrand(brandId);
         return itemRepository.findByBrand(brand);
     }
 
+    private Brand findBrand(Long id) {
+        return brandRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.INVALID_BRAND_ID.get() + id));
+    }
+
+    private StylePoint findStylePoint(Long id) {
+        return stylePointRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        ErrorMessage.NOT_FOUND_STYLEPOINT.get() + id));
+    }
 }
