@@ -21,6 +21,7 @@ function Footer() {
             <div className="right_bar">|</div>
             <div>개인정보처리방침</div>
           </div>
+          <br />
           <div className="right_middle">
             더키(TheKEY) | 대표:허윤수 | 대표전화 | 개인정보보호책임자:허윤수
             <br />
@@ -28,6 +29,7 @@ function Footer() {
             <br />
             공용메일@gmail.com
           </div>
+          <br />
           <div className="right_bottom">
             COPYRIGHT © 2023 더키(TheKEY). ALL RIGHTS RESERVED.
           </div>

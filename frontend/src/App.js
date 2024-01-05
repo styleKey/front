@@ -7,6 +7,7 @@ import Footer from "./components/layouts/Footer";
 
 import Home from "./components/pages/Home";
 import Style from "./components/pages/Style";
+import Test from "./components/pages/Test";
 
 function App() {
   return (
@@ -16,7 +17,8 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/Style" element={<Style />} />
+          <Route path="/test" element={<Test />} />
+          <Route path="/style" element={<Style />} />
         </Routes>
         <Footer />
       </div>

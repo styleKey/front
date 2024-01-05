@@ -1,7 +1,7 @@
 import React from "react";
 
 function Style() {
-  return <div>sdfsdfs</div>;
+  return <div>Style</div>;
 }
 
 export default Style;

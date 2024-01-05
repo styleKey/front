@@ -1,6 +1,6 @@
 import React from "react";
 import "./Logobar.css";
-import LogoImage from "../../icon/icon192_stylekey.png";
+import LogoImage from "../../icon/stylekeylogo.png";
 import YotubeImage from "../../logo/logo_youtube.png";
 import InstaImage from "../../logo/Instagram-logo.png";
 function Logobar() {

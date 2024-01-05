@@ -23,10 +23,19 @@ function Navbar() {
         </div>
       </Link>
       <div className="nav_bar">|</div>
+      <Link to="/test">
+        <div
+          className={`nav_select ${selected === "/test" ? "selected" : ""}`}
+          onClick={() => setSelected("/test")}
+        >
+          TEST
+        </div>
+      </Link>
+      <div className="nav_bar">|</div>
       <Link to="/style">
         <div
           className={`nav_select ${selected === "/style" ? "selected" : ""}`}
-          onClick={() => setSelected("/Style")}
+          onClick={() => setSelected("/style")}
         >
           STYLE
         </div>
