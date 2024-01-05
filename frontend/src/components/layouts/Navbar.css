@@ -2,6 +2,14 @@ body {
   margin: 0;
   padding: 0;
 }
+.selected {
+  color: rgb(202, 143, 202);
+}
+.navbar a {
+  text-decoration: none;
+  color: black;
+}
+
 .navbar {
   width: 98%;
   display: flex;
@@ -15,11 +23,11 @@ body {
 .nav_select {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  margin-top: 15px;
   margin-left: 30px;
   margin-right: 10px;
   cursor: pointer;
+  font-weight: 500;
 }
 
 .nav_bar {
