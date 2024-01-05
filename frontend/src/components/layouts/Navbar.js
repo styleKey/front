@@ -1,37 +1,36 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import "./Navbar.css";
 
 function Navbar() {
-  const [selected, setSelected] = useState("HOME"); // 'HOME'을 기본 선택 상태로 설정
+  const location = useLocation();
 
-  const handleMenuClick = (menu) => {
-    setSelected(menu);
-  };
+  const [selected, setSelected] = useState(location.pathname);
 
-  // 마우스 호버 상태를 추적할 필요가 없으므로 관련 상태와 함수를 제거합니다
-
-  const homeTextColor = selected === "HOME" ? "black" : "gray";
-  const styleTextColor = selected === "STYLE" ? "black" : "gray";
+  useEffect(() => {
+    setSelected(location.pathname);
+  }, [location]);
 
   return (
     <div className="navbar">
       <div className="nav_bar">|</div>
-      <div
-        className="nav_select"
-        onClick={() => handleMenuClick("HOME")} // 클릭 이벤트 핸들러 추가
-        style={{ color: homeTextColor }}
-      >
-        HOME
-      </div>
+      <Link to="/">
+        <div
+          className={`nav_select ${selected === "/" ? "selected" : ""}`}
+          onClick={() => setSelected("/")}
+        >
+          HOME
+        </div>
+      </Link>
       <div className="nav_bar">|</div>
-      <div
-        className="nav_select"
-        onClick={() => handleMenuClick("STYLE")} // 클릭 이벤트 핸들러 추가
-        style={{ color: styleTextColor }}
-      >
-        STYLE
-      </div>
+      <Link to="/style">
+        <div
+          className={`nav_select ${selected === "/style" ? "selected" : ""}`}
+          onClick={() => setSelected("/Style")}
+        >
+          STYLE
+        </div>
+      </Link>
       <div className="nav_bar">|</div>
     </div>
   );
