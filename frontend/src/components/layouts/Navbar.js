@@ -1,13 +1,8 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 function Navbar() {
-  return (
-    <nav>
-      <Link to='/test'>TEST</Link>
-      <Link to='/stylepoints'>STYLE</Link>
-    </nav>
-  );
+  return <nav>네비바</nav>;
 }
 
 export default Navbar;
