@@ -1,0 +1,39 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+.footer {
+  width: 100%;
+  height: 200px;
+  background-color: black;
+}
+.footer_main {
+  padding-top: 20px;
+  width: 100%;
+  height: 200px;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+.footer_left {
+  font-size: 30px;
+  font-weight: 550;
+  padding-left: 20px;
+}
+.footer_right {
+  display: flex;
+  flex-direction: column;
+}
+.right_top {
+  display: flex;
+  flex-direction: row;
+}
+.right_bar {
+  color: gray;
+  margin-left: 5px;
+  margin-right: 5px;
+}
